@@ -1,7 +1,11 @@
 package bsep.tim4.hospitalApp.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.validation.constraints.NotBlank;
-import lombok.*;
 
 @Getter
 @Setter
@@ -31,6 +35,8 @@ public class CSRDto {
     String country;
 
     @NotBlank(message = "Email cannot be empty.")
-    String emailAddress;
+    String email;
 
+    @NotBlank(message = "Key password cannot be empty.")
+    String keyPassword;
 }
