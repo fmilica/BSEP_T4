@@ -85,7 +85,7 @@ public class CSRGenerator {
         }
         return null;
     }
-
+/*
     public static void main(String[] args) throws Exception {
         CSRDto csrDto = new CSRDto("COMONNEJM", "NEJM", "SURNEJM", "ORGNEJM", "ORGUNIT", "LOCAL", "COUNTRY", "IMEJL", "SIFRA");
         CSRGenerator generatorCSR = new CSRGenerator();
@@ -98,5 +98,5 @@ public class CSRGenerator {
         writer.close();
         String csrString = sw.toString();
         System.out.println(csrString);
-    }
+    }*/
 }

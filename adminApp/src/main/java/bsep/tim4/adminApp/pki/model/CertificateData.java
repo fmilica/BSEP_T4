@@ -1,5 +1,5 @@
 package bsep.tim4.adminApp.pki.model;
-
+/*
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,4 +19,4 @@ public class CertificateData {
 
     private String alias;
 
-}
+}*/

@@ -7,13 +7,12 @@ import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 
-//U KEYSTORES primer.jks SE CUVAJU JAVNI, PRIVATNI, SIMETRICNI KLJUCEVI I SERTIFIKATI - baza podataka kao
 public class KeyStoreWriter {
-    // KeyStore je Java klasa za citanje specijalizovanih datoteka koje se koriste za cuvanje kljuceva
+    // KeyStore je Java klasa za pisanje specijalizovanih datoteka koje se koriste za cuvanje kljuceva
     // Tri tipa entiteta koji se obicno nalaze u ovakvim datotekama su:
     // - Sertifikati koji ukljucuju javni kljuc
     // - Privatni kljucevi
-    // - Tajni kljucevi, koji se koriste u simetricnima siframa
+    // - Tajni (simetricni) kljucevi, koji se koriste u simetricnima siframa
     private KeyStore keyStore;
 
     public KeyStoreWriter() {
@@ -24,7 +23,17 @@ public class KeyStoreWriter {
         }
     }
 
-    //koristimo i kada ucitavamo postojecu keystore i kada kreiramo keystore
+    public void createKeyStore(String fileName, char[] password) {
+        try {
+            keyStore.load(null, password);
+            FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+            keyStore.store(fileOutputStream, password);
+            fileOutputStream.close();
+        } catch (NoSuchAlgorithmException | CertificateException | IOException | KeyStoreException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void loadKeyStore(String fileName, char[] password) {
         try {
             if (fileName != null) {
@@ -46,9 +55,17 @@ public class KeyStoreWriter {
         }
     }
 
-    public void write(String alias, PrivateKey privateKey, char[] password, Certificate certificate) {
+    public void writePrivateKey(String alias, PrivateKey privateKey, char[] password, Certificate certificate) {
         try {
             keyStore.setKeyEntry(alias, privateKey, password, new Certificate[]{certificate});
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeCertificate(String alias, Certificate certificate) {
+        try {
+            keyStore.setCertificateEntry(alias, certificate);
         } catch (KeyStoreException e) {
             e.printStackTrace();
         }

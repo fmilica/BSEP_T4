@@ -1,8 +1,8 @@
-package bsep.tim4.hospitalApp.service;
+package bsep.tim4.adminApp.pki.service;
 
-import bsep.tim4.hospitalApp.data.IssuerData;
-import bsep.tim4.hospitalApp.keystores.KeyStoreReader;
-import bsep.tim4.hospitalApp.keystores.KeyStoreWriter;
+import bsep.tim4.adminApp.pki.keystores.KeyStoreReader;
+import bsep.tim4.adminApp.pki.keystores.KeyStoreWriter;
+import bsep.tim4.adminApp.pki.model.IssuerData;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +22,9 @@ public class KeyStoreService {
     @Value("${pki.keystore-password}")
     private String keyStorePass;
 
+    @Value("${rootCA-key-pass}")
+    private String rootCAPass;
+
     private final KeyStoreReader keyStoreReader;
     private final KeyStoreWriter keyStoreWriter;
 
@@ -40,7 +43,7 @@ public class KeyStoreService {
     public void loadKeyStore() {
         String keyStoreFullName = keyStorePath + keyStoreName;
         File keyStoreFile = new File(keyStoreFullName);
-        if (!keyStoreFile.exists()) {
+        if(!keyStoreFile.exists()){
             this.keyStoreWriter.createKeyStore(keyStoreFullName, keyStorePass.toCharArray());
         } else {
             this.keyStoreWriter.loadKeyStore(keyStoreFullName, keyStorePass.toCharArray());
@@ -51,13 +54,14 @@ public class KeyStoreService {
         this.keyStoreWriter.saveKeyStore(keyStorePath + keyStoreName, keyStorePass.toCharArray());
     }
 
-    public void savePrivateKey(String alias, PrivateKey privateKey, String keyPassword, Certificate certificate) {
-        this.keyStoreWriter.writePrivateKey(alias, privateKey, keyPassword.toCharArray(), certificate);
+    //mozemo i privatni kljuc dodatno da sifrujemo zato postoji rootCAPass
+    public void savePrivateKey(String alias, PrivateKey privateKey, Certificate certificate) {
+        this.keyStoreWriter.writePrivateKey(alias, privateKey,rootCAPass.toCharArray(), certificate);
     }
 
-    public PrivateKey loadPrivateKey(String alias, String keyPassword) {
+    public PrivateKey loadPrivateKey(String alias) {
         return this.keyStoreReader.readPrivateKey(
-                keyStorePath + keyStoreName, keyStorePass, alias, keyPassword);
+                keyStorePath + keyStoreName, keyStorePass, alias, rootCAPass);
     }
 
     public void saveCertificate(String alias, Certificate certificate) {

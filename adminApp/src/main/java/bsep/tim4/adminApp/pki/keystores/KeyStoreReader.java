@@ -1,5 +1,6 @@
 package bsep.tim4.adminApp.pki.keystores;
 
+import bsep.tim4.adminApp.pki.model.IssuerData;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 
@@ -11,15 +12,12 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
-import bsep.tim4.adminApp.pki.model.*;
-
-//U KEYSTORES primer.jks SE CUVAJU JAVNI, PRIVATNI, SIMETRICNI KLJUCEVI I SERTIFIKATI - baza podataka kao
 public class KeyStoreReader {
     // KeyStore je Java klasa za citanje specijalizovanih datoteka koje se koriste za cuvanje kljuceva
     // Tri tipa entiteta koji se obicno nalaze u ovakvim datotekama su:
     // - Sertifikati koji ukljucuju javni kljuc
     // - Privatni kljucevi
-    // - Tajni kljucevi, koji se koriste u simetricnima siframa
+    // - Tajni kljucevi (simetricni), koji se koriste u simetricnima siframa
     private KeyStore keyStore;
 
     public KeyStoreReader() {
@@ -44,7 +42,6 @@ public class KeyStoreReader {
         try {
             // Datoteka se ucitava
             BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
-            //OVA SIFRA JE ZA KEYSTORE- svaki keystore ima neku sifru prilikom generisanja
             keyStore.load(in, password);
 
             // Iscitava se sertifikat koji ima dati alias
@@ -105,5 +102,4 @@ public class KeyStoreReader {
         }
         return null;
     }
-
 }

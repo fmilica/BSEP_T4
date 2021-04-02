@@ -28,9 +28,6 @@ public class CSRDto {
     @NotBlank(message = "Organization unit cannot be empty.")
     String organizationUnit;
 
-    @NotBlank(message = "Locality cannot be empty.")
-    String locality;
-
     @NotBlank(message = "Country cannot be empty.")
     String country;
 
