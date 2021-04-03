@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { CSR } from "../model/csr.model";
 
@@ -8,6 +8,9 @@ import { CSR } from "../model/csr.model";
     providedIn: 'root',
 })
 export class CsrService {
+
+    public chosenCsr: BehaviorSubject<CSR> = new BehaviorSubject<CSR>({} as CSR);
+
     private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     constructor(private http: HttpClient) {}

@@ -15,20 +15,20 @@ export class CsrComponent implements OnInit {
   displayedColumns: string[] = ['commonName', 'name', 'surname', 'organizationName', 
                                 'organizationUnit', 'country', 'email', 'actions'];
 
-  dataSource: CSR[] = []
-  // dataSource: CSR[] =  [{commonName: 'common', name: 'ksenija', surname: 'prcic',
-  //                           organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
-  //                           country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 0},
-  //                           {commonName: 'common', name: 'ksenija', surname: 'prcic',
-  //                           organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
-  //                           country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 1},
-  //                           {commonName: 'common', name: 'ksenija', surname: 'prcic',
-  //                           organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
-  //                           country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 1},
-  //                           {commonName: 'common', name: 'ksenija', surname: 'prcic',
-  //                           organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
-  //                           country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 2}
-  //                         ]
+  //dataSource: CSR[] = []
+  dataSource: CSR[] =  [{commonName: 'common', givenName: 'ksenija', surname: 'prcic',
+                            organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
+                            country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 'PENDING'},
+                            {commonName: 'common', givenName: 'ksenija', surname: 'prcic',
+                            organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
+                            country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 'APPROVED'},
+                            {commonName: 'common', givenName: 'ksenija', surname: 'prcic',
+                            organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
+                            country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 'APPROVED'},
+                            {commonName: 'common', givenName: 'ksenija', surname: 'prcic',
+                            organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
+                            country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 'DECLINED'}
+                          ]
 
   constructor(
     private csrService: CsrService,
@@ -69,6 +69,7 @@ export class CsrComponent implements OnInit {
 
   // accept csr
   acceptCsr(csr: CSR) {
+    this.csrService.chosenCsr.next(csr);
     this.router.navigate(['homepage/create-certificate'])
   }
 }

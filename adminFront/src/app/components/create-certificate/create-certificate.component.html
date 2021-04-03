@@ -1,3 +1,4 @@
+<div class="table-title">Create certificate</div>
 <mat-horizontal-stepper linear #stepper>
     <mat-step [stepControl]="subjectInfoForm">
         <form [formGroup]="subjectInfoForm">
@@ -40,25 +41,32 @@
             <ng-template matStepLabel>General Info</ng-template>
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Certificate type</mat-label>
-                <mat-select formControlName="certificateType">
+                <mat-select formControlName="certificateType" (selectionChange)="setDates()">
                     <mat-option value="intermediate">Intermediate</mat-option>
                     <mat-option value="endUser">End user</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Valid from</mat-label>
-                <input matInput formControlName="startDate">
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Valid to</mat-label>
-                <input matInput formControlName="endDate">
-            </mat-form-field>
-            <section class="key-usage-section">
+            <div>
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>Valid from</mat-label>
+                    <input matInput formControlName="startDate" [matDatepicker]="validFrom">
+                    <mat-datepicker-toggle matSuffix [for]="validFrom"></mat-datepicker-toggle>
+                    <mat-datepicker #validFrom></mat-datepicker>                
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>Valid to</mat-label>
+                    <input matInput formControlName="endDate" [matDatepicker]="validTo" 
+                    [min]="minDate" [max]="maxDate">
+                    <mat-datepicker-toggle matSuffix [for]="validTo"></mat-datepicker-toggle>
+                    <mat-datepicker #validTo></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <!-- <section class="key-usage-section">
                 <h4>Key usage:</h4>
                 <mat-checkbox formControlName="digitalSignature">Digital signature</mat-checkbox>
                 <mat-checkbox formControlName="nonRepudiation">Non repudiation</mat-checkbox>
                 <mat-checkbox formControlName="keyEncipherment">Key encipherment</mat-checkbox>
-            </section>
+            </section> -->
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
@@ -68,13 +76,15 @@
     <mat-step [stepControl]="issuerInfoFrom">
         <form [formGroup]="issuerInfoFrom">
             <ng-template matStepLabel>Issuer info</ng-template>
-            <!-- <mat-form-field appearance="fill" class="form-field">
+            <div>
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Signing certificate</mat-label>
                 <mat-select formControlName="signingCertificate"
                     (selectionChange)="certificateChange($event)">
-                    <mat-option *ngFor="let certificate of allCertificates" [value]="certificate.id">{{certificate.alias}}</mat-option>
+                    <mat-option *ngFor="let certificate of signingCertificates" [value]="certificate.id">{{certificate.alias}}</mat-option>
                 </mat-select>
-            </mat-form-field> -->
+            </mat-form-field>
+            </div>
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Common name</mat-label>
                 <input matInput formControlName="commonName">
@@ -105,7 +115,7 @@
             </mat-form-field>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="stepper.reset()">Reset</button>
+                <button mat-button (click)="stepper.reset()">Create</button>
             </div>
         </form>
     </mat-step>
