@@ -2,6 +2,7 @@ package bsep.tim4.adminApp.pki.util;
 
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
+import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
@@ -42,6 +43,8 @@ public class CertificateGenerator {
                     subjectData.getEndDate(),
                     subjectData.getX500name(),
                     subjectData.getPublicKey());
+
+            certGen.addExtension(Extension.keyUsage)
 
             // Generise se sertifikat - ovo jeste sertifikat ali mi bas zelimo da vratimo onaj objekat
             X509CertificateHolder certHolder = certGen.build(contentSigner);

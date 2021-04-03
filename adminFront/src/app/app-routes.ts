@@ -1,5 +1,6 @@
 import { Routes } from "@angular/router";
 import { CertificatesComponent } from "./components/certificates/certificates.component";
+import { CreateCertificateComponent } from "./components/create-certificate/create-certificate.component";
 import { CsrComponent } from "./components/csr/csr.component";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -30,6 +31,10 @@ export const routes: Routes = [
         {
           path: 'certificates',
           component: CertificatesComponent,
+        },
+        {
+          path: 'create-certificate',
+          component: CreateCertificateComponent,
         },
         {
           path: 'users',

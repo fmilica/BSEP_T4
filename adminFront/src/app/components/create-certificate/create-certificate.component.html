@@ -1,0 +1,112 @@
+<mat-horizontal-stepper linear #stepper>
+    <mat-step [stepControl]="subjectInfoForm">
+        <form [formGroup]="subjectInfoForm">
+            <ng-template matStepLabel>Subject Info</ng-template>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Common name</mat-label>
+                <input matInput formControlName="commonName">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Given name</mat-label>
+                <input matInput formControlName="givenName">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Surname</mat-label>
+                <input matInput formControlName="surname">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Organization name</mat-label>
+                <input matInput formControlName="organizationName">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Organization unit</mat-label>
+                <input matInput formControlName="organizationUnit">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Country</mat-label>
+                <input matInput formControlName="country">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email">
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="generalInfoForm">
+        <form [formGroup]="generalInfoForm">
+            <ng-template matStepLabel>General Info</ng-template>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Certificate type</mat-label>
+                <mat-select formControlName="certificateType">
+                    <mat-option value="intermediate">Intermediate</mat-option>
+                    <mat-option value="endUser">End user</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Valid from</mat-label>
+                <input matInput formControlName="startDate">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Valid to</mat-label>
+                <input matInput formControlName="endDate">
+            </mat-form-field>
+            <section class="key-usage-section">
+                <h4>Key usage:</h4>
+                <mat-checkbox formControlName="digitalSignature">Digital signature</mat-checkbox>
+                <mat-checkbox formControlName="nonRepudiation">Non repudiation</mat-checkbox>
+                <mat-checkbox formControlName="keyEncipherment">Key encipherment</mat-checkbox>
+            </section>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="issuerInfoFrom">
+        <form [formGroup]="issuerInfoFrom">
+            <ng-template matStepLabel>Issuer info</ng-template>
+            <!-- <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Signing certificate</mat-label>
+                <mat-select formControlName="signingCertificate"
+                    (selectionChange)="certificateChange($event)">
+                    <mat-option *ngFor="let certificate of allCertificates" [value]="certificate.id">{{certificate.alias}}</mat-option>
+                </mat-select>
+            </mat-form-field> -->
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Common name</mat-label>
+                <input matInput formControlName="commonName">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Given name</mat-label>
+                <input matInput formControlName="givenName">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Surname</mat-label>
+                <input matInput formControlName="surname">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Organization name</mat-label>
+                <input matInput formControlName="organizationName">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Organization unit</mat-label>
+                <input matInput formControlName="organizationUnit">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Country</mat-label>
+                <input matInput formControlName="country">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email">
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+            </div>
+        </form>
+    </mat-step>
+</mat-horizontal-stepper>

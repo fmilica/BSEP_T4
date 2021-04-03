@@ -89,7 +89,7 @@
             <td mat-cell *matCellDef="let csr">
                 <div *ngIf="csr.status=='PENDING'; then allowedActions else finishedActions"></div>
                 <ng-template #allowedActions>
-                    <button mat-icon-button (click)="acceptCsr()">
+                    <button mat-icon-button (click)="acceptCsr(csr)">
                         <mat-icon class="accept">check_circle</mat-icon>
                     </button>
                     <button mat-icon-button (click)="declineCsr(csr)">

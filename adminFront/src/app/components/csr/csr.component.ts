@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CSR } from 'src/app/model/csr.model';
 import { CsrService } from 'src/app/services/csr.service';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-csr',
@@ -31,6 +32,7 @@ export class CsrComponent implements OnInit {
 
   constructor(
     private csrService: CsrService,
+    private router: Router,
     private toastr: ToastrService
   ) { }
 
@@ -66,5 +68,7 @@ export class CsrComponent implements OnInit {
   }
 
   // accept csr
-  acceptCsr() {}
+  acceptCsr(csr: CSR) {
+    this.router.navigate(['homepage/create-certificate'])
+  }
 }

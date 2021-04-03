@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
@@ -17,18 +17,24 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { CsrComponent } from './components/csr/csr.component';
+import { CreateCertificateComponent } from './components/create-certificate/create-certificate.component';
+import { CertificatesComponent } from './components/certificates/certificates.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomepageComponent,
-    CsrComponent
+    CsrComponent,
+    CreateCertificateComponent,
+    CertificatesComponent
   ],
   imports: [
     RouterModule,
@@ -48,6 +54,8 @@ import { CsrComponent } from './components/csr/csr.component';
     MatListModule,
     MatToolbarModule,
     MatTreeModule,
+    MatStepperModule,
+    MatCheckboxModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
       timeOut: 2500,
