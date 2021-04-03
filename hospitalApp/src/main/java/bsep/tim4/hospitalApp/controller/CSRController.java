@@ -39,8 +39,8 @@ public class CSRController {
         ResponseEntity<String> responseEntityStr = restTemplate.
                 postForEntity(sendCsrFullUri, request, String.class);
 
-        String certificate = responseEntityStr.getBody();
-        csrService.storeCertificate(certificate);
-        return new ResponseEntity<>(certificate, HttpStatus.OK);
+        //String certificate = responseEntityStr.getBody();
+        //csrService.storeCertificate(certificate);
+        return new ResponseEntity<>("uspesno poslat zahtev", HttpStatus.OK);
     }
 }

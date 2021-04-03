@@ -1,21 +1,13 @@
 package bsep.tim4.adminApp.pki.controller;
 
-import bsep.tim4.adminApp.pki.model.SubjectData;
 import bsep.tim4.adminApp.pki.service.CertificateService;
 import bsep.tim4.adminApp.pki.service.CsrService;
-import org.bouncycastle.asn1.x500.X500Name;
-import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping(value="api/csr")
@@ -24,10 +16,21 @@ public class CsrController {
     @Autowired
     private CertificateService certificateService;
 
+    @Autowired
+    private CsrService csrService;
+
     @PostMapping(value="/receive")
-    public ResponseEntity<String> receiveCsr(@RequestBody String csr) {
-        String certificate = certificateService.generateCertificate(csr);
-        System.out.println(certificate);
-        return new ResponseEntity<>(certificate, HttpStatus.OK);
+    public void receiveCsr(@RequestBody String csr) {
+        //Primljen csr se skladisti u bazu i na taj email se salje konfirmacioni link
+        csrService.saveCsr(csr);
+
+        //String certificate = certificateService.generateCertificate(csr);
+        //System.out.println(certificate);
+        //return new ResponseEntity<>(certificate, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/verification")
+    public void verifyCsr(@RequestParam("token") String token) {
+        csrService.verifyCsr(token);
     }
 }
