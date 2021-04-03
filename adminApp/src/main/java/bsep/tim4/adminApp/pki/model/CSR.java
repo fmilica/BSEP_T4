@@ -1,5 +1,6 @@
 package bsep.tim4.adminApp.pki.model;
 
+import bsep.tim4.adminApp.pki.model.enums.CsrStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,6 +45,8 @@ public class CSR {
     //private X500Name x500Name;
 
     private boolean verified;
+
+    private CsrStatus status;
 
     public CSR(PublicKey publicKey, X500Name x500Name) {
         this.publicKey = publicKey;

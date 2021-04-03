@@ -4,6 +4,7 @@ import bsep.tim4.adminApp.mailSender.MailSenderService;
 import bsep.tim4.adminApp.mailSender.VerificationLink;
 import bsep.tim4.adminApp.mailSender.VerificationLinkRepository;
 import bsep.tim4.adminApp.pki.model.CSR;
+import bsep.tim4.adminApp.pki.model.enums.CsrStatus;
 import bsep.tim4.adminApp.pki.repository.CsrRepository;
 import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
@@ -58,6 +59,19 @@ public class CsrService {
         }
     }
 
+    public void acceptCsr(Long id) {
+        CSR csr = csrRepository.findById(id).orElse(null);
+        csr.setStatus(CsrStatus.ACCEPTED);
+
+        csrRepository.save(csr);
+    }
+
+    public void declineCsr(Long id) {
+        CSR csr = csrRepository.findById(id).orElse(null);
+        csr.setStatus(CsrStatus.DECLINED);
+
+        csrRepository.save(csr);
+    }
 
     public JcaPKCS10CertificationRequest readCsr(String csrString) {
 
@@ -86,6 +100,7 @@ public class CsrService {
         }*/
 
         certificateRequest.setVerified(true);
+        certificateRequest.setStatus(CsrStatus.PENDING);
         csrRepository.save(certificateRequest);
     }
 }
