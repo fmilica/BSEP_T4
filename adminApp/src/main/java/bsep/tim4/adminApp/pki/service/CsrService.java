@@ -20,6 +20,7 @@ import java.io.StringReader;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
+import java.util.List;
 
 @Service
 public class CsrService {
@@ -33,18 +34,8 @@ public class CsrService {
     @Autowired
     private MailSenderService mailSenderService;
 
-    public JcaPKCS10CertificationRequest readCsr(String csrString) {
-
-        PEMParser pemParser = null;
-        try {
-            pemParser = new PEMParser(new StringReader(csrString));
-            Object parsedObj = pemParser.readObject();
-            JcaPKCS10CertificationRequest jcaPKCS10CertificationRequest = new JcaPKCS10CertificationRequest((PKCS10CertificationRequest)parsedObj);
-            return jcaPKCS10CertificationRequest;
-        } catch (IOException | ClassCastException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public List<CSR> findAllByVerified(boolean verified) {
+        return csrRepository.findAllByVerified(verified);
     }
 
     public void saveCsr(String csr) {
@@ -64,6 +55,21 @@ public class CsrService {
 
         } catch (NoSuchAlgorithmException | InvalidKeyException | MessagingException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public JcaPKCS10CertificationRequest readCsr(String csrString) {
+
+        PEMParser pemParser = null;
+        try {
+            pemParser = new PEMParser(new StringReader(csrString));
+            Object parsedObj = pemParser.readObject();
+            JcaPKCS10CertificationRequest jcaPKCS10CertificationRequest = new JcaPKCS10CertificationRequest((PKCS10CertificationRequest)parsedObj);
+            return jcaPKCS10CertificationRequest;
+        } catch (IOException | ClassCastException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
