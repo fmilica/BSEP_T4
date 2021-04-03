@@ -37,7 +37,7 @@ public class CsrService {
     private MailSenderService mailSenderService;
 
     public List<CSR> findAllByVerified(boolean verified) {
-        return csrRepository.findAllByVerified(verified);
+        return csrRepository.findAllByVerifiedOrderByIdAsc(verified);
     }
 
     public void saveCsr(String csr) {

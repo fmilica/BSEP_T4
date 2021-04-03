@@ -10,7 +10,7 @@ public class CsrMapper {
 
     public CsrDTO toCsrDto(CSR csr) {
         return new CsrDTO(csr.getId(), csr.getCommonName(), csr.getName(), csr.getSurname(), csr.getOrganizationName(),
-                csr.getOrganizationUnit(), csr.getCountry(), csr.getEmail());
+                csr.getOrganizationUnit(), csr.getCountry(), csr.getEmail(), csr.getStatus());
     }
 
     public List<CsrDTO> toCsrDtoList(List<CSR> csrList) {

@@ -52,6 +52,7 @@ public class CSR {
         this.publicKey = publicKey;
         this.mapX500Name(x500Name);
         this.verified = false;
+        this.status = CsrStatus.PENDING;
     }
 
     private void mapX500Name(X500Name x500Name) {

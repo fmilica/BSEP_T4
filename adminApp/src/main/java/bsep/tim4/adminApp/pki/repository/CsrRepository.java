@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface CsrRepository extends JpaRepository<CSR, Long> {
 
-    List<CSR> findAllByVerified(boolean verified);
+    List<CSR> findAllByVerifiedOrderByIdAsc(boolean verified);
 
 
 }

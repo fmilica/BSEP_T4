@@ -1,5 +1,6 @@
 package bsep.tim4.adminApp.pki.model.dto;
 
+import bsep.tim4.adminApp.pki.model.enums.CsrStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,6 @@ public class CsrDTO {
     private String country;
 
     private String email;
+
+    private CsrStatus status;
 }

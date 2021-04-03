@@ -12,21 +12,22 @@ import { map } from 'rxjs/operators';
 export class CsrComponent implements OnInit {
 
   displayedColumns: string[] = ['commonName', 'name', 'surname', 'organizationName', 
-                                'organizationUnit', 'country', 'email', 'status', 'actions'];
+                                'organizationUnit', 'country', 'email', 'actions'];
 
-  dataSource: CSR[] =  [{commonName: 'common', name: 'ksenija', surname: 'prcic',
-                            organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
-                            country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 0},
-                            {commonName: 'common', name: 'ksenija', surname: 'prcic',
-                            organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
-                            country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 1},
-                            {commonName: 'common', name: 'ksenija', surname: 'prcic',
-                            organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
-                            country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 1},
-                            {commonName: 'common', name: 'ksenija', surname: 'prcic',
-                            organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
-                            country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 2}
-                          ]
+  dataSource: CSR[] = []
+  // dataSource: CSR[] =  [{commonName: 'common', name: 'ksenija', surname: 'prcic',
+  //                           organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
+  //                           country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 0},
+  //                           {commonName: 'common', name: 'ksenija', surname: 'prcic',
+  //                           organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
+  //                           country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 1},
+  //                           {commonName: 'common', name: 'ksenija', surname: 'prcic',
+  //                           organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
+  //                           country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 1},
+  //                           {commonName: 'common', name: 'ksenija', surname: 'prcic',
+  //                           organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
+  //                           country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 2}
+  //                         ]
 
   constructor(
     private csrService: CsrService,
@@ -34,7 +35,7 @@ export class CsrComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //this.initDataSource();
+    this.initDataSource();
   }
 
   initDataSource(): void {
@@ -46,9 +47,24 @@ export class CsrComponent implements OnInit {
     ).subscribe();
   }
 
+  // decline csr
+  declineCsr(csr: CSR) {
+    this.csrService.declineCertificateSigningRequest(csr.id)
+    .subscribe(
+      response => {
+        this.toastr.success('Successfully declined CSR!');
+        // reload tabele
+        this.initDataSource();
+      },
+      error => {
+        if (error.error.message){
+          this.toastr.error(error.error.message);
+        } else {
+          this.toastr.error('503 Server Unavailable');
+        }
+      });
+  }
+
   // accept csr
   acceptCsr() {}
-
-  // decline csr
-  declineCsr() {}
 }
