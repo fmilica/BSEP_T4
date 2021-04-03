@@ -3,6 +3,7 @@ package bsep.tim4.adminApp.pki.service;
 import bsep.tim4.adminApp.mailSender.MailSenderService;
 import bsep.tim4.adminApp.mailSender.VerificationLink;
 import bsep.tim4.adminApp.mailSender.VerificationLinkRepository;
+import bsep.tim4.adminApp.pki.exceptions.NonExistentIdException;
 import bsep.tim4.adminApp.pki.model.CSR;
 import bsep.tim4.adminApp.pki.model.enums.CsrStatus;
 import bsep.tim4.adminApp.pki.repository.CsrRepository;
@@ -59,15 +60,23 @@ public class CsrService {
         }
     }
 
-    public void acceptCsr(Long id) {
+    public void acceptCsr(Long id) throws NonExistentIdException {
         CSR csr = csrRepository.findById(id).orElse(null);
+
+        if(csr == null) {
+            throw new NonExistentIdException("CSR");
+        }
         csr.setStatus(CsrStatus.ACCEPTED);
 
         csrRepository.save(csr);
     }
 
-    public void declineCsr(Long id) {
+    public void declineCsr(Long id) throws NonExistentIdException {
         CSR csr = csrRepository.findById(id).orElse(null);
+
+        if(csr == null) {
+            throw new NonExistentIdException("CSR");
+        }
         csr.setStatus(CsrStatus.DECLINED);
 
         csrRepository.save(csr);
@@ -89,12 +98,14 @@ public class CsrService {
 
     public void verifyCsr(String token) {
         VerificationLink verificationLink = verificationLinkRepository.findOneByToken(token);
-        /*if (verificationLink == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Verification token does not exist!");
-        }*/
+        //ako je verifikacioni link nevalidan, nista
+        if (verificationLink == null) {
+            return;
+        }
 
         CSR certificateRequest = verificationLink.getCertificateRequest();
 
+        //TODO uvesti expiration date za verification links
         /*if (verificationToken.isExpired()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Verification token has expired! Please register again");
         }*/
