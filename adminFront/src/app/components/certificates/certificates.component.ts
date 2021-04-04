@@ -1,50 +1,47 @@
-import { FlatTreeControl } from '@angular/cdk/tree';
+import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 
 /**
  * Food data with nested structure.
  * Each node has a name and an optional list of children.
  */
- interface FoodNode {
-  name: string;
-  children?: FoodNode[];
+ interface CertificateView {
+  alias: string;
+  status: string;
+  children?: CertificateView[];
 }
 
-const TREE_DATA: FoodNode[] = [
+const TREE_DATA: CertificateView[] = [
   {
-    name: 'Fruit',
-    children: [
-      {name: 'Apple'},
-      {name: 'Banana'},
-      {name: 'Fruit loops'},
-    ]
-  }, {
-    name: 'Vegetables',
+    alias: 'root',
+    status: 'VALID',
     children: [
       {
-        name: 'Green',
+        alias: 'nas-prvi',
+        status: 'REVOKED'
+      },
+      {
+        alias: 'nas-drugi',
+        status: 'VALID'
+      },
+      {
+        alias: 'nas-CA',
+        status: 'VALID',
         children: [
-          {name: 'Broccoli'},
-          {name: 'Brussels sprouts'},
-        ]
-      }, {
-        name: 'Orange',
-        children: [
-          {name: 'Pumpkins'},
-          {name: 'Carrots'},
+          {
+            alias: 'ca-junior',
+            status: 'VALID'
+          }
         ]
       },
+      {
+        alias: 'nas-treci',
+        status: 'VALID'
+      },
     ]
-  },
+  }
 ];
-
-/** Flat node with expandable and level information */
-interface ExampleFlatNode {
-  expandable: boolean;
-  name: string;
-  level: number;
-}
 
 @Component({
   selector: 'app-certificates',
@@ -52,29 +49,16 @@ interface ExampleFlatNode {
   styleUrls: ['./certificates.component.sass']
 })
 export class CertificatesComponent {
-  private _transformer = (node: FoodNode, level: number) => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      name: node.name,
-      level: level,
-    };
-  }
-
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
-    node => node.level, node => node.expandable);
-
-  treeFlattener = new MatTreeFlattener(
-      this._transformer, node => node.level, node => node.expandable, node => node.children);
-
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  treeControl = new NestedTreeControl<CertificateView>(node => node.children);
+  dataSource = new MatTreeNestedDataSource<CertificateView>();
 
   constructor() {
     this.dataSource.data = TREE_DATA;
   }
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  hasChild = (_: number, node: CertificateView) => !!node.children && node.children.length > 0;
 
-  ngOnInit(): void {
+  details(alias) {
+    console.log(alias)
   }
-
 }

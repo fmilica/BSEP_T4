@@ -117,7 +117,7 @@ public class KeyStoreReader {
             ks.load(in, keyStorePass.toCharArray());
 
             //ucitavamo sve aliase koji postoje u keystore
-            Enumeration<String> aliasEnumeration = keyStore.aliases();
+            Enumeration<String> aliasEnumeration = ks.aliases();
             List<String> aliases = Collections.list(aliasEnumeration);
 
             //issuer data od ca
@@ -125,8 +125,9 @@ public class KeyStoreReader {
 
             //prolazimo kroz sve sertifikate u keystore i vracamo njihov issuer data
             for (String alias : aliases) {
-                X509Certificate certificate = (X509Certificate) readCertificate(keyStoreFile, keyStorePass, alias);
-                if (certificate.getBasicConstraints() != -1 || certificate.getKeyUsage()[5]) {
+                X509Certificate certificate = (X509Certificate)readCertificate(keyStoreFile, keyStorePass, alias);
+                // da li je CA sertifikat
+                if(certificate.getBasicConstraints() != -1){
                     issuerDatas.add(readIssuerFromStore(keyStoreFile, alias, keyStorePass.toCharArray(), keyPass.toCharArray()));
                 }
 
@@ -150,7 +151,7 @@ public class KeyStoreReader {
             ks.load(in, keyStorePass.toCharArray());
 
             //ucitavamo sve aliase koji postoje u keystore
-            Enumeration<String> aliasEnumeration = keyStore.aliases();
+            Enumeration<String> aliasEnumeration = ks.aliases();
             List<String> aliases = Collections.list(aliasEnumeration);
 
             //prvo pronalazimo root ca

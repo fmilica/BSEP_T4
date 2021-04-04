@@ -18,6 +18,7 @@ public class CertificateViewDTO {
     private String alias;
 
     private CertificateStatusEnum status;
+    private boolean revoked;
 
     private List<CertificateViewDTO> children;
 
@@ -26,9 +27,9 @@ public class CertificateViewDTO {
         this.children = new ArrayList<>();
     }
 
-    public CertificateViewDTO(String alias, CertificateStatusEnum status) {
+    public CertificateViewDTO(String alias, boolean revoked) {
         this.alias = alias;
-        this.status = status;
+        this.revoked = revoked;
         this.children = new ArrayList<>();
     }
 }

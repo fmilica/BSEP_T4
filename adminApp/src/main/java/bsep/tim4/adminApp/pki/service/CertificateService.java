@@ -1,6 +1,7 @@
 package bsep.tim4.adminApp.pki.service;
 
 import bsep.tim4.adminApp.pki.keystores.KeyStoreReader;
+import bsep.tim4.adminApp.pki.model.CertificateData;
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
 import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
@@ -29,6 +30,8 @@ public class CertificateService {
 
     @Autowired
     private CsrService csrService;
+    @Autowired
+    private CertificateDataService certificateDataService;
 
     @Autowired
     KeyStoreService keyStoreService;
@@ -50,16 +53,27 @@ public class CertificateService {
     public String generateCertificate(String csr) {
         JcaPKCS10CertificationRequest csrRequest = csrService.readCsr(csr);
         try {
-            SubjectData subjectData = generateSubjectData(csrRequest);
+            Date startDate = generateStartDate();
+            Date endDate = generateEndDate(startDate);
+
+            SubjectData subjectData = generateSubjectData(csrRequest, startDate, endDate);
             IssuerData issuerData = generateIssuerData();
+
+            // email je alias za bazu
+            RDN emailRDN = subjectData.getX500name().getRDNs(BCStyle.E)[0];
+            String alias = emailRDN.getFirst().getValue().toString();
+
+            // generisanje za bazu
+            RDN commonNameRDN = subjectData.getX500name().getRDNs(BCStyle.CN)[0];
+            String commonName = commonNameRDN.getFirst().getValue().toString();
+            CertificateData certData = generateCertificateData(commonName, alias, "root", startDate, endDate);
+            subjectData.setSerialNumber(certData.getId().toString());
 
             //generisanje sertifikata
             Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData);
 
             //cuvanje sertifikata u keystore (ne koristimo savePrivateKey jer ne znamo privatan kjuc)
             keyStoreService.loadKeyStore();
-            RDN emailRDN = subjectData.getX500name().getRDNs(BCStyle.E)[0];
-            String alias = emailRDN.getFirst().getValue().toString();
             keyStoreService.saveCertificate(alias, certificate);
             keyStoreService.saveKeyStore();
 
@@ -75,15 +89,12 @@ public class CertificateService {
         return null;
     }
 
-
-    public SubjectData generateSubjectData(JcaPKCS10CertificationRequest csrRequest) throws NoSuchAlgorithmException, InvalidKeyException {
+    public SubjectData generateSubjectData(JcaPKCS10CertificationRequest csrRequest, Date startDate, Date endDate) throws NoSuchAlgorithmException, InvalidKeyException {
         X500Name x500name = csrRequest.getSubject();
         PublicKey publicKey = csrRequest.getPublicKey();
-        Date startDate = generateStartDate();
-        Date endDate = generateEndDate(startDate);
 
-        //TODO serial number je za sada 2 to cemo menjati
-        SubjectData subjectData = new SubjectData(publicKey, x500name, "2", startDate, endDate);
+        //serial number je ID iz baze
+        SubjectData subjectData = new SubjectData(publicKey, x500name, "0", startDate, endDate);
 
         return subjectData;
     }
@@ -92,7 +103,7 @@ public class CertificateService {
         //citanje root sertifikata
         //TODO za sada je ovo root, a kada budu bili i intermediate sertifikati ce se menjati ovo
         keyStoreService.loadKeyStore();
-        //TODO za sada ovde pise root password kasnije se moze mozda rucno unositi
+        //password za CA sertifikat je isti kao password za keyStore
         IssuerData issuerData = keyStoreService.loadIssuerData("root", "RootPassword");
 
         return issuerData;
@@ -111,5 +122,10 @@ public class CertificateService {
         Date endDate = c.getTime();
 
         return endDate;
+    }
+
+    private CertificateData generateCertificateData(String commonName, String alias, String issuerAlias, Date validFrom, Date validTo) {
+        CertificateData certData = new CertificateData(commonName, alias, issuerAlias, validFrom, validTo);
+        return certificateDataService.save(certData);
     }
 }
