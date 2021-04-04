@@ -3,6 +3,7 @@ package bsep.tim4.adminApp.pki.service;
 import bsep.tim4.adminApp.pki.keystores.KeyStoreReader;
 import bsep.tim4.adminApp.pki.keystores.KeyStoreWriter;
 import bsep.tim4.adminApp.pki.model.IssuerData;
+import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -83,5 +84,9 @@ public class KeyStoreService {
 
     public List<IssuerData> loadAllCAIssuers() {
         return this.keyStoreReader.readAllCAIssuers(keyStorePath, keyStorePass, rootCAPass);
+    }
+
+    public CertificateViewDTO loadAllCertificates() {
+        return this.keyStoreReader.readAllCertificates(keyStorePath, keyStorePass, rootCAPass);
     }
 }

@@ -2,6 +2,7 @@ package bsep.tim4.adminApp.pki.controller;
 
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.dto.CertificateSignerDTO;
+import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
 import bsep.tim4.adminApp.pki.model.mapper.CertificateSignerMapper;
 import bsep.tim4.adminApp.pki.service.CertificateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,13 @@ public class CertificateController {
         List<CertificateSignerDTO> certificateSignerDTOList = certificateSignerMapper.toCertificateSignerDtoList(issuerDataList);
 
         return new ResponseEntity<>(certificateSignerDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<CertificateViewDTO> getAllCertificates() {
+        CertificateViewDTO root = certificateService.getAllCertificates();
+
+        return new ResponseEntity<>(root, HttpStatus.OK);
     }
 
 

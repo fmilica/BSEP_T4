@@ -3,6 +3,7 @@ package bsep.tim4.adminApp.pki.service;
 import bsep.tim4.adminApp.pki.keystores.KeyStoreReader;
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
+import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
 import bsep.tim4.adminApp.pki.util.CertificateGenerator;
 import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
@@ -42,6 +43,10 @@ public class CertificateService {
         return keyStoreService.loadAllCAIssuers();
     }
 
+    public CertificateViewDTO getAllCertificates() {
+        return keyStoreService.loadAllCertificates();
+    }
+
     public String generateCertificate(String csr) {
         JcaPKCS10CertificationRequest csrRequest = csrService.readCsr(csr);
         try {
@@ -69,6 +74,7 @@ public class CertificateService {
         }
         return null;
     }
+
 
     public SubjectData generateSubjectData(JcaPKCS10CertificationRequest csrRequest) throws NoSuchAlgorithmException, InvalidKeyException {
         X500Name x500name = csrRequest.getSubject();

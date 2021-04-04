@@ -1,17 +1,16 @@
 package bsep.tim4.adminApp.pki.keystores;
 
 import bsep.tim4.adminApp.pki.model.IssuerData;
+import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
+import bsep.tim4.adminApp.pki.model.enums.CertificateStatusEnum;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.security.*;
+import java.security.cert.*;
 import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -126,8 +125,8 @@ public class KeyStoreReader {
 
             //prolazimo kroz sve sertifikate u keystore i vracamo njihov issuer data
             for (String alias : aliases) {
-                X509Certificate certificate = (X509Certificate)readCertificate(keyStoreFile, keyStorePass, alias);
-                if(certificate.getBasicConstraints() != -1){
+                X509Certificate certificate = (X509Certificate) readCertificate(keyStoreFile, keyStorePass, alias);
+                if (certificate.getBasicConstraints() != -1 || certificate.getKeyUsage()[5]) {
                     issuerDatas.add(readIssuerFromStore(keyStoreFile, alias, keyStorePass.toCharArray(), keyPass.toCharArray()));
                 }
 
@@ -137,11 +136,11 @@ public class KeyStoreReader {
 
         } catch (KeyStoreException | NoSuchProviderException | IOException | NoSuchAlgorithmException | CertificateException e) {
             e.printStackTrace();
-            return  null;
+            return null;
         }
     }
 
-    public List<IssuerData> readAllIssuers(String keyStoreFile, String keyStorePass, String keyPass) {
+    public CertificateViewDTO readAllCertificates(String keyStoreFile, String keyStorePass, String keyPass) {
         try {
             // kreiramo instancu KeyStore
             KeyStore ks = KeyStore.getInstance("JKS", "SUN");
@@ -154,23 +153,51 @@ public class KeyStoreReader {
             Enumeration<String> aliasEnumeration = keyStore.aliases();
             List<String> aliases = Collections.list(aliasEnumeration);
 
-            //issuer data od ca
-            List<IssuerData> issuerDatas = new ArrayList<>();
+            //prvo pronalazimo root ca
+            X509Certificate rootCertificate = (X509Certificate) readCertificate(keyStoreFile, keyStorePass, "root");
 
-            //prolazimo kroz sve sertifikate u keystore i vracamo njihov issuer data
+            CertificateViewDTO root = new CertificateViewDTO("root", CertificateStatusEnum.ACTIVE);
+
+            ArrayList<CertificateViewDTO> rootChildren =  new ArrayList<>();
+
+            ArrayList<CertificateViewDTO> allEndUsers =  new ArrayList<>();
+
+            //zatim pronalazimo sve intermidiate cas
             for (String alias : aliases) {
-                X509Certificate certificate = (X509Certificate)readCertificate(keyStoreFile, keyStorePass, alias);
-                if(certificate.getBasicConstraints() != -1){
-                    issuerDatas.add(readIssuerFromStore(keyStoreFile, alias, keyStorePass.toCharArray(), keyPass.toCharArray()));
+                if (!alias.equals("root")) {
+                    Certificate certificate = readCertificate(keyStoreFile, keyStorePass, alias);
+                    CertificateViewDTO endUser = new CertificateViewDTO(alias);
+
+                    if(!isRevoked(certificate)) {
+                        endUser.setStatus(CertificateStatusEnum.ACTIVE);
+                    } else {
+                        endUser.setStatus(CertificateStatusEnum.REVOKED);
+                    }
+
+                    rootChildren.add(endUser);
                 }
 
             }
 
-            return issuerDatas;
+            root.setChildren(rootChildren);
 
-        } catch (KeyStoreException | NoSuchProviderException | IOException | NoSuchAlgorithmException | CertificateException e) {
+            return root;
+
+        } catch (KeyStoreException | NoSuchProviderException | IOException | NoSuchAlgorithmException | CertificateException | CRLException e) {
             e.printStackTrace();
-            return  null;
+            return null;
         }
+    }
+
+    public boolean isRevoked(Certificate cer) throws IOException, CertificateException, CRLException {
+
+        CertificateFactory factory = CertificateFactory.getInstance("X.509");
+
+        File file = new File("src/main/resources/CRLs.crl");
+
+        byte[] bytes = Files.readAllBytes(file.toPath());
+        X509CRL crl = (X509CRL) factory.generateCRL(new ByteArrayInputStream(bytes));
+
+        return crl.isRevoked(cer);
     }
 }
