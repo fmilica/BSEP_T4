@@ -32,7 +32,7 @@ export class AuthenticationService {
   private expiresInNum = 0;
 
   login(userLoginDto: UserLogin): Observable<HttpResponse<void>> {
-    return this.http.post<void>('http://localhost:8080/login', userLoginDto, {
+    return this.http.post<void>('http://localhost:8081/login', userLoginDto, {
       headers: this.headers,
       observe: 'response',
     });
@@ -49,7 +49,7 @@ export class AuthenticationService {
       // token vise nije validan
       localStorage.removeItem('jwtToken');
       localStorage.removeItem('expiresIn');
-      this.router.navigate(['login-register/login']);
+      this.router.navigate(['login']);
       return false;
     }
     // token je validan, prosledimo rolu kao sledecu vrednost observable
@@ -62,7 +62,7 @@ export class AuthenticationService {
   logout(): void {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('expiresIn');
-    this.router.navigate(['login-register/login']);
+    this.router.navigate(['login']);
     this.role.next('');
     this.stopRefreshTokenTimer();
   }
