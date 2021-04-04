@@ -44,4 +44,8 @@ public class CertificateData {
         this.validFrom = validFrom;
         this.validTo = validTo;
     }
+
+    public String getEmail() {
+        return this.alias;
+    }
 }

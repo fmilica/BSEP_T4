@@ -26,7 +26,7 @@ export class CertificateService {
         return this.http.get<Certificate>(environment.apiEndpoint + 'certificate/root-certificate');
     }
 
-    getCertificate(id: number, alias: string): Observable<Certificate> {
+    getCertificate(alias: string): Observable<Certificate> {
         return this.http.get<Certificate>(environment.apiEndpoint + 'certificate/' + alias)
     }
 

@@ -32,7 +32,7 @@ export class CreateCertificateComponent implements OnInit {
   //   {alias: 'root', serialNumber: 1, id: 1},
   //   {alias: 'ca-inter', serialNumber: 2, id: 2}
   // ]
-  chosenSigningCertificate = {id: -1, alias: ''}
+  chosenSigningCertificate = {alias: '', commonName: ''}
 
   constructor(
     private csrService: CsrService,
@@ -132,6 +132,9 @@ export class CreateCertificateComponent implements OnInit {
       this.certificateService.getAllCACertificates()
         .subscribe(
           (response) => {
+            if (!Array.isArray(response)) {
+              response = [response]
+            }
             this.signingCertificates = response;
           }
         )
@@ -139,22 +142,22 @@ export class CreateCertificateComponent implements OnInit {
   }
 
   setIssuerData(certificate) {
-    this.subjectInfoForm.get('commonName').setValue(certificate.commonName);
-    this.subjectInfoForm.get('givenName').setValue(certificate.givenName);
-    this.subjectInfoForm.get('surname').setValue(certificate.surname);
-    this.subjectInfoForm.get('organizationName').setValue(certificate.organizationName);
-    this.subjectInfoForm.get('organizationUnit').setValue(certificate.organizationUnit);
-    this.subjectInfoForm.get('country').setValue(certificate.country);
-    this.subjectInfoForm.get('email').setValue(certificate.email);
+    this.issuerInfoForm.get('commonName').setValue(certificate.commonName);
+    this.issuerInfoForm.get('givenName').setValue(certificate.name);
+    this.issuerInfoForm.get('surname').setValue(certificate.surname);
+    this.issuerInfoForm.get('organizationName').setValue(certificate.organizationName);
+    this.issuerInfoForm.get('organizationUnit').setValue(certificate.organizationUnit);
+    this.issuerInfoForm.get('country').setValue(certificate.country);
+    this.issuerInfoForm.get('email').setValue(certificate.email);
   }
 
   certificateChange(event) {
     if (event) {
-      this.chosenSigningCertificate.id = event.value;
-      this.chosenSigningCertificate.alias = event.source.triggerValue;
+      this.chosenSigningCertificate.alias = event.value;
+      this.chosenSigningCertificate.commonName = event.source.triggerValue;
     }
     this.certificateService.getCertificate(
-      this.chosenSigningCertificate.id, this.chosenSigningCertificate.alias)
+      this.chosenSigningCertificate.alias)
         .subscribe(
           (response) => {
             this.signingCertificates = [response];
@@ -172,7 +175,9 @@ export class CreateCertificateComponent implements OnInit {
     const newCert: CreateCertificate = 
       new CreateCertificate(
         chosenCsr.id,
-        this.chosenSigningCertificate.alias
+        this.chosenSigningCertificate.alias,
+        this.generalInfoForm.get('startDate').value,
+        this.generalInfoForm.get('endDate').value
       )
     this.certificateService.createCertificate(newCert)
       .subscribe(

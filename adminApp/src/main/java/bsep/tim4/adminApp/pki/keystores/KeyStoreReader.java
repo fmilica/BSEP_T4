@@ -74,7 +74,7 @@ public class KeyStoreReader {
             BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
             ks.load(in, keyStorePass.toCharArray());
 
-            if (ks.isKeyEntry(alias)) {
+            if (ks.isCertificateEntry(alias) || ks.isKeyEntry(alias)) {
                 Certificate cert = ks.getCertificate(alias);
                 return cert;
             }
@@ -102,6 +102,25 @@ public class KeyStoreReader {
             }
         } catch (KeyStoreException | NoSuchAlgorithmException | NoSuchProviderException | CertificateException
                 | IOException | UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Certificate[] readCertificateChain(String keyStoreFile, String keyStorePass, String alias) {
+        try {
+            // kreiramo instancu KeyStore
+            KeyStore ks = KeyStore.getInstance("JKS", "SUN");
+            //ucitavamo podatke
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
+            ks.load(in, keyStorePass.toCharArray());
+
+            if(ks.isCertificateEntry(alias)) {
+                Certificate[] cert = ks.getCertificateChain(alias);
+                return cert;
+            }
+        } catch (CertificateException | NoSuchAlgorithmException |
+                NoSuchProviderException | IOException | KeyStoreException e) {
             e.printStackTrace();
         }
         return null;
@@ -155,9 +174,9 @@ public class KeyStoreReader {
             List<String> aliases = Collections.list(aliasEnumeration);
 
             //prvo pronalazimo root ca
-            X509Certificate rootCertificate = (X509Certificate) readCertificate(keyStoreFile, keyStorePass, "root");
+            X509Certificate rootCertificate = (X509Certificate) readCertificate(keyStoreFile, keyStorePass, "serbioneer@gmail.com");
 
-            CertificateViewDTO root = new CertificateViewDTO("root", false);
+            CertificateViewDTO root = new CertificateViewDTO("serbioneer@gmail.com", false);
 
             ArrayList<CertificateViewDTO> rootChildren =  new ArrayList<>();
 
@@ -165,7 +184,7 @@ public class KeyStoreReader {
 
             //zatim pronalazimo sve intermidiate cas
             for (String alias : aliases) {
-                if (!alias.equals("root")) {
+                if (!alias.equals("serbioneer@gmail.com")) {
                     Certificate certificate = readCertificate(keyStoreFile, keyStorePass, alias);
                     CertificateViewDTO endUser = new CertificateViewDTO(alias);
 

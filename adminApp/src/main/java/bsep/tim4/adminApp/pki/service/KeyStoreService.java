@@ -82,6 +82,10 @@ public class KeyStoreService {
                         keyStorePass.toCharArray(), keyPassword.toCharArray());
     }
 
+    public Certificate[] readCertificateChain(String alias) {
+        return this.keyStoreReader.readCertificateChain(keyStorePath + keyStoreName, keyStorePass, alias);
+    }
+
     public List<IssuerData> loadAllCAIssuers() {
         return this.keyStoreReader.readAllCAIssuers(keyStorePath + keyStoreName, keyStorePass, rootCAPass);
     }

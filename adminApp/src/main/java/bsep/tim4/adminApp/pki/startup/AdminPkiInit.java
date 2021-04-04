@@ -81,7 +81,7 @@ public class AdminPkiInit implements ApplicationRunner {
         X509Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, true);
         //poziva se savePrivateKey jer za ovaj sertifikat ima i privatni kljuc, root sertifikat
         //za ostale sertifikate se poziva saveCertificate jer ima samo sertifikat i njegov javni kljuc, a privatni kljuc mu je nedostupan
-        keyStoreService.savePrivateKey("root", privateKey, certificate );
+        keyStoreService.savePrivateKey("serbioneer@gmail.com", privateKey, certificate );
 
         try {
             createCRL(privateKey, rootInfo);

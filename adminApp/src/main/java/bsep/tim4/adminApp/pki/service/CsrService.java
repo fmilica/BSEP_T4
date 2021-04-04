@@ -40,6 +40,14 @@ public class CsrService {
         return csrRepository.findAllByVerifiedOrderByIdAsc(verified);
     }
 
+    public CSR findById(Long id) throws NonExistentIdException {
+        CSR csr =  csrRepository.findById(id).orElse(null);
+        if(csr == null) {
+            throw new NonExistentIdException("CSR");
+        }
+        return csr;
+    }
+
     public void saveCsr(String csr) {
         JcaPKCS10CertificationRequest certificationRequest = readCsr(csr);
 

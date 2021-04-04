@@ -81,7 +81,7 @@
                 <mat-label>Signing certificate</mat-label>
                 <mat-select formControlName="signingCertificate"
                     (selectionChange)="certificateChange($event)">
-                    <mat-option *ngFor="let certificate of signingCertificates" [value]="certificate.id">{{certificate.alias}}</mat-option>
+                    <mat-option *ngFor="let certificate of signingCertificates" [value]="certificate.alias">{{certificate.commonName}}</mat-option>
                 </mat-select>
             </mat-form-field>
             </div>
