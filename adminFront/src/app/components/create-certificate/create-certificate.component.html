@@ -42,7 +42,7 @@
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Certificate type</mat-label>
                 <mat-select formControlName="certificateType" (selectionChange)="setDates()">
-                    <mat-option value="intermediate">Intermediate</mat-option>
+                    <mat-option disabled value="intermediate">Intermediate</mat-option>
                     <mat-option value="endUser">End user</mat-option>
                 </mat-select>
             </mat-form-field>

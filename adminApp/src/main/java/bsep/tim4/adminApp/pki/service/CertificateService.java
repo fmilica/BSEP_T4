@@ -70,7 +70,8 @@ public class CertificateService {
             subjectData.setSerialNumber(certData.getId().toString());
 
             //generisanje sertifikata
-            Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData);
+            //TODO sve se ovo svakako menja
+            Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, false);
 
             //cuvanje sertifikata u keystore (ne koristimo savePrivateKey jer ne znamo privatan kjuc)
             keyStoreService.loadKeyStore();

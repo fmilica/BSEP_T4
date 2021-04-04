@@ -18,6 +18,9 @@ export class CreateCertificateComponent implements OnInit {
   generalInfoForm: FormGroup;
   issuerInfoForm: FormGroup;
 
+  //default certificateType 
+  cerType = "endUser"
+
   // validTo
   minDate: Date;
   maxDate: Date;
@@ -47,7 +50,7 @@ export class CreateCertificateComponent implements OnInit {
       email: new FormControl({ value: '', disabled: true}, []),
     });
     this.generalInfoForm = new FormGroup({
-      certificateType: new FormControl('', [Validators.required]),
+      certificateType: new FormControl('endUser', [Validators.required]),
       startDate: new FormControl({ value: new Date(), disabled: true}, []),
       endDate: new FormControl('', [Validators.required]),
       // key usage

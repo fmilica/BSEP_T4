@@ -87,6 +87,6 @@ public class KeyStoreService {
     }
 
     public CertificateViewDTO loadAllCertificates() {
-        return this.keyStoreReader.readAllCertificates(keyStorePath, keyStorePass, rootCAPass);
+        return this.keyStoreReader.readAllCertificates(keyStorePath + keyStoreName, keyStorePass, rootCAPass);
     }
 }

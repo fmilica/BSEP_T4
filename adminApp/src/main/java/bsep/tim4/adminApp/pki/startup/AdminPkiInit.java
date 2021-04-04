@@ -10,6 +10,8 @@ import bsep.tim4.adminApp.pki.util.KeyPairGenerator;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.bouncycastle.asn1.x509.BasicConstraints;
+import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.cert.X509CRLHolder;
 import org.bouncycastle.cert.X509v2CRLBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CRLConverter;
@@ -76,7 +78,7 @@ public class AdminPkiInit implements ApplicationRunner {
         // serial number je ID
         SubjectData subjectData = new SubjectData(publicKey, rootInfo, certData.getId().toString(), startDate, endDate);
 
-        X509Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData);
+        X509Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, true);
         //poziva se savePrivateKey jer za ovaj sertifikat ima i privatni kljuc, root sertifikat
         //za ostale sertifikate se poziva saveCertificate jer ima samo sertifikat i njegov javni kljuc, a privatni kljuc mu je nedostupan
         keyStoreService.savePrivateKey("root", privateKey, certificate );
@@ -95,6 +97,8 @@ public class AdminPkiInit implements ApplicationRunner {
         builder.addRDN(BCStyle.CN, "adminRoot");
         builder.addRDN(BCStyle.O, "BSEP");
         builder.addRDN(BCStyle.OU, "Tim4");
+        builder.addRDN(BCStyle.GIVENNAME, "Admin");
+        builder.addRDN(BCStyle.SURNAME, "Root");
         builder.addRDN(BCStyle.C, "RS");
         builder.addRDN(BCStyle.E, "serbioneer@gmail.com");
 
@@ -140,7 +144,8 @@ public class AdminPkiInit implements ApplicationRunner {
     
     private CertificateData createRootInfoEntity(Date startDate, Date endDate) {
         CertificateData certData = new CertificateData("root", "root", "root", startDate, endDate);
-        certData = certificateDataService.save(certData);
+        //certData = certificateDataService.save(certData);
+        certData.setId(1L);
         return certData;
     }
 }

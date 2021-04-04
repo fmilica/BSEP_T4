@@ -157,7 +157,7 @@ public class KeyStoreReader {
             //prvo pronalazimo root ca
             X509Certificate rootCertificate = (X509Certificate) readCertificate(keyStoreFile, keyStorePass, "root");
 
-            CertificateViewDTO root = new CertificateViewDTO("root", CertificateStatusEnum.ACTIVE);
+            CertificateViewDTO root = new CertificateViewDTO("root", false);
 
             ArrayList<CertificateViewDTO> rootChildren =  new ArrayList<>();
 

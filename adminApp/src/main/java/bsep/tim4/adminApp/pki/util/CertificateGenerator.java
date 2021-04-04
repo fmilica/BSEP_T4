@@ -2,7 +2,9 @@ package bsep.tim4.adminApp.pki.util;
 
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
+import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.asn1.x509.Extension;
+import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
@@ -21,7 +23,7 @@ public class CertificateGenerator {
     public CertificateGenerator() {
     }
 
-    public static X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData) {
+    public static X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData, boolean CAFlag) {
         Security.addProvider(new BouncyCastleProvider());
         try {
             // Posto klasa za generisanje sertifiakta ne moze da primi direktno privatni kljuc pravi se builder za objekat
@@ -35,6 +37,7 @@ public class CertificateGenerator {
             // Formira se objekat koji ce sadrzati privatni kljuc i koji ce se koristiti za potpisivanje sertifikata
             ContentSigner contentSigner = builder.build(issuerData.getPrivateKey());
 
+
             // Postavljaju se podaci za generisanje sertifiakta
             X509v3CertificateBuilder certGen = new JcaX509v3CertificateBuilder(
                     issuerData.getX500name(),
@@ -44,6 +47,11 @@ public class CertificateGenerator {
                     subjectData.getX500name(),
                     subjectData.getPublicKey());
 
+            if(CAFlag) {
+                certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(true));
+            } else {
+                certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(false));
+            }
 
             // Generise se sertifikat - ovo jeste sertifikat ali mi bas zelimo da vratimo onaj objekat
             X509CertificateHolder certHolder = certGen.build(contentSigner);
@@ -55,7 +63,7 @@ public class CertificateGenerator {
 
             // Konvertuje objekat u sertifikat
             return certConverter.getCertificate(certHolder);
-        } catch (IllegalArgumentException | IllegalStateException | OperatorCreationException | CertificateException e) {
+        } catch (IllegalArgumentException | IllegalStateException | OperatorCreationException | CertificateException | CertIOException e) {
             e.printStackTrace();
         }
         return null;
