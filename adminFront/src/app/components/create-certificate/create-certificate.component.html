@@ -73,8 +73,8 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="issuerInfoFrom">
-        <form [formGroup]="issuerInfoFrom">
+    <mat-step [stepControl]="issuerInfoForm">
+        <form [formGroup]="issuerInfoForm">
             <ng-template matStepLabel>Issuer info</ng-template>
             <div>
             <mat-form-field appearance="fill" class="form-field">
@@ -115,7 +115,7 @@
             </mat-form-field>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="stepper.reset()">Create</button>
+                <button mat-button (click)="onSubmit()">Create</button>
             </div>
         </form>
     </mat-step>

@@ -15,7 +15,7 @@ import java.util.List;
 public class CertificateSignerMapper {
 
     public CertificateSignerDTO toCertificateSignerDto(IssuerData issuerData) {
-        PrivateKey privateKey = issuerData.getPrivateKey();
+        //PrivateKey privateKey = issuerData.getPrivateKey();
         String alias = (issuerData.getX500name().getRDNs(BCStyle.E)[0]).getFirst().getValue().toString();
         String commonName = (issuerData.getX500name().getRDNs(BCStyle.CN)[0]).getFirst().getValue().toString();
         String name = (issuerData.getX500name().getRDNs(BCStyle.NAME)[0]).getFirst().getValue().toString();
@@ -25,7 +25,7 @@ public class CertificateSignerMapper {
         String country = (issuerData.getX500name().getRDNs(BCStyle.C)[0]).getFirst().getValue().toString();
         String email = (issuerData.getX500name().getRDNs(BCStyle.E)[0]).getFirst().getValue().toString();
 
-        return new CertificateSignerDTO(privateKey, alias, commonName, name, surname, organizationName, organizationUnit,
+        return new CertificateSignerDTO(/*privateKey,*/ alias, commonName, name, surname, organizationName, organizationUnit,
                     country, email);
     }
 

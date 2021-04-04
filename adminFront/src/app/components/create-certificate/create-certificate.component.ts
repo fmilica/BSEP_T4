@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Certificate } from 'src/app/model/certificate.model';
+import { CreateCertificate } from 'src/app/model/create-certificate.model';
 import { CertificateService } from 'src/app/services/certificate.service';
 import { CsrService } from 'src/app/services/csr.service';
 
@@ -15,7 +16,7 @@ export class CreateCertificateComponent implements OnInit {
 
   subjectInfoForm: FormGroup;
   generalInfoForm: FormGroup;
-  issuerInfoFrom: FormGroup;
+  issuerInfoForm: FormGroup;
 
   // validTo
   minDate: Date;
@@ -23,11 +24,11 @@ export class CreateCertificateComponent implements OnInit {
 
   // signingCertificates
   createCA = false;
-  signingCertificates: Certificate[] = 
-  [
-    {alias: 'root', serialNumber: 1, id: 1},
-    {alias: 'ca-inter', serialNumber: 2, id: 2}
-  ]
+  signingCertificates: Certificate[] = []
+  // [
+  //   {alias: 'root', serialNumber: 1, id: 1},
+  //   {alias: 'ca-inter', serialNumber: 2, id: 2}
+  // ]
   chosenSigningCertificate = {id: -1, alias: ''}
 
   constructor(
@@ -54,7 +55,7 @@ export class CreateCertificateComponent implements OnInit {
       // nonRepudiation: new FormControl(''),
       // keyEncipherment: new FormControl(''),
     });
-    this.issuerInfoFrom = new FormGroup({
+    this.issuerInfoForm = new FormGroup({
       signingCertificate: new FormControl('', [Validators.required]),
       commonName: new FormControl({ value: '', disabled: true}, []),
       givenName: new FormControl({ value: '', disabled: true}, []),
@@ -69,13 +70,13 @@ export class CreateCertificateComponent implements OnInit {
   ngOnInit(): void {
     this.setSubjectInfo();
     this.setDates();
-    //this.getCertificates();
+    this.getCertificates();
   }
 
   setSubjectInfo() {
     const chosenCsr = this.csrService.chosenCsr.getValue();
     this.subjectInfoForm.get('commonName').setValue(chosenCsr.commonName);
-    this.subjectInfoForm.get('givenName').setValue(chosenCsr.givenName);
+    this.subjectInfoForm.get('givenName').setValue(chosenCsr.name);
     this.subjectInfoForm.get('surname').setValue(chosenCsr.surname);
     this.subjectInfoForm.get('organizationName').setValue(chosenCsr.organizationName);
     this.subjectInfoForm.get('organizationUnit').setValue(chosenCsr.organizationUnit);
@@ -159,7 +160,29 @@ export class CreateCertificateComponent implements OnInit {
         )
   }
 
-  submit() {
-    
+  onSubmit() {
+    if (this.generalInfoForm.invalid || this.issuerInfoForm.invalid) {
+      return;
+    }
+
+    const chosenCsr = this.csrService.chosenCsr.getValue();
+    const newCert: CreateCertificate = 
+      new CreateCertificate(
+        chosenCsr.id,
+        this.chosenSigningCertificate.alias
+      )
+    this.certificateService.createCertificate(newCert)
+      .subscribe(
+        response => {
+          this.toastr.success('Successfully created certificate!');
+          this.router.navigate(['homepage/csr']);
+        },
+        error => {
+          if (error.error.message){
+            this.toastr.error(error.error.message);
+          } else {
+            this.toastr.error('503 Server Unavailable');
+          }
+        });
   }
 }

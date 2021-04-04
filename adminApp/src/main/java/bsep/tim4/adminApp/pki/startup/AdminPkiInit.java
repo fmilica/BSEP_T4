@@ -1,7 +1,9 @@
 package bsep.tim4.adminApp.pki.startup;
 
+import bsep.tim4.adminApp.pki.model.CertificateData;
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
+import bsep.tim4.adminApp.pki.service.CertificateDataService;
 import bsep.tim4.adminApp.pki.service.KeyStoreService;
 import bsep.tim4.adminApp.pki.util.CertificateGenerator;
 import bsep.tim4.adminApp.pki.util.KeyPairGenerator;
@@ -32,6 +34,9 @@ public class AdminPkiInit implements ApplicationRunner {
     @Autowired
     private KeyStoreService keyStoreService;
 
+    @Autowired
+    private CertificateDataService certificateDataService;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         // ako keystore ne postoji, kreiraj ga
@@ -50,13 +55,16 @@ public class AdminPkiInit implements ApplicationRunner {
         Date startDate = generateStartDate();
         Date endDate = generateEndDate(startDate);
 
+        // generisanje entiteta
+        CertificateData certData = createRootInfoEntity(startDate, endDate);
+
         KeyPair keyPair = KeyPairGenerator.generateKeyPair();
         PublicKey publicKey = keyPair.getPublic();
         PrivateKey privateKey = keyPair.getPrivate();
 
         IssuerData issuerData = new IssuerData(privateKey, rootInfo);
-        //TODO serial number je za sada 1 videcemo sta ce biti posle
-        SubjectData subjectData = new SubjectData(publicKey, rootInfo, "1", startDate, endDate);
+        // serial number je ID
+        SubjectData subjectData = new SubjectData(publicKey, rootInfo, certData.getId().toString(), startDate, endDate);
 
         X509Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData);
         //poziva se savePrivateKey jer za ovaj sertifikat ima i privatni kljuc, root sertifikat
@@ -88,5 +96,11 @@ public class AdminPkiInit implements ApplicationRunner {
         Date endDate = c.getTime();
 
         return endDate;
+    }
+
+    private CertificateData createRootInfoEntity(Date startDate, Date endDate) {
+        CertificateData certData = new CertificateData("root", "root", "root", startDate, endDate);
+        certData = certificateDataService.save(certData);
+        return certData;
     }
 }

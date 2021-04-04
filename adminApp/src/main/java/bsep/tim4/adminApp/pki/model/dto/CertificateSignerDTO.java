@@ -13,7 +13,7 @@ import java.security.PrivateKey;
 @AllArgsConstructor
 public class CertificateSignerDTO {
 
-    private PrivateKey privateKey;
+    //private PrivateKey privateKey;
 
     private String alias;
 

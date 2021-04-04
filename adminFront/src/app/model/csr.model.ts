@@ -2,7 +2,7 @@ export class CSR {
 
     constructor(
         public commonName: string,
-        public givenName: string,
+        public name: string,
         public surname: string,
         public organizationName: string,
         public organizationUnit: string,

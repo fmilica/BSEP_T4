@@ -82,6 +82,6 @@ public class KeyStoreService {
     }
 
     public List<IssuerData> loadAllCAIssuers() {
-        return this.keyStoreReader.readAllCAIssuers(keyStorePath, keyStorePass, rootCAPass);
+        return this.keyStoreReader.readAllCAIssuers(keyStorePath + keyStoreName, keyStorePass, rootCAPass);
     }
 }

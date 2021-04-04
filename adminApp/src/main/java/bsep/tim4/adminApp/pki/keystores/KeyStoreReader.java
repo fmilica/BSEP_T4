@@ -1,17 +1,15 @@
 package bsep.tim4.adminApp.pki.keystores;
 
 import bsep.tim4.adminApp.pki.model.IssuerData;
+import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.security.*;
+import java.security.cert.*;
 import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -118,7 +116,7 @@ public class KeyStoreReader {
             ks.load(in, keyStorePass.toCharArray());
 
             //ucitavamo sve aliase koji postoje u keystore
-            Enumeration<String> aliasEnumeration = keyStore.aliases();
+            Enumeration<String> aliasEnumeration = ks.aliases();
             List<String> aliases = Collections.list(aliasEnumeration);
 
             //issuer data od ca
@@ -127,6 +125,7 @@ public class KeyStoreReader {
             //prolazimo kroz sve sertifikate u keystore i vracamo njihov issuer data
             for (String alias : aliases) {
                 X509Certificate certificate = (X509Certificate)readCertificate(keyStoreFile, keyStorePass, alias);
+                // da li je CA sertifikat
                 if(certificate.getBasicConstraints() != -1){
                     issuerDatas.add(readIssuerFromStore(keyStoreFile, alias, keyStorePass.toCharArray(), keyPass.toCharArray()));
                 }
@@ -151,7 +150,7 @@ public class KeyStoreReader {
             ks.load(in, keyStorePass.toCharArray());
 
             //ucitavamo sve aliase koji postoje u keystore
-            Enumeration<String> aliasEnumeration = keyStore.aliases();
+            Enumeration<String> aliasEnumeration = ks.aliases();
             List<String> aliases = Collections.list(aliasEnumeration);
 
             //issuer data od ca
