@@ -44,7 +44,6 @@ public class CertificateGenerator {
                     subjectData.getX500name(),
                     subjectData.getPublicKey());
 
-            certGen.addExtension(Extension.keyUsage)
 
             // Generise se sertifikat - ovo jeste sertifikat ali mi bas zelimo da vratimo onaj objekat
             X509CertificateHolder certHolder = certGen.build(contentSigner);

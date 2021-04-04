@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
+import java.util.List;
 
 @Service
 public class KeyStoreService {
@@ -78,5 +79,9 @@ public class KeyStoreService {
         return this.keyStoreReader.readIssuerFromStore(
                 keyStorePath + keyStoreName, alias,
                         keyStorePass.toCharArray(), keyPassword.toCharArray());
+    }
+
+    public List<IssuerData> loadAllCAIssuers() {
+        return this.keyStoreReader.readAllCAIssuers(keyStorePath, keyStorePass, rootCAPass);
     }
 }

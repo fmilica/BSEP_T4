@@ -1,5 +1,6 @@
 package bsep.tim4.adminApp.pki.service;
 
+import bsep.tim4.adminApp.pki.keystores.KeyStoreReader;
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
 import bsep.tim4.adminApp.pki.util.CertificateGenerator;
@@ -19,6 +20,8 @@ import java.security.PublicKey;
 import java.security.cert.Certificate;
 import java.util.Calendar;
 import java.util.Date;
+import java.security.cert.Certificate;
+import java.util.List;
 
 @Service
 public class CertificateService {
@@ -28,6 +31,16 @@ public class CertificateService {
 
     @Autowired
     KeyStoreService keyStoreService;
+
+    public IssuerData getRootCertificate() {
+        IssuerData issuerData = keyStoreService.loadIssuerData("root", "RootPassword");
+
+        return issuerData;
+    }
+
+    public List<IssuerData> getAllCAIssuers() {
+        return keyStoreService.loadAllCAIssuers();
+    }
 
     public String generateCertificate(String csr) {
         JcaPKCS10CertificationRequest csrRequest = csrService.readCsr(csr);
