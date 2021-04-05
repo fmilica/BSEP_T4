@@ -5,7 +5,7 @@
     <li class="mat-tree-node">
       <!-- use a disabled button to provide padding for tree leaf -->
       <button mat-icon-button disabled></button>
-      <div *ngIf="node.status=='REVOKED'; then revoked else valid"></div>
+      <div *ngIf="node.revoked==true; then revoked else valid"></div>
       <ng-template #revoked>
         <mat-icon class="revoked">gpp_bad</mat-icon>
         {{node.alias}}
@@ -29,7 +29,7 @@
             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
           </mat-icon>
         </button>
-        <div *ngIf="node.status=='REVOKED'; then revoked else valid"></div>
+        <div *ngIf="node.revoked==true; then revoked else valid"></div>
         <ng-template #revoked>
           <mat-icon class="revoked">gpp_bad</mat-icon>
           {{node.alias}}
@@ -39,7 +39,8 @@
           <mat-icon class="valid">gpp_good</mat-icon>
           {{node.alias}}
           <button class="btn btn-color btn-tree" mat-button (click)="details(node.alias)">Details</button>
-          <button class="btn btn-color btn-tree revoke" mat-button (click)="openRevokeDialog(node.alias)" >Revoke</button>
+          <button class="btn btn-color btn-tree revoke" mat-button (click)="openRevokeDialog(node.alias)"
+          [disabled]="node.alias=='serbioneer@gmail.com'">Revoke</button>
         </ng-template>
       </div>
       <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">

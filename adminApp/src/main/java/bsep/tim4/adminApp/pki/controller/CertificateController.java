@@ -98,12 +98,21 @@ public class CertificateController {
         return new ResponseEntity<>(certificateSignerDTO, HttpStatus.OK);
     }
 
+    @PostMapping( value = "revoke/{alias}" )
+    public ResponseEntity<Void> revokeCertificate(@PathVariable String alias, @RequestBody String revocationReason) {
+        try {
+            certificateDataService.revoke(alias, revocationReason);
+        } catch (NonExistentIdException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+
     @GetMapping
     public ResponseEntity<List<CertificateViewDTO>> getAllCertificates() {
-        CertificateViewDTO root = certificateService.getAllCertificates();
-
-        List<CertificateViewDTO> certificateViewDTOS = new ArrayList<>();
-        certificateViewDTOS.add(root);
+        List<CertificateViewDTO> certificateViewDTOS = certificateDataService.findCertificateView();
+        /*CertificateViewDTO root = certificateService.getAllCertificates();*/
 
         return new ResponseEntity<>(certificateViewDTOS, HttpStatus.OK);
     }
