@@ -1,5 +1,6 @@
 package bsep.tim4.adminApp.pki.service;
 
+import bsep.tim4.adminApp.mailSender.certificate.CertificateMailSenderService;
 import bsep.tim4.adminApp.pki.exceptions.NonExistentIdException;
 import bsep.tim4.adminApp.pki.model.CertificateData;
 import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
@@ -7,6 +8,7 @@ import bsep.tim4.adminApp.pki.repository.CertificateDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +19,9 @@ public class CertificateDataService {
 
     @Autowired
     private CertificateDataRepository certificateDataRepository;
+
+    @Autowired
+    private CertificateMailSenderService certificateMailSenderService;
 
     public CertificateData findById(Long id) {
         return certificateDataRepository.findById(id).orElse(null);
@@ -30,7 +35,7 @@ public class CertificateDataService {
         return certificateDataRepository.save(certData);
     }
 
-    public CertificateData revoke(String alias, String revocationReason) throws NonExistentIdException {
+    public CertificateData revoke(String alias, String revocationReason) throws NonExistentIdException, MessagingException {
         CertificateData certData = findByAlias(alias);
         if (certData == null) {
             throw new NonExistentIdException("certificate");
@@ -38,6 +43,8 @@ public class CertificateDataService {
         certData.setRevoked(true);
         certData.setRevocationDate(new Date());
         certData.setRevocationReason(revocationReason);
+
+        certificateMailSenderService.sendRevocationReason(certData);
 
         return certificateDataRepository.save(certData);
     }

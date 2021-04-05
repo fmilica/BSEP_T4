@@ -120,7 +120,7 @@ public class CertificateController {
     public ResponseEntity<Void> revokeCertificate(@PathVariable String alias, @RequestBody String revocationReason) {
         try {
             certificateDataService.revoke(alias, revocationReason);
-        } catch (NonExistentIdException e) {
+        } catch (NonExistentIdException | MessagingException e) {
             e.printStackTrace();
         }
         return new ResponseEntity<Void>(HttpStatus.OK);
