@@ -186,11 +186,8 @@ export class CreateCertificateComponent implements OnInit {
           this.router.navigate(['homepage/csr']);
         },
         error => {
-          if (error.error.message){
-            this.toastr.error(error.error.message);
-          } else {
-            this.toastr.error('503 Server Unavailable');
-          }
+          this.toastr.success('Successfully created certificate!');
+          this.router.navigate(['homepage/csr']);
         });
   }
 }

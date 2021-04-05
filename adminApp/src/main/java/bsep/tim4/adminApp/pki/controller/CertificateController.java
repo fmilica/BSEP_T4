@@ -19,6 +19,7 @@ import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -98,10 +99,13 @@ public class CertificateController {
     }
 
     @GetMapping
-    public ResponseEntity<CertificateViewDTO> getAllCertificates() {
+    public ResponseEntity<List<CertificateViewDTO>> getAllCertificates() {
         CertificateViewDTO root = certificateService.getAllCertificates();
 
-        return new ResponseEntity<>(root, HttpStatus.OK);
+        List<CertificateViewDTO> certificateViewDTOS = new ArrayList<>();
+        certificateViewDTOS.add(root);
+
+        return new ResponseEntity<>(certificateViewDTOS, HttpStatus.OK);
     }
 
 
