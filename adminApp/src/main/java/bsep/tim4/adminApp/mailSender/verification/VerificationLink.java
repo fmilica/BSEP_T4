@@ -1,4 +1,4 @@
-package bsep.tim4.adminApp.mailSender;
+package bsep.tim4.adminApp.mailSender.verification;
 
 import bsep.tim4.adminApp.pki.model.CSR;
 import lombok.Getter;

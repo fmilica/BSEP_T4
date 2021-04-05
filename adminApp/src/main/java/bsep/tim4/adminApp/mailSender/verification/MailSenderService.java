@@ -1,9 +1,8 @@
-package bsep.tim4.adminApp.mailSender;
+package bsep.tim4.adminApp.mailSender.verification;
 
 import bsep.tim4.adminApp.pki.model.CSR;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;

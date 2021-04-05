@@ -1,8 +1,8 @@
 package bsep.tim4.adminApp.pki.service;
 
-import bsep.tim4.adminApp.mailSender.MailSenderService;
-import bsep.tim4.adminApp.mailSender.VerificationLink;
-import bsep.tim4.adminApp.mailSender.VerificationLinkRepository;
+import bsep.tim4.adminApp.mailSender.verification.MailSenderService;
+import bsep.tim4.adminApp.mailSender.verification.VerificationLink;
+import bsep.tim4.adminApp.mailSender.verification.VerificationLinkRepository;
 import bsep.tim4.adminApp.pki.exceptions.NonExistentIdException;
 import bsep.tim4.adminApp.pki.model.CSR;
 import bsep.tim4.adminApp.pki.model.enums.CsrStatus;
@@ -11,10 +11,8 @@ import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.bouncycastle.asn1.x500.X500Name;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
