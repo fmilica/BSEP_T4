@@ -18,15 +18,15 @@ import java.util.Date;
 public class TokenUtils {
 
     // Izdavac tokena
-    @Value("serbioneer")
+    @Value("${app.name}")
     private String APP_NAME;
 
     // Tajna koju samo backend aplikacija treba da zna kako bi mogla da generise i proveri JWT https://jwt.io/
-    @Value("secretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecret")
+    @Value("${jwt.secret}")
     public String SECRET;
 
     // Period vazenja
-    @Value("900000") // 15 min -> 1800000 = 30 min
+    @Value("${jwt.expire}") // 15 min -> 1800000 = 30 min
     //@Value("30000") // 30 sekundi -> demonstracija
     //@Value("120000") // 2 min -> demonstracija
     private int EXPIRES_IN;

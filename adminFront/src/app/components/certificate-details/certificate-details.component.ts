@@ -29,13 +29,12 @@ export class CertificateDetailsComponent implements OnInit {
   download(): void {
     this.certificateService.downloadCertificate(this.data.certAlias).subscribe(
       response => {
-        console.log(response)
         let type = "application/crt";
         let blob = new Blob([response], { type: type});
         let url = window.URL.createObjectURL(blob);
         var link = document.createElement('a');
         link.href = url;
-        link.download = "certificate.crt";
+        link.download = this.data.certAlias + ".crt";
         link.click();
       }
     )

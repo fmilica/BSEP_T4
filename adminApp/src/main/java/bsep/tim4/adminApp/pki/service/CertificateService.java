@@ -11,6 +11,7 @@ import bsep.tim4.adminApp.pki.model.SubjectData;
 import bsep.tim4.adminApp.pki.model.dto.CertificateDetailedViewDTO;
 import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
 import bsep.tim4.adminApp.pki.model.dto.CreateCertificateDTO;
+import bsep.tim4.adminApp.pki.model.enums.CertificateTemplateEnum;
 import bsep.tim4.adminApp.pki.util.CertificateGenerator;
 import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
@@ -122,8 +123,8 @@ public class CertificateService {
             subjectData.setSerialNumber(certData.getId().toString());
 
             //generisanje sertifikata
-            //TODO PROSLEDJIVACEMO TEMPLEJT POSLE - caFlag je false jer su svi endUser
-            Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, false);
+            //TODO PROSLEDJIVACEMO TEMPLEJT POSLE - svi su endUser
+            Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, CertificateTemplateEnum.END_USER);
 
             //cuvanje sertifikata u keystore (ne koristimo savePrivateKey jer ne znamo privatan kjuc)
             keyStoreService.loadKeyStore();

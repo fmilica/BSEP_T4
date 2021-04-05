@@ -36,7 +36,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        // BCryptPasswordEncoder automatski implementira 16-bitni salt
+        // 16-bitni je i preporucen
+        // preporucena minimalna vrednost
+        return new BCryptPasswordEncoder(12);
     }
 
     @Bean

@@ -2,8 +2,10 @@ package bsep.tim4.adminApp.pki.util;
 
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
+import bsep.tim4.adminApp.pki.model.enums.CertificateTemplateEnum;
 import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.asn1.x509.Extension;
+import org.bouncycastle.asn1.x509.KeyUsage;
 import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
@@ -23,7 +25,8 @@ public class CertificateGenerator {
     public CertificateGenerator() {
     }
 
-    public static X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData, boolean CAFlag) {
+    public static X509Certificate generateCertificate(
+            SubjectData subjectData, IssuerData issuerData, CertificateTemplateEnum template) {
         Security.addProvider(new BouncyCastleProvider());
         try {
             // Posto klasa za generisanje sertifiakta ne moze da primi direktno privatni kljuc pravi se builder za objekat
@@ -47,10 +50,34 @@ public class CertificateGenerator {
                     subjectData.getX500name(),
                     subjectData.getPublicKey());
 
-            if(CAFlag) {
-                certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(true));
-            } else {
-                certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(false));
+            switch (template) {
+                // prvo true - isCritical -> ako se koristi za drugu nameru, narusava prava
+                case CA_CERT:
+                    // CA je
+                    certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(true));
+                    // samo za CA
+                    certGen.addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.keyCertSign));
+                    certGen.addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.digitalSignature | KeyUsage.dataEncipherment));
+                    break;
+                case TLS_CLIENT:
+                    // nije CA
+                    certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(false));
+                    certGen.addExtension(Extension.keyUsage, true,
+                            new KeyUsage(KeyUsage.digitalSignature | KeyUsage.dataEncipherment | KeyUsage.keyAgreement));
+                    break;
+                case TLS_SERVER:
+                    // nije CA
+                    certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(false));
+                    certGen.addExtension(Extension.keyUsage, true,
+                            new KeyUsage(KeyUsage.digitalSignature | KeyUsage.dataEncipherment | KeyUsage.keyEncipherment | KeyUsage.keyAgreement));
+                    break;
+                case END_USER:
+                    // nije CA
+                    certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(false));
+                    // https://help.hcltechsw.com/domino/10.0.1/admin/conf_keyusageextensionsandextendedkeyusage_r.html
+                    // The digital signature and data encipherment key usage extensions are enabled by default for all Internet certificates.
+                    certGen.addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.digitalSignature | KeyUsage.dataEncipherment));
+                    break;
             }
 
             // Generise se sertifikat - ovo jeste sertifikat ali mi bas zelimo da vratimo onaj objekat
