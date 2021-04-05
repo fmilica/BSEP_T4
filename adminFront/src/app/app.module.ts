@@ -33,6 +33,7 @@ import { CertificatesComponent } from './components/certificates/certificates.co
 import { MatNativeDateModule } from '@angular/material/core';
 import { ViewCertificateComponent } from './components/view-certificate/view-certificate.component';
 import { RevocationDialogComponent } from './components/revocation-dialog/revocation-dialog.component';
+import { CertificateDetailsComponent } from './components/certificate-details/certificate-details.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { RevocationDialogComponent } from './components/revocation-dialog/revoca
     CreateCertificateComponent,
     CertificatesComponent,
     ViewCertificateComponent,
-    RevocationDialogComponent
+    RevocationDialogComponent,
+    CertificateDetailsComponent
   ],
   imports: [
     RouterModule,

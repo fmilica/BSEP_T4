@@ -143,7 +143,7 @@ public class AdminPkiInit implements ApplicationRunner {
     }
     
     private CertificateData createRootInfoEntity(Date startDate, Date endDate) {
-        CertificateData certData = new CertificateData("root", "serbioneer@gmail.com", "serbioneer@gmail.com", startDate, endDate);
+        CertificateData certData = new CertificateData("adminRoot", "serbioneer@gmail.com", "serbioneer@gmail.com", startDate, endDate);
         certData = certificateDataService.save(certData);
         return certData;
     }
