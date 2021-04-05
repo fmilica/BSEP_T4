@@ -83,14 +83,14 @@ public class AdminPkiInit implements ApplicationRunner {
         //poziva se savePrivateKey jer za ovaj sertifikat ima i privatni kljuc, root sertifikat
         //za ostale sertifikate se poziva saveCertificate jer ima samo sertifikat i njegov javni kljuc, a privatni kljuc mu je nedostupan
         keyStoreService.savePrivateKey("serbioneer@gmail.com", privateKey, certificate );
-
+        /*
         try {
             createCRL(privateKey, rootInfo);
         } catch (CRLException e) {
             e.printStackTrace();
         } catch (OperatorCreationException | IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private X500Name generateCertIssAndSubjData() {
@@ -144,9 +144,8 @@ public class AdminPkiInit implements ApplicationRunner {
     }
     
     private CertificateData createRootInfoEntity(Date startDate, Date endDate) {
-        CertificateData certData = new CertificateData("root", "root", "root", startDate, endDate);
-        //certData = certificateDataService.save(certData);
-        certData.setId(1L);
+        CertificateData certData = new CertificateData("adminRoot", "serbioneer@gmail.com", "serbioneer@gmail.com", startDate, endDate);
+        certData = certificateDataService.save(certData);
         return certData;
     }
 }

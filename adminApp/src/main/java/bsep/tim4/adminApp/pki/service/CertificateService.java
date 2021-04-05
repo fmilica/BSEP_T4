@@ -8,6 +8,7 @@ import bsep.tim4.adminApp.pki.model.CSR;
 import bsep.tim4.adminApp.pki.model.CertificateData;
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
+import bsep.tim4.adminApp.pki.model.dto.CertificateDetailedViewDTO;
 import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
 import bsep.tim4.adminApp.pki.model.dto.CreateCertificateDTO;
 import bsep.tim4.adminApp.pki.model.enums.CertificateTemplateEnum;
@@ -16,17 +17,20 @@ import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import javax.security.auth.x500.X500Principal;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.cert.Certificate;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +60,32 @@ public class CertificateService {
         IssuerData issuerData = keyStoreService.loadIssuerData(alias, "RootPassword");
         return issuerData;
     }
+
+    public CertificateDetailedViewDTO getDetails(String alias) {
+        X509Certificate certificate = (X509Certificate) keyStoreService.loadCertificate(alias);
+        CertificateDetailedViewDTO certDetails = new CertificateDetailedViewDTO();
+        // certificate information
+        certDetails.setCertAlias(alias);
+        certDetails.setSerialNumb(certificate.getSerialNumber());
+        certDetails.setVersion(certificate.getVersion());
+        certDetails.setValidFrom(certificate.getNotBefore());
+        certDetails.setValidUntil(certificate.getNotAfter());
+        certDetails.setSignatureAlgorithm(certificate.getSigAlgName());
+        certDetails.setPublicKey(certificate.getPublicKey().getEncoded());
+        try {
+            X500Name x500name = new JcaX509CertificateHolder(certificate).getSubject();
+            RDN cn = x500name.getRDNs(BCStyle.CN)[0];
+            certDetails.setCommonName(cn.getFirst().getValue().toString());
+            X500Principal subject = certificate.getSubjectX500Principal();
+            certDetails.setSubjectData(subject.toString());
+            X500Principal issuer = certificate.getIssuerX500Principal();
+            certDetails.setIssuerData(issuer.toString());
+        } catch (CertificateEncodingException e) {
+            e.printStackTrace();
+        }
+        return certDetails;
+    }
+
 
     public List<IssuerData> getAllCAIssuers() {
         return keyStoreService.loadAllCAIssuers();

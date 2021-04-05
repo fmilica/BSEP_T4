@@ -1,12 +1,8 @@
-package bsep.tim4.adminApp.mailSender.certificate;
+package bsep.tim4.adminApp.mailSender.verification;
 
-import bsep.tim4.adminApp.mailSender.certificate.CertificateLink;
-import bsep.tim4.adminApp.mailSender.certificate.CertificateLinkRepository;
 import bsep.tim4.adminApp.pki.model.CSR;
-import bsep.tim4.adminApp.pki.model.CertificateData;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -18,27 +14,33 @@ import javax.mail.internet.MimeMessage;
 import java.util.UUID;
 
 @Service
-public class CertificateMailSenderService {
+public class MailSenderService {
 
     @Autowired
     private JavaMailSenderImpl mailSender;
 
     @Autowired
-    private CertificateLinkRepository certificateLinkRepository;
+    private VerificationLinkRepository verificationLinkRepository;
+
+    /*@Value("${spring.mail.username}")
+    private String email;
+
+    @Value("${spring.mail.password}")
+    private String password;*/
 
     @Autowired
     Environment env;
 
     @Async
     @Transactional
-    public void sendCertificateLink(CertificateData certData) throws MessagingException {
+    public void sendVerificationLink(CSR certificateRequest) throws MessagingException {
         String token = UUID.randomUUID().toString();
-        createCertificateLink(token, certData);
+        createVerificationLink(token, certificateRequest);
 
-        String recipientAddress = certData.getEmail();
-        String subject = "Certificate download address";
-        String certificateUrl
-                = "http://localhost:8080" + "/api/certificate/download?token=" + token;
+        String recipientAddress = certificateRequest.getEmail();
+        String subject = "Certificate Signing Request Verification";
+        String verificationUrl
+                = "http://localhost:8080" + "/api/csr/verification?token=" + token;
 
         mailSender.setUsername(env.getProperty("spring.mail.username"));
         mailSender.setPassword(env.getProperty("spring.mail.password"));
@@ -53,7 +55,7 @@ public class CertificateMailSenderService {
                 "\n" +
                 "<td style=\"outline:none;width:100%;color:#17181a;font-family:'FreightSans Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif;font-size:26px;font-style:normal;font-weight:normal;line-height:30px;word-spacing:0;margin:0;padding:60px 120px 0\" align=\"center\" valign=\"top\">\n" +
                 "\n" +
-                "Follow the link to download your certificate!\n" +
+                "Please verify your certificate signing request!\n" +
                 "\n" +
                 "</td>\n" +
                 "\n" +
@@ -63,7 +65,7 @@ public class CertificateMailSenderService {
                 "\n" +
                 "<td style=\"outline:none;width:100%;color:#797c7f;font-family:'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif;font-size:14px;font-style:normal;font-weight:normal;line-height:24px;word-spacing:0;margin:0;padding:50px 80px 0\" align=\"left\" valign=\"top\">\n" +
                 "\n" +
-                "<p style=\"outline:none;margin:0;padding:0\">Follow the link to complete the download: " + certificateUrl +"</p>\n" +
+                "<p style=\"outline:none;margin:0;padding:0\">Follow the link to complete the verification: " + verificationUrl +"</p>\n" +
                 "\n" +
                 "\n" +
                 "\n" +
@@ -77,7 +79,7 @@ public class CertificateMailSenderService {
                 "\n" +
                 "<tr><td style=\"outline:none;width:100%;color:#17181a;font-family:'FreightSans Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif;font-size:18px;font-style:normal;font-weight:normal;line-height:24px;word-spacing:0;margin:0;padding:50px 80px\" align=\"left\" valign=\"top\">\n" +
                 "\n" +
-                "Hope this message finds you well!\n" +
+                "Please ignore this massage if you have not sent certificate signing request!\n" +
                 "\n" +
                 "</td>\n" +
                 "\n" +
@@ -96,9 +98,9 @@ public class CertificateMailSenderService {
         mailSender.send(mimeMessage);
     }
 
-    private CertificateLink createCertificateLink(String token, CertificateData certData) {
-        CertificateLink certificateLink = new CertificateLink(token, certData);
-        return certificateLinkRepository.save(certificateLink);
+    private VerificationLink createVerificationLink(String token, CSR csrRequest) {
+        VerificationLink verificationLink = new VerificationLink(token, csrRequest);
+        return verificationLinkRepository.save(verificationLink);
     }
 
 }
