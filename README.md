@@ -7,10 +7,10 @@ Frontend projekte je potrebno otvoriti u razvojnom okruzenju koje podrzava Angul
 ### Admin application
 ```
 Backend projekat se nalazi u adminApp direktorijumu. Port: 8080.
-Front projekat se nalazi u adminFront direktorijumu. Port 4200.
+Front projekat se nalazi u adminFront direktorijumu. Port: 4200.
 ```
 ### Hospital application
 ```
 Backend projekat se nalazi u hospitalApp direktorijumu. Port: 8081.
-Front projekat se nalazi u hospitalFront direktorijumu. Port 4201.
+Front projekat se nalazi u hospitalFront direktorijumu. Port: 4201.
 ```
