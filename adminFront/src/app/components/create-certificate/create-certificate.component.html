@@ -42,7 +42,7 @@
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Certificate type</mat-label>
                 <mat-select formControlName="certificateType" (selectionChange)="setDates()">
-                    <mat-option value="intermediate">Intermediate</mat-option>
+                    <mat-option disabled value="intermediate">Intermediate</mat-option>
                     <mat-option value="endUser">End user</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -73,15 +73,15 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="issuerInfoFrom">
-        <form [formGroup]="issuerInfoFrom">
+    <mat-step [stepControl]="issuerInfoForm">
+        <form [formGroup]="issuerInfoForm">
             <ng-template matStepLabel>Issuer info</ng-template>
             <div>
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Signing certificate</mat-label>
                 <mat-select formControlName="signingCertificate"
                     (selectionChange)="certificateChange($event)">
-                    <mat-option *ngFor="let certificate of signingCertificates" [value]="certificate.id">{{certificate.alias}}</mat-option>
+                    <mat-option *ngFor="let certificate of signingCertificates" [value]="certificate.alias">{{certificate.commonName}}</mat-option>
                 </mat-select>
             </mat-form-field>
             </div>
@@ -115,7 +115,7 @@
             </mat-form-field>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="stepper.reset()">Create</button>
+                <button mat-button (click)="onSubmit()">Create</button>
             </div>
         </form>
     </mat-step>

@@ -28,9 +28,10 @@ public class CsrController {
     private final CsrMapper csrMapper = new CsrMapper();
 
     @PostMapping(value="/receive")
-    public void receiveCsr(@RequestBody String csr) {
+    public ResponseEntity<String> receiveCsr(@RequestBody String csr) {
         //Primljen csr se skladisti u bazu i na taj email se salje konfirmacioni link
         csrService.saveCsr(csr);
+        return new ResponseEntity<>(csr, HttpStatus.OK);
     }
 
     @GetMapping(value="/verification")

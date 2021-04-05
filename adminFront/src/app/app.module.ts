@@ -28,6 +28,7 @@ import { CsrComponent } from './components/csr/csr.component';
 import { CreateCertificateComponent } from './components/create-certificate/create-certificate.component';
 import { CertificatesComponent } from './components/certificates/certificates.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ViewCertificateComponent } from './components/view-certificate/view-certificate.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     HomepageComponent,
     CsrComponent,
     CreateCertificateComponent,
-    CertificatesComponent
+    CertificatesComponent,
+    ViewCertificateComponent
   ],
   imports: [
     RouterModule,

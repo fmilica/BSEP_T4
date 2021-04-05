@@ -7,14 +7,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(value="api/csr")
 public class CSRController {
@@ -39,8 +37,8 @@ public class CSRController {
         ResponseEntity<String> responseEntityStr = restTemplate.
                 postForEntity(sendCsrFullUri, request, String.class);
 
-        //String certificate = responseEntityStr.getBody();
+        String csrReturn = responseEntityStr.getBody();
         //csrService.storeCertificate(certificate);
-        return new ResponseEntity<>("uspesno poslat zahtev", HttpStatus.OK);
+        return new ResponseEntity<>(csrReturn, HttpStatus.OK);
     }
 }

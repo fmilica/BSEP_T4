@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Certificate } from 'src/app/model/certificate.model';
+import { CreateCertificate } from 'src/app/model/create-certificate.model';
 import { CertificateService } from 'src/app/services/certificate.service';
 import { CsrService } from 'src/app/services/csr.service';
 
@@ -15,7 +16,10 @@ export class CreateCertificateComponent implements OnInit {
 
   subjectInfoForm: FormGroup;
   generalInfoForm: FormGroup;
-  issuerInfoFrom: FormGroup;
+  issuerInfoForm: FormGroup;
+
+  //default certificateType 
+  cerType = "endUser"
 
   // validTo
   minDate: Date;
@@ -23,12 +27,12 @@ export class CreateCertificateComponent implements OnInit {
 
   // signingCertificates
   createCA = false;
-  signingCertificates: Certificate[] = 
-  [
-    {alias: 'root', serialNumber: 1, id: 1},
-    {alias: 'ca-inter', serialNumber: 2, id: 2}
-  ]
-  chosenSigningCertificate = {id: -1, alias: ''}
+  signingCertificates: Certificate[] = []
+  // [
+  //   {alias: 'root', serialNumber: 1, id: 1},
+  //   {alias: 'ca-inter', serialNumber: 2, id: 2}
+  // ]
+  chosenSigningCertificate = {alias: '', commonName: ''}
 
   constructor(
     private csrService: CsrService,
@@ -46,7 +50,7 @@ export class CreateCertificateComponent implements OnInit {
       email: new FormControl({ value: '', disabled: true}, []),
     });
     this.generalInfoForm = new FormGroup({
-      certificateType: new FormControl('', [Validators.required]),
+      certificateType: new FormControl('endUser', [Validators.required]),
       startDate: new FormControl({ value: new Date(), disabled: true}, []),
       endDate: new FormControl('', [Validators.required]),
       // key usage
@@ -54,7 +58,7 @@ export class CreateCertificateComponent implements OnInit {
       // nonRepudiation: new FormControl(''),
       // keyEncipherment: new FormControl(''),
     });
-    this.issuerInfoFrom = new FormGroup({
+    this.issuerInfoForm = new FormGroup({
       signingCertificate: new FormControl('', [Validators.required]),
       commonName: new FormControl({ value: '', disabled: true}, []),
       givenName: new FormControl({ value: '', disabled: true}, []),
@@ -69,13 +73,13 @@ export class CreateCertificateComponent implements OnInit {
   ngOnInit(): void {
     this.setSubjectInfo();
     this.setDates();
-    //this.getCertificates();
+    this.getCertificates();
   }
 
   setSubjectInfo() {
     const chosenCsr = this.csrService.chosenCsr.getValue();
     this.subjectInfoForm.get('commonName').setValue(chosenCsr.commonName);
-    this.subjectInfoForm.get('givenName').setValue(chosenCsr.givenName);
+    this.subjectInfoForm.get('givenName').setValue(chosenCsr.name);
     this.subjectInfoForm.get('surname').setValue(chosenCsr.surname);
     this.subjectInfoForm.get('organizationName').setValue(chosenCsr.organizationName);
     this.subjectInfoForm.get('organizationUnit').setValue(chosenCsr.organizationUnit);
@@ -128,6 +132,9 @@ export class CreateCertificateComponent implements OnInit {
       this.certificateService.getAllCACertificates()
         .subscribe(
           (response) => {
+            if (!Array.isArray(response)) {
+              response = [response]
+            }
             this.signingCertificates = response;
           }
         )
@@ -135,22 +142,22 @@ export class CreateCertificateComponent implements OnInit {
   }
 
   setIssuerData(certificate) {
-    this.subjectInfoForm.get('commonName').setValue(certificate.commonName);
-    this.subjectInfoForm.get('givenName').setValue(certificate.givenName);
-    this.subjectInfoForm.get('surname').setValue(certificate.surname);
-    this.subjectInfoForm.get('organizationName').setValue(certificate.organizationName);
-    this.subjectInfoForm.get('organizationUnit').setValue(certificate.organizationUnit);
-    this.subjectInfoForm.get('country').setValue(certificate.country);
-    this.subjectInfoForm.get('email').setValue(certificate.email);
+    this.issuerInfoForm.get('commonName').setValue(certificate.commonName);
+    this.issuerInfoForm.get('givenName').setValue(certificate.name);
+    this.issuerInfoForm.get('surname').setValue(certificate.surname);
+    this.issuerInfoForm.get('organizationName').setValue(certificate.organizationName);
+    this.issuerInfoForm.get('organizationUnit').setValue(certificate.organizationUnit);
+    this.issuerInfoForm.get('country').setValue(certificate.country);
+    this.issuerInfoForm.get('email').setValue(certificate.email);
   }
 
   certificateChange(event) {
     if (event) {
-      this.chosenSigningCertificate.id = event.value;
-      this.chosenSigningCertificate.alias = event.source.triggerValue;
+      this.chosenSigningCertificate.alias = event.value;
+      this.chosenSigningCertificate.commonName = event.source.triggerValue;
     }
     this.certificateService.getCertificate(
-      this.chosenSigningCertificate.id, this.chosenSigningCertificate.alias)
+      this.chosenSigningCertificate.alias)
         .subscribe(
           (response) => {
             this.signingCertificates = [response];
@@ -159,7 +166,28 @@ export class CreateCertificateComponent implements OnInit {
         )
   }
 
-  submit() {
-    
+  onSubmit() {
+    if (this.generalInfoForm.invalid || this.issuerInfoForm.invalid) {
+      return;
+    }
+
+    const chosenCsr = this.csrService.chosenCsr.getValue();
+    const newCert: CreateCertificate = 
+      new CreateCertificate(
+        chosenCsr.id,
+        this.chosenSigningCertificate.alias,
+        this.generalInfoForm.get('startDate').value,
+        this.generalInfoForm.get('endDate').value
+      )
+    this.certificateService.createCertificate(newCert)
+      .subscribe(
+        response => {
+          this.toastr.success('Successfully created certificate!');
+          this.router.navigate(['homepage/csr']);
+        },
+        error => {
+          this.toastr.success('Successfully created certificate!');
+          this.router.navigate(['homepage/csr']);
+        });
   }
 }

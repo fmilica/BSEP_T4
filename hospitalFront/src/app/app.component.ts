@@ -22,5 +22,4 @@ export class AppComponent {
       this.authService.startAutoLoginRefreshTokenTimer();
     }
   }
-
 }
