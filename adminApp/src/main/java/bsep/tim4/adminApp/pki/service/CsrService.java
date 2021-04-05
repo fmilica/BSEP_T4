@@ -1,8 +1,8 @@
 package bsep.tim4.adminApp.pki.service;
 
-import bsep.tim4.adminApp.mailSender.MailSenderService;
-import bsep.tim4.adminApp.mailSender.VerificationLink;
-import bsep.tim4.adminApp.mailSender.VerificationLinkRepository;
+import bsep.tim4.adminApp.mailSender.csr.CsrSenderService;
+import bsep.tim4.adminApp.mailSender.csr.VerificationLink;
+import bsep.tim4.adminApp.mailSender.csr.VerificationLinkRepository;
 import bsep.tim4.adminApp.pki.exceptions.NonExistentIdException;
 import bsep.tim4.adminApp.pki.model.CSR;
 import bsep.tim4.adminApp.pki.model.enums.CsrStatus;
@@ -11,10 +11,8 @@ import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.bouncycastle.asn1.x500.X500Name;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -34,7 +32,7 @@ public class CsrService {
     private VerificationLinkRepository verificationLinkRepository;
 
     @Autowired
-    private MailSenderService mailSenderService;
+    private CsrSenderService csrSenderService;
 
     public List<CSR> findAllByVerified(boolean verified) {
         return csrRepository.findAllByVerifiedOrderByIdAsc(verified);
@@ -61,7 +59,7 @@ public class CsrService {
             CSR certificateRequest = csrRepository.save(csrEntity);
 
             //slanje konfirmacionog linka na tu email adresu
-            mailSenderService.sendVerificationLink(certificateRequest);
+            csrSenderService.sendVerificationLink(certificateRequest);
 
         } catch (NoSuchAlgorithmException | InvalidKeyException | MessagingException e) {
             e.printStackTrace();
@@ -79,7 +77,7 @@ public class CsrService {
         csrRepository.save(csr);
     }
 
-    public void declineCsr(Long id) throws NonExistentIdException {
+    public void declineCsr(Long id) throws NonExistentIdException, MessagingException {
         CSR csr = csrRepository.findById(id).orElse(null);
 
         if(csr == null) {
@@ -88,6 +86,8 @@ public class CsrService {
         csr.setStatus(CsrStatus.DECLINED);
 
         csrRepository.save(csr);
+
+        csrSenderService.sendCsrDeclined(csr);
     }
 
     public JcaPKCS10CertificationRequest readCsr(String csrString) {
