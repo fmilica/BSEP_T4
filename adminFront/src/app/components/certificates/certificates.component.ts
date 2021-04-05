@@ -1,42 +1,11 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { map } from 'rxjs/operators';
 import { CertificateView } from 'src/app/model/certificate-view.model';
 import { CertificateService } from 'src/app/services/certificate.service';
-
-
-
-/*const TREE_DATA: CertificateView[] = [
-  {
-    alias: 'root',
-    status: 'VALID',
-    children: [
-      {
-        alias: 'nas-prvi',
-        status: 'REVOKED'
-      },
-      {
-        alias: 'nas-drugi',
-        status: 'VALID'
-      },
-      {
-        alias: 'nas-CA',
-        status: 'VALID',
-        children: [
-          {
-            alias: 'ca-junior',
-            status: 'VALID'
-          }
-        ]
-      },
-      {
-        alias: 'nas-treci',
-        status: 'VALID'
-      },
-    ]
-  }
-];*/
+import { RevocationDialogComponent } from '../revocation-dialog/revocation-dialog.component';
 
 @Component({
   selector: 'app-certificates',
@@ -48,7 +17,8 @@ export class CertificatesComponent implements OnInit{
   dataSource = new MatTreeNestedDataSource<CertificateView>();
 
   constructor(
-    private certificateService : CertificateService
+    private certificateService : CertificateService,
+    private revokeDialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -68,5 +38,16 @@ export class CertificatesComponent implements OnInit{
 
   details(alias) {
     console.log(alias)
+  }
+
+  openRevokeDialog(alias) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {certificateAlias: alias}
+    //dialogConfig.height = '700px';
+    const dialogRef = this.revokeDialog.open(RevocationDialogComponent, dialogConfig);
+
+    /*dialogRef.afterClosed().subscribe(value => {
+      this.newsListComponent.fetchNews(this.culturalSiteId);
+    });*/
   }
 }

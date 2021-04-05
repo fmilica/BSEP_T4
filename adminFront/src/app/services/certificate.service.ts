@@ -37,7 +37,7 @@ export class CertificateService {
         });
     }
 
-    revokeCertificate(alias: string): Observable<Certificate> {
-        return this.http.get<Certificate>(environment.apiEndpoint + 'certificate/revoke' + alias)
+    revokeCertificate(alias: string, chosenReason: string): Observable<void> {
+        return this.http.get<void>(environment.apiEndpoint + 'certificate/revoke' + alias)
     }
 }

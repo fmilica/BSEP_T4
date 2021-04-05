@@ -20,6 +20,9 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatRadioModule } from '@angular/material/radio';
+
 import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -29,6 +32,7 @@ import { CreateCertificateComponent } from './components/create-certificate/crea
 import { CertificatesComponent } from './components/certificates/certificates.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ViewCertificateComponent } from './components/view-certificate/view-certificate.component';
+import { RevocationDialogComponent } from './components/revocation-dialog/revocation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,8 @@ import { ViewCertificateComponent } from './components/view-certificate/view-cer
     CsrComponent,
     CreateCertificateComponent,
     CertificatesComponent,
-    ViewCertificateComponent
+    ViewCertificateComponent,
+    RevocationDialogComponent
   ],
   imports: [
     RouterModule,
@@ -61,6 +66,8 @@ import { ViewCertificateComponent } from './components/view-certificate/view-cer
     MatStepperModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    MatDialogModule,
+    MatRadioModule,
     MatNativeDateModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',

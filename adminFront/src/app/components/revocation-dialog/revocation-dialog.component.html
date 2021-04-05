@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Revocation reason</h2>
+
+<mat-dialog-content>
+    <label>Choose revocation reason: </label>
+    <div>
+        <mat-radio-group class="radio-group" [(ngModel)]="chosenReason">
+            <mat-radio-button class="radio-button" *ngFor="let reason of revocationReasons"  [value] = "reason">
+                {{reason}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div>
+        <button class="btn btn-color" mat-button (click)="revoke()" [disabled]="!chosenReason">Revoke</button>
+        <button class="btn btn-color" mat-button (click)="close()">Cancel</button>
+    </div>
+</mat-dialog-content>
