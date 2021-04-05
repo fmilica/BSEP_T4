@@ -3,7 +3,6 @@ import { CreateCsrComponent } from "./components/create-csr/create-csr.component
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { LoginComponent } from "./components/login/login.component";
 
-
 export const routes: Routes = [
     {
       path: '',
