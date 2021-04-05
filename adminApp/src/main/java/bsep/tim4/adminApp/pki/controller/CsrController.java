@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.mail.MessagingException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -61,7 +60,7 @@ public class CsrController {
     public void declineCsr(@PathVariable("id") Long id) {
         try {
             csrService.declineCsr(id);
-        } catch (NonExistentIdException | MessagingException e) {
+        } catch (NonExistentIdException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }

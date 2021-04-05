@@ -1,8 +1,8 @@
 package bsep.tim4.adminApp.pki.service;
 
-import bsep.tim4.adminApp.mailSender.csr.CsrSenderService;
-import bsep.tim4.adminApp.mailSender.csr.VerificationLink;
-import bsep.tim4.adminApp.mailSender.csr.VerificationLinkRepository;
+import bsep.tim4.adminApp.mailSender.verification.MailSenderService;
+import bsep.tim4.adminApp.mailSender.verification.VerificationLink;
+import bsep.tim4.adminApp.mailSender.verification.VerificationLinkRepository;
 import bsep.tim4.adminApp.pki.exceptions.NonExistentIdException;
 import bsep.tim4.adminApp.pki.model.CSR;
 import bsep.tim4.adminApp.pki.model.enums.CsrStatus;
@@ -32,7 +32,7 @@ public class CsrService {
     private VerificationLinkRepository verificationLinkRepository;
 
     @Autowired
-    private CsrSenderService csrSenderService;
+    private MailSenderService mailSenderService;
 
     public List<CSR> findAllByVerified(boolean verified) {
         return csrRepository.findAllByVerifiedOrderByIdAsc(verified);
@@ -59,7 +59,7 @@ public class CsrService {
             CSR certificateRequest = csrRepository.save(csrEntity);
 
             //slanje konfirmacionog linka na tu email adresu
-            csrSenderService.sendVerificationLink(certificateRequest);
+            mailSenderService.sendVerificationLink(certificateRequest);
 
         } catch (NoSuchAlgorithmException | InvalidKeyException | MessagingException e) {
             e.printStackTrace();
@@ -77,7 +77,7 @@ public class CsrService {
         csrRepository.save(csr);
     }
 
-    public void declineCsr(Long id) throws NonExistentIdException, MessagingException {
+    public void declineCsr(Long id) throws NonExistentIdException {
         CSR csr = csrRepository.findById(id).orElse(null);
 
         if(csr == null) {
@@ -86,8 +86,6 @@ public class CsrService {
         csr.setStatus(CsrStatus.DECLINED);
 
         csrRepository.save(csr);
-
-        csrSenderService.sendCsrDeclined(csr);
     }
 
     public JcaPKCS10CertificationRequest readCsr(String csrString) {
