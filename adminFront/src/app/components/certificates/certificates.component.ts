@@ -5,7 +5,6 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { map } from 'rxjs/operators';
 import { CertificateView } from 'src/app/model/certificate-view.model';
 import { CertificateService } from 'src/app/services/certificate.service';
-import { CertificateDetailsComponent } from '../certificate-details/certificate-details.component';
 import { RevocationDialogComponent } from '../revocation-dialog/revocation-dialog.component';
 
 @Component({
@@ -38,18 +37,17 @@ export class CertificatesComponent implements OnInit{
   hasChild = (_: number, node: CertificateView) => !!node.children && node.children.length > 0;
 
   details(alias) {
-    this.certificateService.getDetails(alias)
-    .subscribe(
-      response => {
-      const dialogConfig = new MatDialogConfig();
-      dialogConfig.data = response;
-      const dialogRef = this.revokeDialog.open(CertificateDetailsComponent, dialogConfig);
-    })
+    console.log(alias)
   }
 
   openRevokeDialog(alias) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {certificateAlias: alias}
+    //dialogConfig.height = '700px';
     const dialogRef = this.revokeDialog.open(RevocationDialogComponent, dialogConfig);
+
+    /*dialogRef.afterClosed().subscribe(value => {
+      this.newsListComponent.fetchNews(this.culturalSiteId);
+    });*/
   }
 }

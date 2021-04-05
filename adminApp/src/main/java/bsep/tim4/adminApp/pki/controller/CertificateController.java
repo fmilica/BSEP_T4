@@ -3,7 +3,10 @@ package bsep.tim4.adminApp.pki.controller;
 import bsep.tim4.adminApp.pki.exceptions.NonExistentIdException;
 import bsep.tim4.adminApp.pki.model.CertificateData;
 import bsep.tim4.adminApp.pki.model.IssuerData;
-import bsep.tim4.adminApp.pki.model.dto.*;
+import bsep.tim4.adminApp.pki.model.dto.CertificateDTO;
+import bsep.tim4.adminApp.pki.model.dto.CertificateSignerDTO;
+import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
+import bsep.tim4.adminApp.pki.model.dto.CreateCertificateDTO;
 import bsep.tim4.adminApp.pki.model.mapper.CertificateSignerMapper;
 import bsep.tim4.adminApp.pki.service.CertificateDataService;
 import bsep.tim4.adminApp.pki.service.CertificateService;
@@ -31,12 +34,6 @@ public class CertificateController {
 
     private final CertificateSignerMapper certificateSignerMapper = new CertificateSignerMapper();
 
-    @GetMapping( value = "detailed/{alias}" )
-    public ResponseEntity<CertificateDetailedViewDTO> getDetailedCertificate(@PathVariable String alias) {
-        CertificateDetailedViewDTO detailedView = certificateService.getDetails(alias);
-        return new ResponseEntity<CertificateDetailedViewDTO>(detailedView, HttpStatus.OK);
-    }
-
     @PostMapping
     public ResponseEntity<String> createCertificate(@RequestBody CreateCertificateDTO certDto) {
         String certificate = "nesto ne valja";
@@ -54,21 +51,6 @@ public class CertificateController {
         if (alias == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        String certificateChain = null;
-        try {
-            certificateChain = certificateService.getPemCertificate(alias);
-            //certificateChain = certificateService.getPemCertificateChain(alias);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        byte[] contents = certificateChain.getBytes();
-        HttpHeaders headers = createDownloadCertHeaders();
-        return new ResponseEntity<>(contents, headers, HttpStatus.OK);
-    }
-
-    @GetMapping( value = "/download-any")
-    public ResponseEntity<Object> adminDownloadCertificate(@RequestParam("alias") String alias) {
         String certificateChain = null;
         try {
             certificateChain = certificateService.getPemCertificate(alias);
@@ -116,35 +98,15 @@ public class CertificateController {
         return new ResponseEntity<>(certificateSignerDTO, HttpStatus.OK);
     }
 
-    @PostMapping( value = "revoke/{alias}" )
-    public ResponseEntity<Void> revokeCertificate(@PathVariable String alias, @RequestBody String revocationReason) {
-        try {
-            certificateDataService.revoke(alias, revocationReason);
-        } catch (NonExistentIdException e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-
     @GetMapping
     public ResponseEntity<List<CertificateViewDTO>> getAllCertificates() {
-        List<CertificateViewDTO> certificateViewDTOS = certificateDataService.findCertificateView();
-        /*CertificateViewDTO root = certificateService.getAllCertificates();*/
+        CertificateViewDTO root = certificateService.getAllCertificates();
+
+        List<CertificateViewDTO> certificateViewDTOS = new ArrayList<>();
+        certificateViewDTOS.add(root);
 
         return new ResponseEntity<>(certificateViewDTOS, HttpStatus.OK);
     }
 
-    private HttpHeaders createDownloadCertHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        String filename = "certificate.crt";
-        ContentDisposition contentDisposition = ContentDisposition
-                .builder("inline")
-                .filename(filename)
-                .build();
-        headers.setContentDisposition(contentDisposition);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        return headers;
-    }
+
 }
