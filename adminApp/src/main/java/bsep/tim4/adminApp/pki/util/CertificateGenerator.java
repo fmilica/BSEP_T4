@@ -56,8 +56,7 @@ public class CertificateGenerator {
                     // CA je
                     certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(true));
                     // samo za CA
-                    certGen.addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.keyCertSign));
-                    certGen.addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.digitalSignature | KeyUsage.dataEncipherment));
+                    certGen.addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.keyCertSign | KeyUsage.digitalSignature | KeyUsage.dataEncipherment));
                     break;
                 case TLS_CLIENT:
                     // nije CA

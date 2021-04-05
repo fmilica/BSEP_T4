@@ -1,5 +1,6 @@
 package bsep.tim4.adminApp.mailSender.csr;
 
+import bsep.tim4.adminApp.mailSender.verification.VerificationLink;
 import bsep.tim4.adminApp.pki.model.CSR;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,6 @@ public class CsrSenderService {
     @Autowired
     private JavaMailSenderImpl mailSender;
 
-    @Autowired
-    private VerificationLinkRepository verificationLinkRepository;
-
     /*@Value("${spring.mail.username}")
     private String email;
 
@@ -35,7 +33,6 @@ public class CsrSenderService {
     @Transactional
     public void sendVerificationLink(CSR certificateRequest) throws MessagingException {
         String token = UUID.randomUUID().toString();
-        createVerificationLink(token, certificateRequest);
 
         String recipientAddress = certificateRequest.getEmail();
         String subject = "Certificate Signing Request Verification";
@@ -159,11 +156,6 @@ public class CsrSenderService {
                 "                        </tr></tbody>";
         email.setText(htmlMsg, true);
         mailSender.send(mimeMessage);
-    }
-
-    private VerificationLink createVerificationLink(String token, CSR csrRequest) {
-        VerificationLink verificationLink = new VerificationLink(token, csrRequest);
-        return verificationLinkRepository.save(verificationLink);
     }
 
 }

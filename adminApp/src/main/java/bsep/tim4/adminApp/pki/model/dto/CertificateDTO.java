@@ -1,6 +1,6 @@
 package bsep.tim4.adminApp.pki.model.dto;
 
-import bsep.tim4.adminApp.pki.model.enums.CertificateTypeEnum;
+import bsep.tim4.adminApp.pki.model.enums.CertificateTemplateEnum;
 import bsep.tim4.adminApp.pki.model.enums.KeyUsageEnum;
 
 import java.util.Date;
@@ -16,7 +16,7 @@ public class CertificateDTO {
 
     private Date endDate;
 
-    private CertificateTypeEnum certificateType;
+    private CertificateTemplateEnum certificateType;
 
     private List<KeyUsageEnum> keyUsages;
 }
