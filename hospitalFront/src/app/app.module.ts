@@ -8,7 +8,6 @@ import { LoginComponent } from './components/login/login.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { CreateCsrComponent } from './components/create-csr/create-csr.component';
-import { LoginComponent } from './components/login/login.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
