@@ -1,0 +1,28 @@
+<div class="wrap-login">
+    <div class="login-image"></div>
+    <form class="login-form" id="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="title">Hospital Login</div>
+        <div class="form-group">
+            <mat-form-field id="email-form-field" appearance="fill" class="form-field">
+                <mat-label>Enter your email</mat-label>
+                <input id="email-input" matInput placeholder="something@example.com" formControlName="email">
+                <mat-error id="email-error" *ngIf="loginForm.get('email')?.invalid">{{getEmailErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <mat-form-field id="password-form-field" appearance="fill" class="form-field">
+                <mat-label>Enter your password</mat-label>
+                <input id="password-input" matInput [type]="hide ? 'password' : 'text'"  formControlName ="password">
+                <button id="show-pass" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error id = "password-error" *ngIf="loginForm.get('password')?.invalid">{{getRequiredFieldErrorMessage('password')}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <button id="login-btn" class="btn btn-color" type="submit" [disabled]="loginForm.invalid">
+                Log in
+            </button>
+        </div>
+    </form>
+</div>
