@@ -21,7 +21,9 @@ export class CertificateService {
     }
 
     downloadCertificate(alias: string) {
-        return this.http.get<void>(environment.apiEndpoint + 'certificate/download-any?alias=' + alias)
+        return this.http.get(environment.apiEndpoint + 'certificate/download-any?alias=' + alias, {
+            responseType: 'arraybuffer'
+        })
     }
 
     getAllCertificates(): Observable<CertificateView[]> {
