@@ -142,7 +142,7 @@ public class CertificateMailSenderService {
                 "\n" +
                 "<tr><td style=\"outline:none;width:100%;color:#17181a;font-family:'FreightSans Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif;font-size:18px;font-style:normal;font-weight:normal;line-height:24px;word-spacing:0;margin:0;padding:50px 80px\" align=\"left\" valign=\"top\">\n" +
                 "\n" +
-                "Please ignore this message if you have not sent certificate signing request!\n" +
+                "Please ignore this message if you do not have a certificate!\n" +
                 "\n" +
                 "</td>\n" +
                 "\n" +

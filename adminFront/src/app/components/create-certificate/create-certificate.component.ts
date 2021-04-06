@@ -50,7 +50,7 @@ export class CreateCertificateComponent implements OnInit {
       email: new FormControl({ value: '', disabled: true}, []),
     });
     this.generalInfoForm = new FormGroup({
-      certificateType: new FormControl('endUser', [Validators.required]),
+      certificateType: new FormControl('END_USER', [Validators.required]),
       startDate: new FormControl({ value: new Date(), disabled: true}, []),
       endDate: new FormControl('', [Validators.required]),
       // key usage
@@ -178,7 +178,7 @@ export class CreateCertificateComponent implements OnInit {
         this.chosenSigningCertificate.alias,
         this.generalInfoForm.get('startDate').value,
         this.generalInfoForm.get('endDate').value,
-        this.cerType
+        this.generalInfoForm.get('certificateType').value
       )
     this.certificateService.createCertificate(newCert)
       .subscribe(

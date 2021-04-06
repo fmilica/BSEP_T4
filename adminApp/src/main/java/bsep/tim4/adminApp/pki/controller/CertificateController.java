@@ -3,24 +3,18 @@ package bsep.tim4.adminApp.pki.controller;
 import bsep.tim4.adminApp.pki.exceptions.CertificateNotCAException;
 import bsep.tim4.adminApp.pki.exceptions.InvalidCertificateException;
 import bsep.tim4.adminApp.pki.exceptions.NonExistentIdException;
-import bsep.tim4.adminApp.pki.model.CertificateData;
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.dto.*;
 import bsep.tim4.adminApp.pki.model.mapper.CertificateSignerMapper;
 import bsep.tim4.adminApp.pki.service.CertificateDataService;
 import bsep.tim4.adminApp.pki.service.CertificateService;
-import com.sun.mail.iap.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.websocket.server.PathParam;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -35,31 +29,33 @@ public class CertificateController {
 
     private final CertificateSignerMapper certificateSignerMapper = new CertificateSignerMapper();
 
-    @GetMapping( value = "validate/{serialNumb} ")
-    public ResponseEntity<String> validateCertificate(@PathVariable BigInteger serialNumb) {
+    @GetMapping( value = "/validate/{serialNumb}" )
+    public ResponseEntity<String> validateCertificate(@PathVariable Long serialNumb) {
         try {
             String alias = certificateDataService.getDateValidity(serialNumb);
-            if (alias == null) {
+            if (alias != null) {
                 if (certificateService.validateCertificate(alias)) {
-                    return new ResponseEntity<>("INVALID", HttpStatus.OK);
-                } else {
                     return new ResponseEntity<>("VALID", HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>("INVALID", HttpStatus.OK);
                 }
             } else {
                 return new ResponseEntity<>("INVALID", HttpStatus.OK);
             }
         } catch (NonExistentIdException e) {
-            return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("NOT_EXISTANT_SERIAL_NUMBER", HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping( value = "detailed/{alias}" )
+    @GetMapping( value = "/detailed/{alias}" )
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<CertificateDetailedViewDTO> getDetailedCertificate(@PathVariable String alias) {
         CertificateDetailedViewDTO detailedView = certificateService.getDetails(alias);
         return new ResponseEntity<CertificateDetailedViewDTO>(detailedView, HttpStatus.OK);
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<String> createCertificate(@RequestBody CreateCertificateDTO certDto) {
         String certificate = "";
         try {
@@ -80,7 +76,7 @@ public class CertificateController {
         }
         String certificateChain = null;
         try {
-            certificateChain = certificateService.getPemCertificate(alias);
+            certificateChain = certificateService.getRootChainPemCertificate(alias);
             //certificateChain = certificateService.getPemCertificateChain(alias);
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,10 +88,12 @@ public class CertificateController {
     }
 
     @GetMapping( value = "/download-any")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<Object> adminDownloadCertificate(@RequestParam("alias") String alias) {
         String certificateChain = null;
         try {
-            certificateChain = certificateService.getPemCertificate(alias);
+            certificateChain = certificateService.getRootChainPemCertificate(alias);
+            //certificateChain = certificateService.getPemCertificate(alias);
             //certificateChain = certificateService.getPemCertificateChain(alias);
         } catch (IOException e) {
             e.printStackTrace();
@@ -115,6 +113,7 @@ public class CertificateController {
     }
 
     @GetMapping( value = "/root-certificate")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<CertificateSignerDTO> getRootCertificate() {
         IssuerData issuerData = certificateService.getRootCertificate();
 
@@ -124,6 +123,7 @@ public class CertificateController {
     }
 
     @GetMapping( value = "/ca-certificates")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<List<CertificateSignerDTO>> getCACertificates() {
         List<IssuerData> issuerDataList = certificateService.getAllCAIssuers();
 
@@ -133,6 +133,7 @@ public class CertificateController {
     }
 
     @GetMapping( value = "/{alias}")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<CertificateSignerDTO> getByAlias(@PathVariable String alias) {
         IssuerData issuerData = certificateService.getByAlias(alias);
         CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto(issuerData);
@@ -141,6 +142,7 @@ public class CertificateController {
     }
 
     @PostMapping( value = "revoke/{alias}" )
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<Void> revokeCertificate(@PathVariable String alias, @RequestBody String revocationReason) {
         try {
             certificateDataService.revoke(alias, revocationReason);
@@ -152,6 +154,7 @@ public class CertificateController {
 
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<List<CertificateViewDTO>> getAllCertificates() {
         List<CertificateViewDTO> certificateViewDTOS = certificateDataService.findCertificateView();
         /*CertificateViewDTO root = certificateService.getAllCertificates();*/

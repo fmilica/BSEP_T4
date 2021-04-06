@@ -15,7 +15,8 @@
         <mat-icon class="valid">gpp_good</mat-icon>
         {{node.alias}}
         <button class="btn btn-color btn-tree" mat-button (click)="details(node.alias)">Details</button>
-        <button class="btn btn-color btn-tree revoke" mat-button (click)="openRevokeDialog(node.alias)">Revoke</button>
+        <button class="btn btn-color btn-tree revoke" mat-button (click)="openRevokeDialog(node.alias)"
+        [disabled]="node.alias=='serbioneer@gmail.com'">Revoke</button>
       </ng-template>
     </li>
   </mat-tree-node>

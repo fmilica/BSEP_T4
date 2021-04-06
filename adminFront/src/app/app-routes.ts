@@ -6,17 +6,25 @@ import { HomepageComponent } from "./components/homepage/homepage.component";
 import { LoginComponent } from "./components/login/login.component";
 import { LogsComponent } from "./components/logs/logs.component";
 import { UsersComponent } from "./components/users/users.component";
+import { LoginGuard } from "./guards/login-guard.service";
+import { RoleGuard } from "./guards/role-guard.service";
 
 export const routes: Routes = [
     {
       path: '',
-      component: LoginComponent,
-      pathMatch: 'full'
+      redirectTo: '/login',
+      pathMatch: 'full',
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
+        canActivate: [LoginGuard]
     },
     {
       path: 'homepage',
       component: HomepageComponent,
-      // canActivate: [LoginGuard],
+      canActivate: [RoleGuard],
+      data: { expectedRoles: 'ROLE_SUPER_ADMIN' },
       children: [
         {
           path: '',
@@ -26,7 +34,6 @@ export const routes: Routes = [
         {
           path: 'csr',
           component: CsrComponent,
-          //canActivate: [LoginGuard],
         },
         {
           path: 'certificates',
@@ -45,5 +52,9 @@ export const routes: Routes = [
           component: LogsComponent,
         }
       ],
-    }, 
+    },
+    {
+      path: '**',
+      component: LoginComponent,
+    }
 ];

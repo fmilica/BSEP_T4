@@ -36,13 +36,13 @@ public class CertificateDataService {
         return certificateDataRepository.save(certData);
     }
 
-    public String getDateValidity(BigInteger serialNumb) throws NonExistentIdException {
-        CertificateData certData = certificateDataRepository.findOneById(serialNumb.longValue());
+    public String getDateValidity(Long serialNumb) throws NonExistentIdException {
+        CertificateData certData = certificateDataRepository.findOneById(serialNumb);
         if (certData == null) {
             throw new NonExistentIdException("certificate");
         }
         Date now = new Date();
-        if (now.before(certData.getValidFrom()) || now.after(certData.getValidTo())) {
+        if (now.after(certData.getValidFrom()) || now.before(certData.getValidTo())) {
             return certData.getAlias();
         }
         return null;

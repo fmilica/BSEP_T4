@@ -71,7 +71,6 @@ public class CertificateService {
             return false;
         }
         Certificate[] chain = keyStoreService.readCertificateChain(alias);
-        X509Certificate[] x509chain = Arrays.copyOf(chain, chain.length, X509Certificate[].class);
         Date now = new Date();
         // za svaki sertifikat u lancu provere
         for (int i = 0; i < chain.length; i++) {
@@ -272,6 +271,17 @@ public class CertificateService {
         StringBuilder certificateBuilder = new StringBuilder();
         String pemCertificate = writeCertificateToPEM((X509Certificate) certificate);
         return pemCertificate;
+    }
+
+    public String getRootChainPemCertificate(String alias) throws IOException {
+        Certificate certificate = keyStoreService.loadCertificate(alias);
+        Certificate root = keyStoreService.loadCertificate("serbioneer@gmail.com");
+        StringBuilder chainBuilder = new StringBuilder();
+        String pemCertificate = writeCertificateToPEM((X509Certificate) certificate);
+        chainBuilder.append(pemCertificate);
+        String rootCertificate = writeCertificateToPEM((X509Certificate) root);
+        chainBuilder.append(rootCertificate);
+        return chainBuilder.toString();
     }
 
     public String getPemCertificateChain(String alias) throws IOException {

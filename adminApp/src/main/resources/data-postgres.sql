@@ -1,4 +1,4 @@
-insert into authority (name) values ('ROLE_ADMIN');
+insert into authority (name) values ('ROLE_SUPER_ADMIN');
 
 -- password = admin
 insert into users (name, surname, email, password, is_active)
