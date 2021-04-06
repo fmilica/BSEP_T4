@@ -43,8 +43,8 @@
                 <mat-label>Certificate template</mat-label>
                 <mat-select formControlName="certificateType" (selectionChange)="setDates()">
                     <mat-option disabled value="CA_CERT">Intermediate CA</mat-option>
-                    <mat-option disabled value="TLS_SERVER">TLS server</mat-option>
-                    <mat-option disabled value="TLS_CLIENT">TLS client</mat-option>
+                    <mat-option value="TLS_SERVER">TLS server</mat-option>
+                    <mat-option value="TLS_CLIENT">TLS client</mat-option>
                     <mat-option value="END_USER">End user</mat-option>
                 </mat-select>
             </mat-form-field>

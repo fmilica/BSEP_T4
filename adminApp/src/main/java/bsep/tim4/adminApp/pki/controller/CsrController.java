@@ -9,6 +9,7 @@ import bsep.tim4.adminApp.pki.service.CsrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -41,6 +42,7 @@ public class CsrController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<List<CsrDTO>> findAll() {
         List<CSR> csrList = csrService.findAllByVerified(true);
         List<CsrDTO> csrDTOList = csrMapper.toCsrDtoList(csrList);
@@ -49,6 +51,7 @@ public class CsrController {
     }
 
     @PutMapping(value = "accept/{id}")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public void acceptCsr(@PathVariable("id") Long id) {
         try {
             csrService.acceptCsr(id);
@@ -58,6 +61,7 @@ public class CsrController {
     }
 
     @PutMapping(value = "decline/{id}")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public void declineCsr(@PathVariable("id") Long id) {
         try {
             csrService.declineCsr(id);

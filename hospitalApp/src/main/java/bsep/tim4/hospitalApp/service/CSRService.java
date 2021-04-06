@@ -10,13 +10,15 @@ import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequest;
+import org.bouncycastle.util.io.pem.PemGenerationException;
+import org.bouncycastle.util.io.pem.PemObject;
+import org.bouncycastle.util.io.pem.PemObjectGenerator;
+import org.bouncycastle.openssl.PEMWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.bouncycastle.openssl.PEMKeyPair;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.Security;
@@ -26,7 +28,8 @@ import java.security.cert.X509Certificate;
 
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
-import java.io.FileWriter;
+import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
+
 import java.security.interfaces.RSAPrivateKey;
 
 @Service
@@ -47,11 +50,14 @@ public class CSRService {
         // cuvanje privatnog kljuca
         keyStoreService.loadKeyStore();
         //keyStoreService.savePrivateKey(csrDto.getEmail(), keyPair.getPrivate(), csrDto.getKeyPassword(), null);
-        JcaPEMWriter jcaPEMWriter = null;
+//        JcaPEMWriter jcaPEMWriter = null;
         try {
-            jcaPEMWriter = new JcaPEMWriter(new FileWriter("src"+ separator + "main"+ separator +"resources"+ separator +"donottouch.key"));
-            jcaPEMWriter.writeObject(this.csrGenerator.getPrivateKey(), null);
-            jcaPEMWriter.close();
+            PEMWriter pw = new PEMWriter(new FileWriter("src"+ separator + "main"+ separator +"resources"+ separator +"donottouch.key"));
+            pw.writeObject(this.csrGenerator.getPrivateKey());
+            pw.close();
+//            jcaPEMWriter = new JcaPEMWriter(new FileWriter("src"+ separator + "main"+ separator +"resources"+ separator +"donottouch.key"));
+//            jcaPEMWriter.writeObject(this.csrGenerator.getPrivateKey(), null);
+//            jcaPEMWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,7 +67,8 @@ public class CSRService {
             // vraca byte[]
             //return csr.getEncoded();
         // u ovoj formi se obicno prosledjuje
-        readPrivateKey();
+        //provera da li ucitavanje privatnog kljuca funkcionise:
+        //readPrivateKey();
         return this.csrGenerator.convertCsr(csr);
     }
 
@@ -89,18 +96,21 @@ public class CSRService {
         }
     }
 
-    public PrivateKeyInfo readPrivateKey() {
+    public PrivateKey readPrivateKey() {
 
         String separator = System.getProperty("file.separator");
         PEMParser pemParser = null;
         try {
-            pemParser = new PEMParser(new FileReader("src"+ separator + "main"+ separator +"resources"+ separator +"donottouch.key"));
+            FileReader fr = new FileReader("src"+ separator + "main"+ separator +"resources"+ separator +"donottouch.key");
+            pemParser = new PEMParser(fr);
 //            JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
 //            PrivateKeyInfo privateKeyInfo = PrivateKeyInfo.getInstance(pemParser.readObject());
 //            RSAPrivateKey privateKey = (RSAPrivateKey) converter.getPrivateKey(privateKeyInfo);
-            PEMKeyPair parsedObj = (PEMKeyPair)pemParser.readObject();
-            PrivateKeyInfo privateKey = parsedObj.getPrivateKeyInfo();
-            return privateKey;
+//            PEMKeyPair parsedObj = (PEMKeyPair)pemParser.readObject();
+//            PrivateKeyInfo privateKey = parsedObj.getPrivateKeyInfo();
+            Object objParsed = pemParser.readObject();
+            KeyPair keyPair = new JcaPEMKeyConverter().getKeyPair((org.bouncycastle.openssl.PEMKeyPair)objParsed);
+            return keyPair.getPrivate();
         } catch (IOException | ClassCastException e) {
             e.printStackTrace();
             return null;
