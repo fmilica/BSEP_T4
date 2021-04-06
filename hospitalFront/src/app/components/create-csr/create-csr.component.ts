@@ -54,6 +54,7 @@ export class CreateCsrComponent implements OnInit {
       response => {
         this.toastr.success('Successfully created csr!');
         this.router.navigate(['homepage/csr']);
+        this.newCSRForm.reset();
       },
       error => {
         if (error.error.message){
