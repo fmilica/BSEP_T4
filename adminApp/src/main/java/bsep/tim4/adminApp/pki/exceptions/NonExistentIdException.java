@@ -1,6 +1,6 @@
 package bsep.tim4.adminApp.pki.exceptions;
 
-public class NonExistentIdException extends Exception{
+public class NonExistentIdException extends Exception {
 
     private static final long serialVersionUID = 1L;
 

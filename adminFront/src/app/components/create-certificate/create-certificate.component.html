@@ -40,10 +40,12 @@
         <form [formGroup]="generalInfoForm">
             <ng-template matStepLabel>General Info</ng-template>
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Certificate type</mat-label>
+                <mat-label>Certificate template</mat-label>
                 <mat-select formControlName="certificateType" (selectionChange)="setDates()">
-                    <mat-option disabled value="intermediate">Intermediate</mat-option>
-                    <mat-option value="endUser">End user</mat-option>
+                    <mat-option disabled value="CA_CERT">Intermediate CA</mat-option>
+                    <mat-option disabled value="TLS_SERVER">TLS server</mat-option>
+                    <mat-option disabled value="TLS_CLIENT">TLS client</mat-option>
+                    <mat-option value="END_USER">End user</mat-option>
                 </mat-select>
             </mat-form-field>
             <div>

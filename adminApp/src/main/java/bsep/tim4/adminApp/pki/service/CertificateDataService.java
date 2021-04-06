@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import java.math.BigInteger;
 import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +34,18 @@ public class CertificateDataService {
 
     public CertificateData save(CertificateData certData){
         return certificateDataRepository.save(certData);
+    }
+
+    public String getDateValidity(BigInteger serialNumb) throws NonExistentIdException {
+        CertificateData certData = certificateDataRepository.findOneById(serialNumb.longValue());
+        if (certData == null) {
+            throw new NonExistentIdException("certificate");
+        }
+        Date now = new Date();
+        if (now.before(certData.getValidFrom()) || now.after(certData.getValidTo())) {
+            return certData.getAlias();
+        }
+        return null;
     }
 
     public CertificateData revoke(String alias, String revocationReason) throws NonExistentIdException, MessagingException {

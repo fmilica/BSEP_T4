@@ -115,7 +115,7 @@ public class KeyStoreReader {
             BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
             ks.load(in, keyStorePass.toCharArray());
 
-            if(ks.isCertificateEntry(alias)) {
+            if(ks.isCertificateEntry(alias) | ks.isKeyEntry(alias)) {
                 Certificate[] cert = ks.getCertificateChain(alias);
                 return cert;
             }

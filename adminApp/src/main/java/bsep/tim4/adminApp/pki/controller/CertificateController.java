@@ -1,5 +1,7 @@
 package bsep.tim4.adminApp.pki.controller;
 
+import bsep.tim4.adminApp.pki.exceptions.CertificateNotCAException;
+import bsep.tim4.adminApp.pki.exceptions.InvalidCertificateException;
 import bsep.tim4.adminApp.pki.exceptions.NonExistentIdException;
 import bsep.tim4.adminApp.pki.model.CertificateData;
 import bsep.tim4.adminApp.pki.model.IssuerData;
@@ -7,6 +9,7 @@ import bsep.tim4.adminApp.pki.model.dto.*;
 import bsep.tim4.adminApp.pki.model.mapper.CertificateSignerMapper;
 import bsep.tim4.adminApp.pki.service.CertificateDataService;
 import bsep.tim4.adminApp.pki.service.CertificateService;
+import com.sun.mail.iap.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -31,6 +35,24 @@ public class CertificateController {
 
     private final CertificateSignerMapper certificateSignerMapper = new CertificateSignerMapper();
 
+    @GetMapping( value = "validate/{serialNumb} ")
+    public ResponseEntity<String> validateCertificate(@PathVariable BigInteger serialNumb) {
+        try {
+            String alias = certificateDataService.getDateValidity(serialNumb);
+            if (alias == null) {
+                if (certificateService.validateCertificate(alias)) {
+                    return new ResponseEntity<>("INVALID", HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>("VALID", HttpStatus.OK);
+                }
+            } else {
+                return new ResponseEntity<>("INVALID", HttpStatus.OK);
+            }
+        } catch (NonExistentIdException e) {
+            return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping( value = "detailed/{alias}" )
     public ResponseEntity<CertificateDetailedViewDTO> getDetailedCertificate(@PathVariable String alias) {
         CertificateDetailedViewDTO detailedView = certificateService.getDetails(alias);
@@ -39,11 +61,13 @@ public class CertificateController {
 
     @PostMapping
     public ResponseEntity<String> createCertificate(@RequestBody CreateCertificateDTO certDto) {
-        String certificate = "nesto ne valja";
+        String certificate = "";
         try {
             certificate = certificateService.createCertificate(certDto);
         } catch (NonExistentIdException | MessagingException e) {
             e.printStackTrace();
+        } catch (CertificateNotCAException | InvalidCertificateException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(certificate, HttpStatus.OK);
     }

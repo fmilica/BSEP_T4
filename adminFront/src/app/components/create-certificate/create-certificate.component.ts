@@ -19,7 +19,7 @@ export class CreateCertificateComponent implements OnInit {
   issuerInfoForm: FormGroup;
 
   //default certificateType 
-  cerType = "endUser"
+  cerType = "END_USER"
 
   // validTo
   minDate: Date;
@@ -94,7 +94,7 @@ export class CreateCertificateComponent implements OnInit {
     let minDate = new Date();
     let maxDate = new Date();
     this.generalInfoForm.get('startDate').setValue(new Date());
-    if (this.generalInfoForm.get('certificateType').value === 'intermediate') {
+    if (this.generalInfoForm.get('certificateType').value === 'CA_CERT') {
       // moze ga potpisati samo root
       this.createCA = true;
       endDate.setFullYear(currentYear + 5);
@@ -177,7 +177,8 @@ export class CreateCertificateComponent implements OnInit {
         chosenCsr.id,
         this.chosenSigningCertificate.alias,
         this.generalInfoForm.get('startDate').value,
-        this.generalInfoForm.get('endDate').value
+        this.generalInfoForm.get('endDate').value,
+        this.cerType
       )
     this.certificateService.createCertificate(newCert)
       .subscribe(

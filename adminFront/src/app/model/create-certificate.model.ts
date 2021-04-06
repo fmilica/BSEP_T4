@@ -4,7 +4,8 @@ export class CreateCertificate {
         public csrId: number,
         public caAlias: string,
         public beginDate: Date,
-        public endDate: Date
+        public endDate: Date,
+        public template: string
         // additional information
     ) {}
 

@@ -1,5 +1,6 @@
 package bsep.tim4.adminApp.pki.model.dto;
 
+import bsep.tim4.adminApp.pki.model.enums.CertificateTemplateEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,4 +20,6 @@ public class CreateCertificateDTO {
     private Date beginDate;
 
     private Date endDate;
+
+    private CertificateTemplateEnum template;
 }
