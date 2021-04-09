@@ -16,7 +16,7 @@
                 <button id="show-pass" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
-                <mat-error id = "password-error" *ngIf="loginForm.get('password')?.invalid">{{getRequiredFieldErrorMessage('password')}}</mat-error>
+                <mat-error id = "password-error" *ngIf="loginForm.get('password')?.invalid">{{getPasswordErrorMessage('password')}}</mat-error>
             </mat-form-field>
         </div>
         <div>
