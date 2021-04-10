@@ -10,6 +10,7 @@ import bsep.tim4.adminApp.pki.model.CSR;
 import bsep.tim4.adminApp.pki.model.CertificateData;
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
+import bsep.tim4.adminApp.pki.model.dto.CertificateAdditionalInfo;
 import bsep.tim4.adminApp.pki.model.dto.CertificateDetailedViewDTO;
 import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
 import bsep.tim4.adminApp.pki.model.dto.CreateCertificateDTO;
@@ -148,14 +149,14 @@ public class CertificateService {
         CSR csr = csrService.findById(certDto.getCsrId());
         // generisanje sertifikata i cuvanje u bazu i keystore
         CertificateData certData = generateCertificate(
-                csr, certDto.getCaAlias(), certDto.getBeginDate(), certDto.getEndDate(), certDto.getTemplate());
+                csr, certDto.getCaAlias(), certDto.getBeginDate(), certDto.getEndDate(), certDto.getAdditionalInfo());
         // slanje sertifikata u mejlu
         certificateMailSenderService.sendCertificateLink(certData);
         return "poslao";
     }
 
     public CertificateData generateCertificate(
-            CSR csr, String caAlias, Date startDate, Date endDate, CertificateTemplateEnum template)
+            CSR csr, String caAlias, Date startDate, Date endDate, CertificateAdditionalInfo additionalInfo)
             throws InvalidCertificateException, CertificateNotCAException {
         try {
             // provera validnosti CA sertifikata
@@ -188,7 +189,7 @@ public class CertificateService {
             subjectData.setSerialNumber(certData.getId().toString());
 
             //generisanje sertifikata
-            Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, template);
+            Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, additionalInfo);
 
             // postavljanje lanca sertifikata
             keyStoreService.loadKeyStore();

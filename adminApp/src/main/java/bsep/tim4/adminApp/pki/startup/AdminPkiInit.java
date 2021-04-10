@@ -3,6 +3,7 @@ package bsep.tim4.adminApp.pki.startup;
 import bsep.tim4.adminApp.pki.model.CertificateData;
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
+import bsep.tim4.adminApp.pki.model.dto.CertificateAdditionalInfo;
 import bsep.tim4.adminApp.pki.model.enums.CertificateTemplateEnum;
 import bsep.tim4.adminApp.pki.service.CertificateDataService;
 import bsep.tim4.adminApp.pki.service.KeyStoreService;
@@ -79,7 +80,9 @@ public class AdminPkiInit implements ApplicationRunner {
         // serial number je ID
         SubjectData subjectData = new SubjectData(publicKey, rootInfo, certData.getId().toString(), startDate, endDate);
 
-        X509Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, CertificateTemplateEnum.CA_CERT);
+        // Root sertifikat
+        CertificateAdditionalInfo rootAdditionalInfo = new CertificateAdditionalInfo(0);
+        X509Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, rootAdditionalInfo);
         //poziva se savePrivateKey jer za ovaj sertifikat ima i privatni kljuc, root sertifikat
         //za ostale sertifikate se poziva saveCertificate jer ima samo sertifikat i njegov javni kljuc, a privatni kljuc mu je nedostupan
         keyStoreService.savePrivateKey("serbioneer@gmail.com", privateKey, certificate );

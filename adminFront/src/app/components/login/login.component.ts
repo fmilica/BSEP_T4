@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', 
       [
         Validators.required,
-        CustomValidators.patternValidator(/\d/, {hasNumber: true}),
+        /*CustomValidators.patternValidator(/\d/, {hasNumber: true}),
         CustomValidators.patternValidator(/[A-Z]/, {hasCapitalCase: true}),
         CustomValidators.patternValidator(/[a-z]/, {hasSmallCase: true}),
         CustomValidators.patternValidator(
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
             hasSpecialCharacters: true
           }
         ),
-        Validators.minLength(8)
+        Validators.minLength(8)*/
       ])
   }
   )}
