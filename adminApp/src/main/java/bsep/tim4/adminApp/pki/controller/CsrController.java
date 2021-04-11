@@ -16,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.mail.MessagingException;
 import java.util.List;
 
-@CrossOrigin(origins = "https://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(value="api/csr")
 public class CsrController {

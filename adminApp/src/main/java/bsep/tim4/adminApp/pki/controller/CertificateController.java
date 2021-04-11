@@ -17,7 +17,7 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin(origins = "https://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(value = "api/certificate")
 public class CertificateController {
