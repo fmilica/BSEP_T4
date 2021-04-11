@@ -22,14 +22,15 @@ import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.security.auth.x500.X500Principal;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
+import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
@@ -82,7 +83,8 @@ public class CertificateService {
                 return false;
             }
             // da li je revoked
-            CertificateData cData = certificateDataService.findByAlias(alias);
+            BigInteger serialNumber = x509Certificate.getSerialNumber();
+            CertificateData cData = certificateDataService.findById(serialNumber.longValue());
             if (cData.isRevoked()) {
                 return false;
             }
@@ -198,27 +200,12 @@ public class CertificateService {
             keyStoreService.loadKeyStore();
             // dodaje novi sertifikat na pocetak lanca
             Certificate[] newCertificateChain = createCertificateChain(certificate, issuerCertificateChain);
-            /*Certificate[] tempChain = new Certificate[issuerCertificateChain.length + 1];
-            tempChain[0] = certificate;
-            System.arraycopy(issuerCertificateChain, 0, tempChain, 1, issuerCertificateChain.length);
-            */
 
             // cuvanje sertifikata (niza sertifikata)
             keyStoreService.savePrivateKey(alias, keyPair.getPrivate(), newCertificateChain);
             keyStoreService.saveKeyStore();
 
-            /*//cuvanje sertifikata u keystore (ne koristimo savePrivateKey jer ne znamo privatan kjuc)
-            //TODO potpisivanje privatnim kljucem???
-            keyStoreService.saveCertificate(alias, certificate);
-            keyStoreService.saveKeyStore();*/
-
             return certData;
-            /*// konverzija sertifikata u String radi transporta
-            StringWriter sw = new StringWriter();
-            JcaPEMWriter writer = new JcaPEMWriter(sw);
-            writer.writeObject(certificate);
-            writer.close();
-            return sw.toString();*/
         } catch (NoSuchAlgorithmException | InvalidKeyException e) {
             e.printStackTrace();
         }
@@ -249,7 +236,6 @@ public class CertificateService {
         //citanje root sertifikata
         keyStoreService.loadKeyStore();
         //password za CA sertifikat je isti kao password za keyStore
-        // TODO za sada koristimo uvek root (nemamo intermediate)
         IssuerData issuerData = keyStoreService.loadIssuerData(caAlias, "RootPassword");
 
         return issuerData;
@@ -326,4 +312,21 @@ public class CertificateService {
         return writer.toString();
     }
 
+    public void getPkcs12Format(String alias) {
+        keyStoreService.loadKeyStore();
+        PrivateKey key = keyStoreService.loadPrivateKey(alias);
+        Certificate[] chain = keyStoreService.readCertificateChain(alias);
+        try {
+            // create keystore
+            KeyStore keystore = KeyStore.getInstance("PKCS12", BouncyCastleProvider.PROVIDER_NAME);
+            // initialize
+            keystore.load(null);
+            // add your key and cert
+            keystore.setKeyEntry(alias, key, "sifra".toCharArray(), chain);
+            // save the keystore to file
+            keystore.store(new FileOutputStream(new File("src/main/resources/keystore.pfx")), "yourPin".toCharArray());
+        } catch (NoSuchProviderException | IOException | NoSuchAlgorithmException | CertificateException | KeyStoreException e) {
+            e.printStackTrace();
+        }
+    }
 }

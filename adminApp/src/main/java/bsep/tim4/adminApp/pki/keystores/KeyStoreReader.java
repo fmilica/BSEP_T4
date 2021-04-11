@@ -209,15 +209,4 @@ public class KeyStoreReader {
         }
     }*/
 
-    public boolean isRevoked(Certificate cer) throws IOException, CertificateException, CRLException {
-
-        CertificateFactory factory = CertificateFactory.getInstance("X.509");
-
-        File file = new File("src/main/resources/CRLs.crl");
-
-        byte[] bytes = Files.readAllBytes(file.toPath());
-        X509CRL crl = (X509CRL) factory.generateCRL(new ByteArrayInputStream(bytes));
-
-        return crl.isRevoked(cer);
-    }
 }

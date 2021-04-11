@@ -101,6 +101,13 @@ public class CertificateController {
         return new ResponseEntity<>(contents, headers, HttpStatus.OK);
     }
 
+    @GetMapping( value = "/download-pkcs12")
+    //@PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    public ResponseEntity<Object> adminDownloadPkcs12(@RequestParam("alias") String alias) {
+        certificateService.getPkcs12Format(alias);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping( value = "/root-certificate")
     @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<CertificateSignerDTO> getRootCertificate() {
