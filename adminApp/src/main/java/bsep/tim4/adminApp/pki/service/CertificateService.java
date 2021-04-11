@@ -25,6 +25,7 @@ import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -54,6 +55,9 @@ public class CertificateService {
 
     @Autowired
     KeyStoreService keyStoreService;
+
+    @Value("${pki.keystore-password}")
+    private String keyStorePass;
 
     public IssuerData getRootCertificate() {
         IssuerData issuerData = keyStoreService.loadIssuerData("serbioneer@gmail.com", "RootPassword");
@@ -312,21 +316,26 @@ public class CertificateService {
         return writer.toString();
     }
 
-    public void getPkcs12Format(String alias) {
+    public byte[] getPkcs12Format(String alias) {
         keyStoreService.loadKeyStore();
         PrivateKey key = keyStoreService.loadPrivateKey(alias);
         Certificate[] chain = keyStoreService.readCertificateChain(alias);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
             // create keystore
+            Security.addProvider(new BouncyCastleProvider());
             KeyStore keystore = KeyStore.getInstance("PKCS12", BouncyCastleProvider.PROVIDER_NAME);
             // initialize
             keystore.load(null);
             // add your key and cert
-            keystore.setKeyEntry(alias, key, "sifra".toCharArray(), chain);
+            keystore.setKeyEntry(alias, key, keyStorePass.toCharArray(), chain);
             // save the keystore to file
-            keystore.store(new FileOutputStream(new File("src/main/resources/keystore.pfx")), "yourPin".toCharArray());
+            keystore.store(bos, keyStorePass.toCharArray());
+            bos.close();
+            return bos.toByteArray();
         } catch (NoSuchProviderException | IOException | NoSuchAlgorithmException | CertificateException | KeyStoreException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

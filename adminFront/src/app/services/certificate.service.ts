@@ -26,6 +26,12 @@ export class CertificateService {
         })
     }
 
+    downloadPkcs12(alias: string) {
+        return this.http.get(environment.apiEndpoint + 'certificate/download-pkcs12?alias=' + alias, {
+            responseType: 'arraybuffer'
+        })
+    }
+
     getAllCertificates(): Observable<CertificateView[]> {
         return this.http.get<CertificateView[]>(environment.apiEndpoint + 'certificate');
     }
