@@ -58,7 +58,11 @@ public class KeyStoreService {
 
     //mozemo i privatni kljuc dodatno da sifrujemo zato postoji rootCAPass
     public void savePrivateKey(String alias, PrivateKey privateKey, Certificate certificate) {
-        this.keyStoreWriter.writePrivateKey(alias, privateKey,rootCAPass.toCharArray(), certificate);
+        this.keyStoreWriter.writePrivateKey(alias, privateKey, rootCAPass.toCharArray(), certificate);
+    }
+
+    public void savePrivateKey(String alias, PrivateKey privateKey, Certificate[] certificateChain) {
+        this.keyStoreWriter.writePrivateKey(alias, privateKey, rootCAPass.toCharArray(), certificateChain);
     }
 
     public PrivateKey loadPrivateKey(String alias) {
@@ -90,7 +94,7 @@ public class KeyStoreService {
         return this.keyStoreReader.readAllCAIssuers(keyStorePath + keyStoreName, keyStorePass, rootCAPass);
     }
 
-    public CertificateViewDTO loadAllCertificates() {
+    /*public CertificateViewDTO loadAllCertificates() {
         return this.keyStoreReader.readAllCertificates(keyStorePath + keyStoreName, keyStorePass, rootCAPass);
-    }
+    }*/
 }

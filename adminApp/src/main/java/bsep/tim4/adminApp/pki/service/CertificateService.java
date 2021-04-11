@@ -138,9 +138,9 @@ public class CertificateService {
         return keyStoreService.loadAllCAIssuers();
     }
 
-    public CertificateViewDTO getAllCertificates() {
+    /*public CertificateViewDTO getAllCertificates() {
         return keyStoreService.loadAllCertificates();
-    }
+    }*/
 
     public String createCertificate(CreateCertificateDTO certDto) throws NonExistentIdException, MessagingException, InvalidCertificateException, CertificateNotCAException {
         // postavljanje statusa na accepted
@@ -175,10 +175,13 @@ public class CertificateService {
                 // u slucaju da nije postavljen basicConstraint ili keyUsage
             }
 
-            SubjectData subjectData = generateSubjectData(csr, startDate, endDate);
+            // generisanje kljuceva
+            KeyPair keyPair = KeyPairGenerator.generateKeyPair();
+
+            SubjectData subjectData = generateSubjectData(csr, startDate, endDate, keyPair);
             IssuerData issuerData = generateIssuerData(caAlias);
 
-            // email je alias za bazu
+            // email je alias za keystore
             RDN emailRDN = subjectData.getX500name().getRDNs(BCStyle.E)[0];
             String alias = emailRDN.getFirst().getValue().toString();
 
@@ -194,14 +197,20 @@ public class CertificateService {
             // postavljanje lanca sertifikata
             keyStoreService.loadKeyStore();
             // dodaje novi sertifikat na pocetak lanca
-            Certificate[] tempChain = new Certificate[issuerCertificateChain.length + 1];
+            Certificate[] newCertificateChain = createCertificateChain(certificate, issuerCertificateChain);
+            /*Certificate[] tempChain = new Certificate[issuerCertificateChain.length + 1];
             tempChain[0] = certificate;
             System.arraycopy(issuerCertificateChain, 0, tempChain, 1, issuerCertificateChain.length);
+            */
 
-            //cuvanje sertifikata u keystore (ne koristimo savePrivateKey jer ne znamo privatan kjuc)
+            // cuvanje sertifikata (niza sertifikata)
+            keyStoreService.savePrivateKey(alias, keyPair.getPrivate(), newCertificateChain);
+            keyStoreService.saveKeyStore();
+
+            /*//cuvanje sertifikata u keystore (ne koristimo savePrivateKey jer ne znamo privatan kjuc)
             //TODO potpisivanje privatnim kljucem???
             keyStoreService.saveCertificate(alias, certificate);
-            keyStoreService.saveKeyStore();
+            keyStoreService.saveKeyStore();*/
 
             return certData;
             /*// konverzija sertifikata u String radi transporta
@@ -216,7 +225,7 @@ public class CertificateService {
         return null;
     }
 
-    public SubjectData generateSubjectData(CSR csr, Date startDate, Date endDate) throws NoSuchAlgorithmException, InvalidKeyException {
+    public SubjectData generateSubjectData(CSR csr, Date startDate, Date endDate, KeyPair keyPair) throws NoSuchAlgorithmException, InvalidKeyException {
         X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
         builder.addRDN(BCStyle.CN, csr.getCommonName());
         builder.addRDN(BCStyle.O, csr.getOrganizationName());
@@ -227,7 +236,8 @@ public class CertificateService {
         builder.addRDN(BCStyle.E, csr.getEmail());
         X500Name x500name = builder.build();
 
-        PublicKey publicKey = csr.getPublicKey();
+        PublicKey publicKey = keyPair.getPublic();
+        //PublicKey publicKey = csr.getPublicKey();
 
         //serial number je ID iz baze
         SubjectData subjectData = new SubjectData(publicKey, x500name, "-1", startDate, endDate);
@@ -248,6 +258,17 @@ public class CertificateService {
     private CertificateData generateCertificateData(String commonName, String alias, String issuerAlias, Date validFrom, Date validTo) {
         CertificateData certData = new CertificateData(commonName, alias, issuerAlias, validFrom, validTo);
         return certificateDataService.save(certData);
+    }
+
+    private Certificate[] createCertificateChain(Certificate newCertificate, Certificate[] issuerChain) {
+        Certificate[] newChain = new Certificate[issuerChain.length + 1];
+        newChain[0] = newCertificate;
+
+        for(int i = 0; i < issuerChain.length; i++) {
+            newChain[i + 1] = issuerChain[i];
+        }
+
+        return newChain;
     }
 
     public String findByToken(String token) {

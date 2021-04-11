@@ -8,12 +8,12 @@
       <div *ngIf="node.revoked==true; then revoked else valid"></div>
       <ng-template #revoked>
         <mat-icon class="revoked">gpp_bad</mat-icon>
-        {{node.alias}}
+        {{node.commonName}}
         <button class="btn btn-color btn-tree" mat-button (click)="details(node.alias)">Details</button>
       </ng-template>
       <ng-template #valid>
         <mat-icon class="valid">gpp_good</mat-icon>
-        {{node.alias}}
+        {{node.commonName}}
         <button class="btn btn-color btn-tree" mat-button (click)="details(node.alias)">Details</button>
         <button class="btn btn-color btn-tree revoke" mat-button (click)="openRevokeDialog(node.alias)"
         [disabled]="node.alias=='serbioneer@gmail.com'">Revoke</button>
@@ -33,12 +33,12 @@
         <div *ngIf="node.revoked==true; then revoked else valid"></div>
         <ng-template #revoked>
           <mat-icon class="revoked">gpp_bad</mat-icon>
-          {{node.alias}}
+          {{node.commonName}}
           <button class="btn btn-color btn-tree" mat-button (click)="details(node.alias)">Details</button>
         </ng-template>
         <ng-template #valid>
           <mat-icon class="valid">gpp_good</mat-icon>
-          {{node.alias}}
+          {{node.commonName}}
           <button class="btn btn-color btn-tree" mat-button (click)="details(node.alias)">Details</button>
           <button class="btn btn-color btn-tree revoke" mat-button (click)="openRevokeDialog(node.alias)"
           [disabled]="node.alias=='serbioneer@gmail.com'">Revoke</button>

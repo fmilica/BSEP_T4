@@ -208,7 +208,6 @@ export class CreateCertificateComponent implements OnInit {
       this.chosenSigningCertificate.alias)
         .subscribe(
           (response) => {
-            this.signingCertificates = [response];
             this.setIssuerData(response);
           }
         )

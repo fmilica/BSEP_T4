@@ -41,7 +41,7 @@
             <ng-template matStepLabel>General Info</ng-template>
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Certificate template</mat-label>
-                <mat-select formControlName="certificateType" (selectionChange)="setDates();setExtensions()">
+                <mat-select formControlName="certificateType" (selectionChange)="setDates();setExtensions();getCertificates()">
                     <mat-option value="CA_CERT">Intermediate CA</mat-option>
                     <mat-option value="TLS_SERVER">TLS server</mat-option>
                     <mat-option value="TLS_CLIENT">TLS client</mat-option>

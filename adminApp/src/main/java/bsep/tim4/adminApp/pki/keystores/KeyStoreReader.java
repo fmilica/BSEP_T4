@@ -160,7 +160,7 @@ public class KeyStoreReader {
         }
     }
 
-    public CertificateViewDTO readAllCertificates(String keyStoreFile, String keyStorePass, String keyPass) {
+    /*public CertificateViewDTO readAllCertificates(String keyStoreFile, String keyStorePass, String keyPass) {
         try {
             // kreiramo instancu KeyStore
             KeyStore ks = KeyStore.getInstance("JKS", "SUN");
@@ -176,7 +176,7 @@ public class KeyStoreReader {
             //prvo pronalazimo root ca
             X509Certificate rootCertificate = (X509Certificate) readCertificate(keyStoreFile, keyStorePass, "serbioneer@gmail.com");
 
-            CertificateViewDTO root = new CertificateViewDTO("serbioneer@gmail.com", false);
+            CertificateViewDTO root = new CertificateViewDTO("serbioneer@gmail.com", "adminRoot", false);
 
             ArrayList<CertificateViewDTO> rootChildren =  new ArrayList<>();
 
@@ -207,7 +207,7 @@ public class KeyStoreReader {
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 
     public boolean isRevoked(Certificate cer) throws IOException, CertificateException, CRLException {
 

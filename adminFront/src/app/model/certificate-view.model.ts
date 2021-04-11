@@ -1,5 +1,6 @@
 export class CertificateView {
     alias: string;
-    status: string;
+    commonName: string;
+    revoked: boolean;
     children?: CertificateView[];
   }

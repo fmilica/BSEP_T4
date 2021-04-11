@@ -76,8 +76,7 @@ public class CertificateController {
         }
         String certificateChain = null;
         try {
-            certificateChain = certificateService.getRootChainPemCertificate(alias);
-            //certificateChain = certificateService.getPemCertificateChain(alias);
+            certificateChain = certificateService.getPemCertificateChain(alias);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,23 +91,13 @@ public class CertificateController {
     public ResponseEntity<Object> adminDownloadCertificate(@RequestParam("alias") String alias) {
         String certificateChain = null;
         try {
-            certificateChain = certificateService.getRootChainPemCertificate(alias);
-            //certificateChain = certificateService.getPemCertificate(alias);
-            //certificateChain = certificateService.getPemCertificateChain(alias);
+            certificateChain = certificateService.getPemCertificateChain(alias);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         byte[] contents = certificateChain.getBytes();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        String filename = "certificate.crt";
-        ContentDisposition contentDisposition = ContentDisposition
-                .builder("inline")
-                .filename(filename)
-                .build();
-        headers.setContentDisposition(contentDisposition);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        HttpHeaders headers = createDownloadCertHeaders();
         return new ResponseEntity<>(contents, headers, HttpStatus.OK);
     }
 
