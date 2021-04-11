@@ -1,7 +1,6 @@
 package bsep.tim4.hospitalApp.users.config;
 
 import bsep.tim4.hospitalApp.users.jwt.JwtAuthenticationFilter;
-import bsep.tim4.hospitalApp.users.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import bsep.tim4.hospitalApp.users.jwt.TokenUtils;
 import bsep.tim4.hospitalApp.users.service.SecureUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -33,7 +35,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     // Handler za vracanje 401 UNAUTHORIZED
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
@@ -49,6 +51,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(secureUserDetailsService).passwordEncoder(passwordEncoder());
     }
+
+    @Autowired
+    private CustomLoginFailureHandler loginFailureHandler;
+
+    @Autowired
+    private CustomLoginSuccessHandler loginSuccessHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -71,15 +79,21 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     // dok su u
                     //.anyRequest().authenticated()
                     .and()
+                /*.formLogin()
+                    //.usernameParameter("email")
+                    //.loginPage("/auth/login")
+                    .failureHandler(loginFailureHandler)
+                    .successHandler(loginSuccessHandler)
+                    .permitAll()
+                    .and()*/
                 // dozvola odjave
                 .logout()
                 	.logoutUrl("/logout-user")
                 	.logoutSuccessUrl("/successful-logout.html")
                     .and()
                 // dodavanje custom filtera
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), tokenUtils))
-                .addFilterAfter(new JwtAuthenticationFilter(tokenUtils, secureUserDetailsService),
-                				JwtUsernameAndPasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(tokenUtils, secureUserDetailsService),
+                        BasicAuthenticationFilter.class);
     }
 
 }

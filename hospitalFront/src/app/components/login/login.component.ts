@@ -53,7 +53,8 @@ export class LoginComponent implements OnInit {
           this.authService.role.next(this.authService.getLoggedInUserAuthority());
         },
         (error) => {
-          this.router.navigate(['homepage']);
+          this.toastr.error(error.error.message)
+          console.log(error)
           /*
           if (error.status === 401) {
             this.toastr.error('Incorrect email or password.');
