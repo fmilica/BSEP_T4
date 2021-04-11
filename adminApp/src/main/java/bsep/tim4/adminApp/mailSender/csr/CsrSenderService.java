@@ -40,7 +40,7 @@ public class CsrSenderService {
         String recipientAddress = certificateRequest.getEmail();
         String subject = "Certificate Signing Request Verification";
         String verificationUrl
-                = "http://localhost:8080" + "/api/csr/verification?token=" + token;
+                = "https://localhost:8080" + "/api/csr/verification?token=" + token;
 
         mailSender.setUsername(env.getProperty("spring.mail.username"));
         mailSender.setPassword(env.getProperty("spring.mail.password"));
