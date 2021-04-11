@@ -52,12 +52,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(secureUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
-    @Autowired
-    private CustomLoginFailureHandler loginFailureHandler;
-
-    @Autowired
-    private CustomLoginSuccessHandler loginSuccessHandler;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

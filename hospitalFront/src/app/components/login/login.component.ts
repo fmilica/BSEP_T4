@@ -54,13 +54,6 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           this.toastr.error(error.error.message)
-          console.log(error)
-          /*
-          if (error.status === 401) {
-            this.toastr.error('Incorrect email or password.');
-          } else {
-            this.toastr.error('503 Server Unavailable');
-          }*/
           this.loginForm.reset();
         }
       );

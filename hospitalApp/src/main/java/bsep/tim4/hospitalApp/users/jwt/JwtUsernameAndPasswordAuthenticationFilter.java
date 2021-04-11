@@ -1,7 +1,5 @@
 package bsep.tim4.hospitalApp.users.jwt;
 
-import bsep.tim4.hospitalApp.users.config.CustomLoginFailureHandler;
-import bsep.tim4.hospitalApp.users.config.CustomLoginSuccessHandler;
 import bsep.tim4.hospitalApp.users.dto.UserLoginDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
@@ -26,21 +24,9 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
     private final TokenUtils tokenUtils;
 
-    @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler() {
-        return new CustomLoginFailureHandler();
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new CustomLoginSuccessHandler();
-    }
-
     public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager, TokenUtils tokenUtils) {
         this.authenticationManager = authenticationManager;
         this.tokenUtils = tokenUtils;
-        this.setAuthenticationFailureHandler(authenticationFailureHandler());
-        this.setAuthenticationSuccessHandler(authenticationSuccessHandler());
     }
 
 
