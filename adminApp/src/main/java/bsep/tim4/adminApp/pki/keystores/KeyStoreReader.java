@@ -123,7 +123,7 @@ public class KeyStoreReader {
         return null;
     }
 
-    public Map<String, IssuerData> readAllCAIssuers(String keyStoreFile, String keyStorePass, String keyPass) {
+    public Map<Long, IssuerData> readAllCAIssuers(String keyStoreFile, String keyStorePass, String keyPass) {
         try {
             // kreiramo instancu KeyStore
             KeyStore ks = KeyStore.getInstance("JKS", "SUN");
@@ -137,15 +137,16 @@ public class KeyStoreReader {
             List<String> aliases = Collections.list(aliasEnumeration);
 
             //issuer data od ca
-            Map<String, IssuerData> issuerDatas = new HashMap<>();
+            Map<Long, IssuerData> issuerDatas = new HashMap<>();
             //List<IssuerData> issuerDatas = new ArrayList<>();
 
             //prolazimo kroz sve sertifikate u keystore i vracamo njihov issuer data
             for (String alias : aliases) {
                 X509Certificate certificate = (X509Certificate)readCertificate(keyStoreFile, keyStorePass, alias);
+                Long serialNumb = certificate.getSerialNumber().longValue();
                 // da li je CA sertifikat
                 if(certificate.getBasicConstraints() != -1){
-                    issuerDatas.put(alias, readIssuerFromStore(keyStoreFile, alias, keyStorePass.toCharArray(), keyPass.toCharArray()));
+                    issuerDatas.put(serialNumb, readIssuerFromStore(keyStoreFile, alias, keyStorePass.toCharArray(), keyPass.toCharArray()));
                 }
 
             }

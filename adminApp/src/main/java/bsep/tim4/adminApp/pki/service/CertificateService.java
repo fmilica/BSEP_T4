@@ -37,10 +37,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CertificateService {
@@ -142,7 +139,17 @@ public class CertificateService {
 
 
     public Map<String, IssuerData> getAllCAIssuers() {
-        return keyStoreService.loadAllCAIssuers();
+        Map<String, IssuerData> validCaIssuers = new HashMap<>();
+        Map<Long, IssuerData> caIssuers = keyStoreService.loadAllCAIssuers();
+        for (Map.Entry<Long, IssuerData> entry : caIssuers.entrySet()) {
+            Long serialNumb = entry.getKey();
+            IssuerData issuer = entry.getValue();
+            CertificateData certData = certificateDataService.findById(serialNumb);
+            if (!certData.isRevoked()) {
+                validCaIssuers.put(certData.getAlias(), issuer);
+            }
+        }
+        return validCaIssuers;
     }
 
     /*public CertificateViewDTO getAllCertificates() {

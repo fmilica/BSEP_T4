@@ -96,7 +96,7 @@ public class KeyStoreService {
         return this.keyStoreReader.readCertificateChain(keyStorePath + keyStoreName, keyStorePass, alias);
     }
 
-    public Map<String, IssuerData> loadAllCAIssuers() {
+    public Map<Long, IssuerData> loadAllCAIssuers() {
         return this.keyStoreReader.readAllCAIssuers(keyStorePath + keyStoreName, keyStorePass, rootCAPass);
     }
 
