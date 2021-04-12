@@ -56,7 +56,7 @@ public class AdminPkiInit implements ApplicationRunner {
         // ako keystore ne postoji, kreiraj ga
         keyStoreService.loadKeyStore();
         // ako root sertifikat ne postoji, kreiraj ga
-        Certificate root = keyStoreService.loadCertificate("serbioneer@gmail.com");
+        Certificate root = keyStoreService.loadCertificate("adminroot");
         if (root == null) {
             createRootCertificate();
             keyStoreService.saveKeyStore();
@@ -85,7 +85,7 @@ public class AdminPkiInit implements ApplicationRunner {
         X509Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, rootAdditionalInfo);
         //poziva se savePrivateKey jer za ovaj sertifikat ima i privatni kljuc, root sertifikat
         //za ostale sertifikate se poziva saveCertificate jer ima samo sertifikat i njegov javni kljuc, a privatni kljuc mu je nedostupan
-        keyStoreService.savePrivateKey("serbioneer@gmail.com", privateKey, certificate );
+        keyStoreService.savePrivateKey("adminroot", privateKey, certificate );
     }
 
     private X500Name generateCertIssAndSubjData() {
@@ -117,7 +117,7 @@ public class AdminPkiInit implements ApplicationRunner {
     }
     
     private CertificateData createRootInfoEntity(Date startDate, Date endDate) {
-        CertificateData certData = new CertificateData("adminRoot", "serbioneer@gmail.com", "serbioneer@gmail.com", startDate, endDate);
+        CertificateData certData = new CertificateData("adminRoot", "adminroot", "adminroot", "serbioneer@gmail.com", startDate, endDate);
         certData = certificateDataService.save(certData);
         return certData;
     }

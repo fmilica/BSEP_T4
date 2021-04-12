@@ -11,6 +11,8 @@ import java.io.File;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @Service
 public class KeyStoreService {
@@ -66,6 +68,7 @@ public class KeyStoreService {
     }
 
     public PrivateKey loadPrivateKey(String alias) {
+        alias = alias.toLowerCase();
         return this.keyStoreReader.readPrivateKey(
                 keyStorePath + keyStoreName, keyStorePass, alias, rootCAPass);
     }
@@ -75,22 +78,25 @@ public class KeyStoreService {
     }
 
     public Certificate loadCertificate(String alias) {
+        alias = alias.toLowerCase();
         return this.keyStoreReader.readCertificate(
                 keyStorePath + keyStoreName, keyStorePass, alias);
     }
 
     // dobavljanje privatnog kljuca (i podataka o vlasniku) vezanog za sertifikat sa datim aliasom
     public IssuerData loadIssuerData(String alias, String keyPassword) {
+        alias = alias.toLowerCase();
         return this.keyStoreReader.readIssuerFromStore(
                 keyStorePath + keyStoreName, alias,
                         keyStorePass.toCharArray(), keyPassword.toCharArray());
     }
 
     public Certificate[] readCertificateChain(String alias) {
+        alias = alias.toLowerCase();
         return this.keyStoreReader.readCertificateChain(keyStorePath + keyStoreName, keyStorePass, alias);
     }
 
-    public List<IssuerData> loadAllCAIssuers() {
+    public Map<String, IssuerData> loadAllCAIssuers() {
         return this.keyStoreReader.readAllCAIssuers(keyStorePath + keyStoreName, keyStorePass, rootCAPass);
     }
 

@@ -11,12 +11,13 @@ import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CertificateSignerMapper {
 
-    public CertificateSignerDTO toCertificateSignerDto(IssuerData issuerData) {
+    public CertificateSignerDTO toCertificateSignerDto(String alias, IssuerData issuerData) {
         //PrivateKey privateKey = issuerData.getPrivateKey();
-        String alias = (issuerData.getX500name().getRDNs(BCStyle.E)[0]).getFirst().getValue().toString();
+        //String alias = (issuerData.getX500name().getRDNs(BCStyle.E)[0]).getFirst().getValue().toString();
         String commonName = (issuerData.getX500name().getRDNs(BCStyle.CN)[0]).getFirst().getValue().toString();
         String name = (issuerData.getX500name().getRDNs(BCStyle.GIVENNAME)[0]).getFirst().getValue().toString();
         String surname = (issuerData.getX500name().getRDNs(BCStyle.SURNAME)[0]).getFirst().getValue().toString();
@@ -29,10 +30,10 @@ public class CertificateSignerMapper {
                     country, email);
     }
 
-    public List<CertificateSignerDTO> toCertificateSignerDtoList(List<IssuerData> issuerDatas) {
+    public List<CertificateSignerDTO> toCertificateSignerDtoList(Map<String, IssuerData> issuerDatas) {
         List<CertificateSignerDTO> certificateSignerDTOS = new ArrayList<CertificateSignerDTO>();
-        for(IssuerData issuerData : issuerDatas) {
-            certificateSignerDTOS.add(toCertificateSignerDto(issuerData));
+        for(Map.Entry<String, IssuerData> issuerData : issuerDatas.entrySet()) {
+            certificateSignerDTOS.add(toCertificateSignerDto(issuerData.getKey(), issuerData.getValue()));
         }
         return certificateSignerDTOS;
     }

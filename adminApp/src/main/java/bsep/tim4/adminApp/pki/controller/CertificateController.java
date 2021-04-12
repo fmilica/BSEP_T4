@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -114,7 +115,7 @@ public class CertificateController {
     public ResponseEntity<CertificateSignerDTO> getRootCertificate() {
         IssuerData issuerData = certificateService.getRootCertificate();
 
-        CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto(issuerData);
+        CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto("adminroot", issuerData);
 
         return new ResponseEntity<>(certificateSignerDTO, HttpStatus.OK);
     }
@@ -122,7 +123,7 @@ public class CertificateController {
     @GetMapping( value = "/ca-certificates")
     @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<List<CertificateSignerDTO>> getCACertificates() {
-        List<IssuerData> issuerDataList = certificateService.getAllCAIssuers();
+        Map<String, IssuerData> issuerDataList = certificateService.getAllCAIssuers();
 
         List<CertificateSignerDTO> certificateSignerDTOList = certificateSignerMapper.toCertificateSignerDtoList(issuerDataList);
 
@@ -133,7 +134,7 @@ public class CertificateController {
     @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<CertificateSignerDTO> getByAlias(@PathVariable String alias) {
         IssuerData issuerData = certificateService.getByAlias(alias);
-        CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto(issuerData);
+        CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto(alias, issuerData);
 
         return new ResponseEntity<>(certificateSignerDTO, HttpStatus.OK);
     }

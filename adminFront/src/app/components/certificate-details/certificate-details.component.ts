@@ -48,7 +48,7 @@ export class CertificateDetailsComponent implements OnInit {
         let url = window.URL.createObjectURL(blob);
         var link = document.createElement('a');
         link.href = url;
-        link.download = this.data.commonName + this.data.serialNumb + ".p12";
+        link.download = this.data.commonName + "_" + this.data.serialNumb + ".p12";
         link.click();
       }
     )

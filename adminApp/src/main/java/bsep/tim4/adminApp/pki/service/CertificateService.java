@@ -40,6 +40,7 @@ import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CertificateService {
@@ -60,7 +61,7 @@ public class CertificateService {
     private String keyStorePass;
 
     public IssuerData getRootCertificate() {
-        IssuerData issuerData = keyStoreService.loadIssuerData("serbioneer@gmail.com", "RootPassword");
+        IssuerData issuerData = keyStoreService.loadIssuerData("adminroot", "RootPassword");
 
         return issuerData;
     }
@@ -140,7 +141,7 @@ public class CertificateService {
     }
 
 
-    public List<IssuerData> getAllCAIssuers() {
+    public Map<String, IssuerData> getAllCAIssuers() {
         return keyStoreService.loadAllCAIssuers();
     }
 
@@ -187,14 +188,25 @@ public class CertificateService {
             SubjectData subjectData = generateSubjectData(csr, startDate, endDate, keyPair);
             IssuerData issuerData = generateIssuerData(caAlias);
 
-            // email je alias za keystore
+            // email
             RDN emailRDN = subjectData.getX500name().getRDNs(BCStyle.E)[0];
-            String alias = emailRDN.getFirst().getValue().toString();
-
-            // generisanje za bazu
+            String email = emailRDN.getFirst().getValue().toString();
+            // alias za keystore
+            // = commonName + issuerCommonName + serialNumber
             RDN commonNameRDN = subjectData.getX500name().getRDNs(BCStyle.CN)[0];
             String commonName = commonNameRDN.getFirst().getValue().toString();
-            CertificateData certData = generateCertificateData(commonName, alias, caAlias, startDate, endDate);
+            RDN issuerCommonNameRDN = issuerData.getX500name().getRDNs(BCStyle.CN)[0];
+            String issuerCommonName = issuerCommonNameRDN.getFirst().getValue().toString();
+            String alias = commonName + "-" + issuerCommonName;
+
+            // generisanje za bazu
+            /*RDN commonNameRDN = subjectData.getX500name().getRDNs(BCStyle.CN)[0];
+            String commonName = commonNameRDN.getFirst().getValue().toString();*/
+            CertificateData certData = generateCertificateData(commonName, alias, caAlias, email, startDate, endDate);
+            alias = certData.getId().toString() + "-" + alias;
+            alias = alias.toLowerCase();
+            certData.setAlias(alias);
+            certificateDataService.save(certData);
             subjectData.setSerialNumber(certData.getId().toString());
 
             //generisanje sertifikata
@@ -245,8 +257,8 @@ public class CertificateService {
         return issuerData;
     }
 
-    private CertificateData generateCertificateData(String commonName, String alias, String issuerAlias, Date validFrom, Date validTo) {
-        CertificateData certData = new CertificateData(commonName, alias, issuerAlias, validFrom, validTo);
+    private CertificateData generateCertificateData(String commonName, String alias, String issuerAlias, String email, Date validFrom, Date validTo) {
+        CertificateData certData = new CertificateData(commonName, alias, issuerAlias, email, validFrom, validTo);
         return certificateDataService.save(certData);
     }
 
@@ -287,7 +299,7 @@ public class CertificateService {
 
     public String getRootChainPemCertificate(String alias) throws IOException {
         Certificate certificate = keyStoreService.loadCertificate(alias);
-        Certificate root = keyStoreService.loadCertificate("serbioneer@gmail.com");
+        Certificate root = keyStoreService.loadCertificate("adminroot");
         StringBuilder chainBuilder = new StringBuilder();
         String pemCertificate = writeCertificateToPEM((X509Certificate) certificate);
         chainBuilder.append(pemCertificate);

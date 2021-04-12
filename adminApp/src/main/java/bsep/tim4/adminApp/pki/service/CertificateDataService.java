@@ -63,9 +63,8 @@ public class CertificateDataService {
     }
 
     public List<CertificateViewDTO> findCertificateView() {
-        CertificateData rootCertificate = certificateDataRepository.findByAlias("serbioneer@gmail.com");
-        List<CertificateData> rootChildren = certificateDataRepository.findAllByAliasNotAndParentAlias("serbioneer@gmail.com", "serbioneer@gmail.com");
-        //List<CertificateData> children = certificateDataRepository.findAllByAliasNot("serbioneer@gmail.com");
+        CertificateData rootCertificate = certificateDataRepository.findByAlias("adminroot");
+        List<CertificateData> rootChildren = certificateDataRepository.findAllByAliasNotAndParentAlias("adminroot", "adminroot");
         // kreiranje view-a
         CertificateViewDTO root = new CertificateViewDTO(rootCertificate.getAlias(), rootCertificate.getCommonName(), rootCertificate.isRevoked());
         List<CertificateViewDTO> childrenView = new ArrayList<>();
