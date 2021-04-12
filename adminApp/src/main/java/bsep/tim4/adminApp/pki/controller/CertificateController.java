@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -76,8 +77,7 @@ public class CertificateController {
         }
         String certificateChain = null;
         try {
-            certificateChain = certificateService.getRootChainPemCertificate(alias);
-            //certificateChain = certificateService.getPemCertificateChain(alias);
+            certificateChain = certificateService.getPemCertificateChain(alias);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,23 +92,21 @@ public class CertificateController {
     public ResponseEntity<Object> adminDownloadCertificate(@RequestParam("alias") String alias) {
         String certificateChain = null;
         try {
-            certificateChain = certificateService.getRootChainPemCertificate(alias);
-            //certificateChain = certificateService.getPemCertificate(alias);
-            //certificateChain = certificateService.getPemCertificateChain(alias);
+            certificateChain = certificateService.getPemCertificateChain(alias);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         byte[] contents = certificateChain.getBytes();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        String filename = "certificate.crt";
-        ContentDisposition contentDisposition = ContentDisposition
-                .builder("inline")
-                .filename(filename)
-                .build();
-        headers.setContentDisposition(contentDisposition);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        HttpHeaders headers = createDownloadCertHeaders();
+        return new ResponseEntity<>(contents, headers, HttpStatus.OK);
+    }
+
+    @GetMapping( value = "/download-pkcs12")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    public ResponseEntity<Object> adminDownloadPkcs12(@RequestParam("alias") String alias) {
+        byte[] contents = certificateService.getPkcs12Format(alias);
+        HttpHeaders headers = createDownloadCertHeaders();
         return new ResponseEntity<>(contents, headers, HttpStatus.OK);
     }
 
@@ -117,7 +115,7 @@ public class CertificateController {
     public ResponseEntity<CertificateSignerDTO> getRootCertificate() {
         IssuerData issuerData = certificateService.getRootCertificate();
 
-        CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto(issuerData);
+        CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto("adminroot", issuerData);
 
         return new ResponseEntity<>(certificateSignerDTO, HttpStatus.OK);
     }
@@ -125,7 +123,7 @@ public class CertificateController {
     @GetMapping( value = "/ca-certificates")
     @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<List<CertificateSignerDTO>> getCACertificates() {
-        List<IssuerData> issuerDataList = certificateService.getAllCAIssuers();
+        Map<String, IssuerData> issuerDataList = certificateService.getAllCAIssuers();
 
         List<CertificateSignerDTO> certificateSignerDTOList = certificateSignerMapper.toCertificateSignerDtoList(issuerDataList);
 
@@ -136,7 +134,7 @@ public class CertificateController {
     @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<CertificateSignerDTO> getByAlias(@PathVariable String alias) {
         IssuerData issuerData = certificateService.getByAlias(alias);
-        CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto(issuerData);
+        CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto(alias, issuerData);
 
         return new ResponseEntity<>(certificateSignerDTO, HttpStatus.OK);
     }

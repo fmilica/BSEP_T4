@@ -34,7 +34,21 @@ export class CertificateDetailsComponent implements OnInit {
         let url = window.URL.createObjectURL(blob);
         var link = document.createElement('a');
         link.href = url;
-        link.download = this.data.certAlias + ".crt";
+        link.download = this.data.commonName + this.data.serialNumb + ".crt";
+        link.click();
+      }
+    )
+  }
+
+  downloadPkcs12(): void {
+    this.certificateService.downloadPkcs12(this.data.certAlias).subscribe(
+      response => {
+        let type = "application/crt";
+        let blob = new Blob([response], { type: type});
+        let url = window.URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = this.data.commonName + "_" + this.data.serialNumb + ".p12";
         link.click();
       }
     )

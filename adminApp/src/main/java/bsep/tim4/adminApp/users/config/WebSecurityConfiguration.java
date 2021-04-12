@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -80,9 +81,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 	.logoutSuccessUrl("/successful-logout.html")
                     .and()
                 // dodavanje custom filtera
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), tokenUtils))
-                .addFilterAfter(new JwtAuthenticationFilter(tokenUtils, secureUserDetailsService),
-                				JwtUsernameAndPasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(tokenUtils, secureUserDetailsService),
+                        BasicAuthenticationFilter.class);
     }
 
 }

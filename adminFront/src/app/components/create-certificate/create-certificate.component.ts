@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { CertificateAdditionalInfo } from 'src/app/model/certificate-additional-info.model';
 import { Certificate } from 'src/app/model/certificate.model';
 import { CreateCertificate } from 'src/app/model/create-certificate.model';
 import { CertificateService } from 'src/app/services/certificate.service';
@@ -54,9 +55,22 @@ export class CreateCertificateComponent implements OnInit {
       startDate: new FormControl({ value: new Date(), disabled: true}, []),
       endDate: new FormControl('', [Validators.required]),
       // key usage
-      // digitalSignature: new FormControl(''),
-      // nonRepudiation: new FormControl(''),
-      // keyEncipherment: new FormControl(''),
+      digitalSignature: new FormControl(''),
+      nonRepudiation: new FormControl(''),
+      keyEncipherment: new FormControl(''),
+      dataEncipherment: new FormControl(''),
+      keyAgreement: new FormControl(''),
+      keyCertSign: new FormControl(''),
+      cRLSign: new FormControl(''),
+      encipherOnly: new FormControl(''),
+      decipherOnly: new FormControl(''),
+      // extended key usage
+      serverAuth: new FormControl(''),
+      clientAuth: new FormControl(''),
+      codeSigning: new FormControl(''),
+      emailProtection: new FormControl(''),
+      timeStamping: new FormControl(''),
+      ocspSigning: new FormControl('')
     });
     this.issuerInfoForm = new FormGroup({
       signingCertificate: new FormControl('', [Validators.required]),
@@ -73,6 +87,7 @@ export class CreateCertificateComponent implements OnInit {
   ngOnInit(): void {
     this.setSubjectInfo();
     this.setDates();
+    this.setExtensions();
     this.getCertificates();
   }
 
@@ -119,6 +134,39 @@ export class CreateCertificateComponent implements OnInit {
     }
   }
 
+  setExtensions() {
+    let certType = this.generalInfoForm.get('certificateType').value;
+    this.uncheckAll();
+    switch (certType) {
+      case "CA_CERT":
+        this.generalInfoForm.get('digitalSignature').setValue(true);
+        this.generalInfoForm.get('keyCertSign').setValue(true);
+        this.generalInfoForm.get('dataEncipherment').setValue(true);
+        break;
+      case "TLS_SERVER":
+        this.generalInfoForm.get('digitalSignature').setValue(true);
+        this.generalInfoForm.get('dataEncipherment').setValue(true);
+        this.generalInfoForm.get('keyAgreement').setValue(true);
+        this.generalInfoForm.get('keyEncipherment').setValue(true);
+        // extended key usage
+        this.generalInfoForm.get('serverAuth').setValue(true);
+        break;
+      case "TLS_CLIENT":
+        this.generalInfoForm.get('digitalSignature').setValue(true);
+        this.generalInfoForm.get('dataEncipherment').setValue(true);
+        this.generalInfoForm.get('keyAgreement').setValue(true);
+        // extended key usage
+        this.generalInfoForm.get('clientAuth').setValue(true);
+        break;
+      case "END_USER":
+        this.generalInfoForm.get('digitalSignature').setValue(true);
+        this.generalInfoForm.get('dataEncipherment').setValue(true);
+        break;
+      default:
+        break;
+    }
+  }
+
   getCertificates() {
     if (this.createCA) {
       this.certificateService.getRootCertificate()
@@ -160,7 +208,6 @@ export class CreateCertificateComponent implements OnInit {
       this.chosenSigningCertificate.alias)
         .subscribe(
           (response) => {
-            this.signingCertificates = [response];
             this.setIssuerData(response);
           }
         )
@@ -178,8 +225,17 @@ export class CreateCertificateComponent implements OnInit {
         this.chosenSigningCertificate.alias,
         this.generalInfoForm.get('startDate').value,
         this.generalInfoForm.get('endDate').value,
-        this.generalInfoForm.get('certificateType').value
+        new CertificateAdditionalInfo()
       )
+
+    if (this.generalInfoForm.get('certificateType').value === "CA_CERT") {
+      newCert.additionalInfo.ca = true;
+    } else {
+      newCert.additionalInfo.ca = false;
+    }
+    newCert.additionalInfo.keyUsages = this.getKeyUsages();
+    newCert.additionalInfo.extendedKeyUsages = this.getExtendedKeyUsages();
+
     this.certificateService.createCertificate(newCert)
       .subscribe(
         response => {
@@ -190,5 +246,79 @@ export class CreateCertificateComponent implements OnInit {
           this.toastr.success('Successfully created certificate!');
           this.router.navigate(['homepage/csr']);
         });
+  }
+
+  getKeyUsages(): number[] {
+    let keyUsages : number[] = [];
+    if (this.generalInfoForm.get('digitalSignature').value) {
+      keyUsages.push(128);
+    }
+    if (this.generalInfoForm.get('nonRepudiation').value) {
+      keyUsages.push(64);
+    }
+    if (this.generalInfoForm.get('keyEncipherment').value) {
+      keyUsages.push(32);
+    }
+    if (this.generalInfoForm.get('dataEncipherment').value) {
+      keyUsages.push(16);
+    }
+    if (this.generalInfoForm.get('keyAgreement').value) {
+      keyUsages.push(8);
+    }
+    if (this.generalInfoForm.get('keyCertSign').value) {
+      keyUsages.push(4);
+    }
+    if (this.generalInfoForm.get('cRLSign').value) {
+      keyUsages.push(2);
+    }
+    if (this.generalInfoForm.get('encipherOnly').value) {
+      keyUsages.push(1);
+    }
+    if (this.generalInfoForm.get('decipherOnly').value) {
+      keyUsages.push(32768);
+    }
+    return keyUsages;
+  }
+
+  getExtendedKeyUsages(): string[] {
+    let extendedKeyUsages : string[] = [];
+    if (this.generalInfoForm.get('serverAuth').value) {
+      extendedKeyUsages.push('id_kp_serverAuth');
+    }
+    if (this.generalInfoForm.get('clientAuth').value) {
+      extendedKeyUsages.push('id_kp_clientAuth');
+    }
+    if (this.generalInfoForm.get('codeSigning').value) {
+      extendedKeyUsages.push('id_kp_codeSigning');
+    }
+    if (this.generalInfoForm.get('emailProtection').value) {
+      extendedKeyUsages.push('id_kp_emailProtection');
+    }
+    if (this.generalInfoForm.get('timeStamping').value) {
+      extendedKeyUsages.push('id_kp_timeStamping');
+    }
+    if (this.generalInfoForm.get('ocspSigning').value) {
+      extendedKeyUsages.push('id_kp_OCSPSigning');
+    }
+    return extendedKeyUsages;
+  }
+
+  uncheckAll() {
+    this.generalInfoForm.get('digitalSignature').setValue(false);
+    this.generalInfoForm.get('nonRepudiation').setValue(false);
+    this.generalInfoForm.get('keyEncipherment').setValue(false);
+    this.generalInfoForm.get('dataEncipherment').setValue(false);
+    this.generalInfoForm.get('keyAgreement').setValue(false);
+    this.generalInfoForm.get('keyCertSign').setValue(false);
+    this.generalInfoForm.get('cRLSign').setValue(false);
+    this.generalInfoForm.get('encipherOnly').setValue(false);
+    this.generalInfoForm.get('decipherOnly').setValue(false);
+    // extended
+    this.generalInfoForm.get('serverAuth').setValue(false);
+    this.generalInfoForm.get('clientAuth').setValue(false);
+    this.generalInfoForm.get('codeSigning').setValue(false);
+    this.generalInfoForm.get('emailProtection').setValue(false);
+    this.generalInfoForm.get('timeStamping').setValue(false);
+    this.generalInfoForm.get('ocspSigning').setValue(false);
   }
 }

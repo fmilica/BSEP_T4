@@ -11,10 +11,7 @@ import java.nio.file.Files;
 import java.security.*;
 import java.security.cert.*;
 import java.security.cert.Certificate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 public class KeyStoreReader {
     // KeyStore je Java klasa za citanje specijalizovanih datoteka koje se koriste za cuvanje kljuceva
@@ -126,7 +123,7 @@ public class KeyStoreReader {
         return null;
     }
 
-    public List<IssuerData> readAllCAIssuers(String keyStoreFile, String keyStorePass, String keyPass) {
+    public Map<String, IssuerData> readAllCAIssuers(String keyStoreFile, String keyStorePass, String keyPass) {
         try {
             // kreiramo instancu KeyStore
             KeyStore ks = KeyStore.getInstance("JKS", "SUN");
@@ -140,14 +137,15 @@ public class KeyStoreReader {
             List<String> aliases = Collections.list(aliasEnumeration);
 
             //issuer data od ca
-            List<IssuerData> issuerDatas = new ArrayList<>();
+            Map<String, IssuerData> issuerDatas = new HashMap<>();
+            //List<IssuerData> issuerDatas = new ArrayList<>();
 
             //prolazimo kroz sve sertifikate u keystore i vracamo njihov issuer data
             for (String alias : aliases) {
                 X509Certificate certificate = (X509Certificate)readCertificate(keyStoreFile, keyStorePass, alias);
                 // da li je CA sertifikat
                 if(certificate.getBasicConstraints() != -1){
-                    issuerDatas.add(readIssuerFromStore(keyStoreFile, alias, keyStorePass.toCharArray(), keyPass.toCharArray()));
+                    issuerDatas.put(alias, readIssuerFromStore(keyStoreFile, alias, keyStorePass.toCharArray(), keyPass.toCharArray()));
                 }
 
             }
@@ -160,7 +158,7 @@ public class KeyStoreReader {
         }
     }
 
-    public CertificateViewDTO readAllCertificates(String keyStoreFile, String keyStorePass, String keyPass) {
+    /*public CertificateViewDTO readAllCertificates(String keyStoreFile, String keyStorePass, String keyPass) {
         try {
             // kreiramo instancu KeyStore
             KeyStore ks = KeyStore.getInstance("JKS", "SUN");
@@ -176,7 +174,7 @@ public class KeyStoreReader {
             //prvo pronalazimo root ca
             X509Certificate rootCertificate = (X509Certificate) readCertificate(keyStoreFile, keyStorePass, "serbioneer@gmail.com");
 
-            CertificateViewDTO root = new CertificateViewDTO("serbioneer@gmail.com", false);
+            CertificateViewDTO root = new CertificateViewDTO("serbioneer@gmail.com", "adminRoot", false);
 
             ArrayList<CertificateViewDTO> rootChildren =  new ArrayList<>();
 
@@ -207,17 +205,6 @@ public class KeyStoreReader {
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 
-    public boolean isRevoked(Certificate cer) throws IOException, CertificateException, CRLException {
-
-        CertificateFactory factory = CertificateFactory.getInstance("X.509");
-
-        File file = new File("src/main/resources/CRLs.crl");
-
-        byte[] bytes = Files.readAllBytes(file.toPath());
-        X509CRL crl = (X509CRL) factory.generateCRL(new ByteArrayInputStream(bytes));
-
-        return crl.isRevoked(cer);
-    }
 }

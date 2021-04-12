@@ -14,5 +14,9 @@ public interface CertificateDataRepository extends JpaRepository<CertificateData
 
     List<CertificateData> findAllByAliasNot(String alias);
 
+    List<CertificateData> findAllByParentAlias(String parentAlias);
+
+    List<CertificateData> findAllByAliasNotAndParentAlias(String alias, String parentAlias);
+
     CertificateData findOneById(Long serialNumb);
 }

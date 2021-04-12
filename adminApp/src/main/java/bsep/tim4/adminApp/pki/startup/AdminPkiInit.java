@@ -3,6 +3,7 @@ package bsep.tim4.adminApp.pki.startup;
 import bsep.tim4.adminApp.pki.model.CertificateData;
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
+import bsep.tim4.adminApp.pki.model.dto.CertificateAdditionalInfo;
 import bsep.tim4.adminApp.pki.model.enums.CertificateTemplateEnum;
 import bsep.tim4.adminApp.pki.service.CertificateDataService;
 import bsep.tim4.adminApp.pki.service.KeyStoreService;
@@ -55,7 +56,7 @@ public class AdminPkiInit implements ApplicationRunner {
         // ako keystore ne postoji, kreiraj ga
         keyStoreService.loadKeyStore();
         // ako root sertifikat ne postoji, kreiraj ga
-        Certificate root = keyStoreService.loadCertificate("root");
+        Certificate root = keyStoreService.loadCertificate("adminroot");
         if (root == null) {
             createRootCertificate();
             keyStoreService.saveKeyStore();
@@ -79,18 +80,12 @@ public class AdminPkiInit implements ApplicationRunner {
         // serial number je ID
         SubjectData subjectData = new SubjectData(publicKey, rootInfo, certData.getId().toString(), startDate, endDate);
 
-        X509Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, CertificateTemplateEnum.CA_CERT);
+        // Root sertifikat
+        CertificateAdditionalInfo rootAdditionalInfo = new CertificateAdditionalInfo(0);
+        X509Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, rootAdditionalInfo);
         //poziva se savePrivateKey jer za ovaj sertifikat ima i privatni kljuc, root sertifikat
         //za ostale sertifikate se poziva saveCertificate jer ima samo sertifikat i njegov javni kljuc, a privatni kljuc mu je nedostupan
-        keyStoreService.savePrivateKey("serbioneer@gmail.com", privateKey, certificate );
-        /*
-        try {
-            createCRL(privateKey, rootInfo);
-        } catch (CRLException e) {
-            e.printStackTrace();
-        } catch (OperatorCreationException | IOException e) {
-            e.printStackTrace();
-        }*/
+        keyStoreService.savePrivateKey("adminroot", privateKey, certificate );
     }
 
     private X500Name generateCertIssAndSubjData() {
@@ -115,36 +110,14 @@ public class AdminPkiInit implements ApplicationRunner {
     private Date generateEndDate(Date startDate) {
         Calendar c = Calendar.getInstance();
         c.setTime(startDate);
-        c.add(Calendar.YEAR, 10);
+        c.add(Calendar.YEAR, 20);
         Date endDate = c.getTime();
 
         return endDate;
     }
-
-    private void createCRL(PrivateKey pk, X500Name issuerName) throws CRLException, OperatorCreationException, IOException {
-        X509v2CRLBuilder crlBuilder = new X509v2CRLBuilder(issuerName, new Date());
-        crlBuilder.setNextUpdate(new Date(System.currentTimeMillis() + 86400 * 1000));
-
-        JcaContentSignerBuilder contentSignerBuilder = new JcaContentSignerBuilder("SHA256WithRSA");
-        contentSignerBuilder.setProvider("BC");
-
-        //issuer pk
-        X509CRLHolder crlHolder = crlBuilder.build(contentSignerBuilder.build(pk));
-        JcaX509CRLConverter converter = new JcaX509CRLConverter();
-        converter.setProvider("BC");
-
-        X509CRL crl = converter.getCRL(crlHolder);
-
-        byte[] bytes = crl.getEncoded();
-
-
-        OutputStream os = new FileOutputStream("src/main/resources/CRLs.crl");
-        os.write(bytes);
-        os.close();
-    }
     
     private CertificateData createRootInfoEntity(Date startDate, Date endDate) {
-        CertificateData certData = new CertificateData("adminRoot", "serbioneer@gmail.com", "serbioneer@gmail.com", startDate, endDate);
+        CertificateData certData = new CertificateData("adminRoot", "adminroot", "adminroot", "serbioneer@gmail.com", startDate, endDate);
         certData = certificateDataService.save(certData);
         return certData;
     }

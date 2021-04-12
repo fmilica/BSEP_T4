@@ -2,10 +2,8 @@ package bsep.tim4.adminApp.pki.util;
 
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
-import bsep.tim4.adminApp.pki.model.enums.CertificateTemplateEnum;
-import org.bouncycastle.asn1.x509.BasicConstraints;
-import org.bouncycastle.asn1.x509.Extension;
-import org.bouncycastle.asn1.x509.KeyUsage;
+import bsep.tim4.adminApp.pki.model.dto.CertificateAdditionalInfo;
+import org.bouncycastle.asn1.x509.*;
 import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
@@ -26,7 +24,7 @@ public class CertificateGenerator {
     }
 
     public static X509Certificate generateCertificate(
-            SubjectData subjectData, IssuerData issuerData, CertificateTemplateEnum template) {
+            SubjectData subjectData, IssuerData issuerData, CertificateAdditionalInfo additionalInfo) {
         Security.addProvider(new BouncyCastleProvider());
         try {
             // Posto klasa za generisanje sertifiakta ne moze da primi direktno privatni kljuc pravi se builder za objekat
@@ -50,7 +48,20 @@ public class CertificateGenerator {
                     subjectData.getX500name(),
                     subjectData.getPublicKey());
 
-            switch (template) {
+            // da li je CA
+            if (additionalInfo.isCa()) {
+                // CA je
+                certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(true));
+            } else {
+                // nije CA
+                certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(false));
+            }
+            // dodavanje keyUsages
+            certGen.addExtension(Extension.keyUsage, true, new KeyUsage(additionalInfo.getKeyUsages()));
+            // dodavanje extended keyUsages
+            certGen.addExtension(Extension.extendedKeyUsage, true, new ExtendedKeyUsage(additionalInfo.getExtendedKeyUsages()));
+
+            /*switch (template) {
                 // prvo true - isCritical -> ako se koristi za drugu nameru, narusava prava
                 case CA_CERT:
                     // CA je
@@ -58,17 +69,19 @@ public class CertificateGenerator {
                     // samo za CA
                     certGen.addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.keyCertSign | KeyUsage.digitalSignature | KeyUsage.dataEncipherment));
                     break;
-                case TLS_CLIENT:
-                    // nije CA
-                    certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(false));
-                    certGen.addExtension(Extension.keyUsage, true,
-                            new KeyUsage(KeyUsage.digitalSignature | KeyUsage.dataEncipherment | KeyUsage.keyAgreement));
-                    break;
                 case TLS_SERVER:
                     // nije CA
                     certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(false));
                     certGen.addExtension(Extension.keyUsage, true,
                             new KeyUsage(KeyUsage.digitalSignature | KeyUsage.dataEncipherment | KeyUsage.keyEncipherment | KeyUsage.keyAgreement));
+                    certGen.addExtension(Extension.extendedKeyUsage, true, new ExtendedKeyUsage(KeyPurposeId.id_kp_serverAuth));
+                    break;
+                case TLS_CLIENT:
+                    // nije CA
+                    certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(false));
+                    certGen.addExtension(Extension.keyUsage, true,
+                            new KeyUsage(KeyUsage.digitalSignature | KeyUsage.dataEncipherment | KeyUsage.keyAgreement));
+                    certGen.addExtension(Extension.extendedKeyUsage, true, new ExtendedKeyUsage(KeyPurposeId.id_kp_clientAuth));
                     break;
                 case END_USER:
                     // nije CA
@@ -77,7 +90,7 @@ public class CertificateGenerator {
                     // The digital signature and data encipherment key usage extensions are enabled by default for all Internet certificates.
                     certGen.addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.digitalSignature | KeyUsage.dataEncipherment));
                     break;
-            }
+            }*/
 
             // Generise se sertifikat - ovo jeste sertifikat ali mi bas zelimo da vratimo onaj objekat
             X509CertificateHolder certHolder = certGen.build(contentSigner);

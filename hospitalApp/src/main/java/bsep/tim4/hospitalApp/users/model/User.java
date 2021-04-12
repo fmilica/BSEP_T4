@@ -13,7 +13,8 @@ import java.util.Set;
 
 @AllArgsConstructor
 @RequiredArgsConstructor
-
+@Getter
+@Setter
 @Entity
 @Table(name="users")
 @SQLDelete(sql =
@@ -28,47 +29,41 @@ public class User implements UserDetails {
 	@Transient
 	private static final long serialVersionUID = 1L;
 
-	@Getter
-	@Setter
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 	
-	@Getter
-	@Setter
 	@Column(name="is_active")
 	private Boolean active;
 	
-	@Getter
-	@Setter
 	@NonNull
 	@Column(name = "name", nullable = false, unique = false)
 	private String name;
 	
-	@Getter
-	@Setter
 	@NonNull
 	@Column(name = "surname", nullable = false, unique = false)
 	private String surname;
 	
-	@Getter
-	@Setter
 	@NonNull
 	@Column(name = "email", nullable = false, unique = false)
 	private String email;
 	
-	@Getter
 	@NonNull
 	@Column(name = "password", nullable = false, unique = false)
 	private String password;
 
-	@Getter
-	@Setter
 	@Column(name = "last_password_reset_date")
 	private Timestamp lastPasswordResetDate;
+
+	@Column(name = "account_non_locked")
+	private boolean accountNonLocked;
+
+	@Column(name = "failed_attempts")
+	private int failedAttempts;
+
+	@Column(name = "last_account_lock_date")
+	private Timestamp lastAccountLockDate;
 	
-	@Getter
-	@Setter
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -87,7 +82,7 @@ public class User implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return this.accountNonLocked;
 	}
 
 	@Override

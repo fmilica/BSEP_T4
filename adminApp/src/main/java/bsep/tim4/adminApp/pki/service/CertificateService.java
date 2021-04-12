@@ -10,6 +10,7 @@ import bsep.tim4.adminApp.pki.model.CSR;
 import bsep.tim4.adminApp.pki.model.CertificateData;
 import bsep.tim4.adminApp.pki.model.IssuerData;
 import bsep.tim4.adminApp.pki.model.SubjectData;
+import bsep.tim4.adminApp.pki.model.dto.CertificateAdditionalInfo;
 import bsep.tim4.adminApp.pki.model.dto.CertificateDetailedViewDTO;
 import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
 import bsep.tim4.adminApp.pki.model.dto.CreateCertificateDTO;
@@ -21,14 +22,16 @@ import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.security.auth.x500.X500Principal;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
+import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
@@ -37,6 +40,7 @@ import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CertificateService {
@@ -53,8 +57,11 @@ public class CertificateService {
     @Autowired
     KeyStoreService keyStoreService;
 
+    @Value("${pki.keystore-password}")
+    private String keyStorePass;
+
     public IssuerData getRootCertificate() {
-        IssuerData issuerData = keyStoreService.loadIssuerData("serbioneer@gmail.com", "RootPassword");
+        IssuerData issuerData = keyStoreService.loadIssuerData("adminroot", "RootPassword");
 
         return issuerData;
     }
@@ -81,7 +88,8 @@ public class CertificateService {
                 return false;
             }
             // da li je revoked
-            CertificateData cData = certificateDataService.findByAlias(alias);
+            BigInteger serialNumber = x509Certificate.getSerialNumber();
+            CertificateData cData = certificateDataService.findById(serialNumber.longValue());
             if (cData.isRevoked()) {
                 return false;
             }
@@ -133,13 +141,13 @@ public class CertificateService {
     }
 
 
-    public List<IssuerData> getAllCAIssuers() {
+    public Map<String, IssuerData> getAllCAIssuers() {
         return keyStoreService.loadAllCAIssuers();
     }
 
-    public CertificateViewDTO getAllCertificates() {
+    /*public CertificateViewDTO getAllCertificates() {
         return keyStoreService.loadAllCertificates();
-    }
+    }*/
 
     public String createCertificate(CreateCertificateDTO certDto) throws NonExistentIdException, MessagingException, InvalidCertificateException, CertificateNotCAException {
         // postavljanje statusa na accepted
@@ -148,14 +156,14 @@ public class CertificateService {
         CSR csr = csrService.findById(certDto.getCsrId());
         // generisanje sertifikata i cuvanje u bazu i keystore
         CertificateData certData = generateCertificate(
-                csr, certDto.getCaAlias(), certDto.getBeginDate(), certDto.getEndDate(), certDto.getTemplate());
+                csr, certDto.getCaAlias(), certDto.getBeginDate(), certDto.getEndDate(), certDto.getAdditionalInfo());
         // slanje sertifikata u mejlu
         certificateMailSenderService.sendCertificateLink(certData);
         return "poslao";
     }
 
     public CertificateData generateCertificate(
-            CSR csr, String caAlias, Date startDate, Date endDate, CertificateTemplateEnum template)
+            CSR csr, String caAlias, Date startDate, Date endDate, CertificateAdditionalInfo additionalInfo)
             throws InvalidCertificateException, CertificateNotCAException {
         try {
             // provera validnosti CA sertifikata
@@ -174,48 +182,53 @@ public class CertificateService {
                 // u slucaju da nije postavljen basicConstraint ili keyUsage
             }
 
-            SubjectData subjectData = generateSubjectData(csr, startDate, endDate);
+            // generisanje kljuceva
+            KeyPair keyPair = KeyPairGenerator.generateKeyPair();
+
+            SubjectData subjectData = generateSubjectData(csr, startDate, endDate, keyPair);
             IssuerData issuerData = generateIssuerData(caAlias);
 
-            // email je alias za bazu
+            // email
             RDN emailRDN = subjectData.getX500name().getRDNs(BCStyle.E)[0];
-            String alias = emailRDN.getFirst().getValue().toString();
-
-            // generisanje za bazu
+            String email = emailRDN.getFirst().getValue().toString();
+            // alias za keystore
+            // = commonName + issuerCommonName + serialNumber
             RDN commonNameRDN = subjectData.getX500name().getRDNs(BCStyle.CN)[0];
             String commonName = commonNameRDN.getFirst().getValue().toString();
-            CertificateData certData = generateCertificateData(commonName, alias, caAlias, startDate, endDate);
+            RDN issuerCommonNameRDN = issuerData.getX500name().getRDNs(BCStyle.CN)[0];
+            String issuerCommonName = issuerCommonNameRDN.getFirst().getValue().toString();
+            String alias = commonName + "-" + issuerCommonName;
+
+            // generisanje za bazu
+            /*RDN commonNameRDN = subjectData.getX500name().getRDNs(BCStyle.CN)[0];
+            String commonName = commonNameRDN.getFirst().getValue().toString();*/
+            CertificateData certData = generateCertificateData(commonName, alias, caAlias, email, startDate, endDate);
+            alias = certData.getId().toString() + "-" + alias;
+            alias = alias.toLowerCase();
+            certData.setAlias(alias);
+            certificateDataService.save(certData);
             subjectData.setSerialNumber(certData.getId().toString());
 
             //generisanje sertifikata
-            Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, template);
+            Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, additionalInfo);
 
             // postavljanje lanca sertifikata
             keyStoreService.loadKeyStore();
             // dodaje novi sertifikat na pocetak lanca
-            Certificate[] tempChain = new Certificate[issuerCertificateChain.length + 1];
-            tempChain[0] = certificate;
-            System.arraycopy(issuerCertificateChain, 0, tempChain, 1, issuerCertificateChain.length);
+            Certificate[] newCertificateChain = createCertificateChain(certificate, issuerCertificateChain);
 
-            //cuvanje sertifikata u keystore (ne koristimo savePrivateKey jer ne znamo privatan kjuc)
-            //TODO potpisivanje privatnim kljucem???
-            keyStoreService.saveCertificate(alias, certificate);
+            // cuvanje sertifikata (niza sertifikata)
+            keyStoreService.savePrivateKey(alias, keyPair.getPrivate(), newCertificateChain);
             keyStoreService.saveKeyStore();
 
             return certData;
-            /*// konverzija sertifikata u String radi transporta
-            StringWriter sw = new StringWriter();
-            JcaPEMWriter writer = new JcaPEMWriter(sw);
-            writer.writeObject(certificate);
-            writer.close();
-            return sw.toString();*/
         } catch (NoSuchAlgorithmException | InvalidKeyException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public SubjectData generateSubjectData(CSR csr, Date startDate, Date endDate) throws NoSuchAlgorithmException, InvalidKeyException {
+    public SubjectData generateSubjectData(CSR csr, Date startDate, Date endDate, KeyPair keyPair) throws NoSuchAlgorithmException, InvalidKeyException {
         X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
         builder.addRDN(BCStyle.CN, csr.getCommonName());
         builder.addRDN(BCStyle.O, csr.getOrganizationName());
@@ -226,7 +239,8 @@ public class CertificateService {
         builder.addRDN(BCStyle.E, csr.getEmail());
         X500Name x500name = builder.build();
 
-        PublicKey publicKey = csr.getPublicKey();
+        PublicKey publicKey = keyPair.getPublic();
+        //PublicKey publicKey = csr.getPublicKey();
 
         //serial number je ID iz baze
         SubjectData subjectData = new SubjectData(publicKey, x500name, "-1", startDate, endDate);
@@ -238,15 +252,25 @@ public class CertificateService {
         //citanje root sertifikata
         keyStoreService.loadKeyStore();
         //password za CA sertifikat je isti kao password za keyStore
-        // TODO za sada koristimo uvek root (nemamo intermediate)
         IssuerData issuerData = keyStoreService.loadIssuerData(caAlias, "RootPassword");
 
         return issuerData;
     }
 
-    private CertificateData generateCertificateData(String commonName, String alias, String issuerAlias, Date validFrom, Date validTo) {
-        CertificateData certData = new CertificateData(commonName, alias, issuerAlias, validFrom, validTo);
+    private CertificateData generateCertificateData(String commonName, String alias, String issuerAlias, String email, Date validFrom, Date validTo) {
+        CertificateData certData = new CertificateData(commonName, alias, issuerAlias, email, validFrom, validTo);
         return certificateDataService.save(certData);
+    }
+
+    private Certificate[] createCertificateChain(Certificate newCertificate, Certificate[] issuerChain) {
+        Certificate[] newChain = new Certificate[issuerChain.length + 1];
+        newChain[0] = newCertificate;
+
+        for(int i = 0; i < issuerChain.length; i++) {
+            newChain[i + 1] = issuerChain[i];
+        }
+
+        return newChain;
     }
 
     public String findByToken(String token) {
@@ -275,7 +299,7 @@ public class CertificateService {
 
     public String getRootChainPemCertificate(String alias) throws IOException {
         Certificate certificate = keyStoreService.loadCertificate(alias);
-        Certificate root = keyStoreService.loadCertificate("serbioneer@gmail.com");
+        Certificate root = keyStoreService.loadCertificate("adminroot");
         StringBuilder chainBuilder = new StringBuilder();
         String pemCertificate = writeCertificateToPEM((X509Certificate) certificate);
         chainBuilder.append(pemCertificate);
@@ -304,4 +328,26 @@ public class CertificateService {
         return writer.toString();
     }
 
+    public byte[] getPkcs12Format(String alias) {
+        keyStoreService.loadKeyStore();
+        PrivateKey key = keyStoreService.loadPrivateKey(alias);
+        Certificate[] chain = keyStoreService.readCertificateChain(alias);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try {
+            // create keystore
+            Security.addProvider(new BouncyCastleProvider());
+            KeyStore keystore = KeyStore.getInstance("PKCS12", BouncyCastleProvider.PROVIDER_NAME);
+            // initialize
+            keystore.load(null);
+            // add your key and cert
+            keystore.setKeyEntry(alias, key, keyStorePass.toCharArray(), chain);
+            // save the keystore to file
+            keystore.store(bos, keyStorePass.toCharArray());
+            bos.close();
+            return bos.toByteArray();
+        } catch (NoSuchProviderException | IOException | NoSuchAlgorithmException | CertificateException | KeyStoreException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

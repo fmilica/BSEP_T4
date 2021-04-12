@@ -63,6 +63,14 @@ public class KeyStoreWriter {
         }
     }
 
+    public void writePrivateKey(String alias, PrivateKey privateKey, char[] password, Certificate[] certificateChain) {
+        try {
+            keyStore.setKeyEntry(alias, privateKey, password, certificateChain);
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void writeCertificate(String alias, Certificate certificate) {
         try {
             keyStore.setCertificateEntry(alias, certificate);

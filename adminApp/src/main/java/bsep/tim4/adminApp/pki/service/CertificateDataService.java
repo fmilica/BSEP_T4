@@ -63,13 +63,23 @@ public class CertificateDataService {
     }
 
     public List<CertificateViewDTO> findCertificateView() {
-        CertificateData rootCertificate = certificateDataRepository.findByAlias("serbioneer@gmail.com");
-        List<CertificateData> children = certificateDataRepository.findAllByAliasNot("serbioneer@gmail.com");
+        CertificateData rootCertificate = certificateDataRepository.findByAlias("adminroot");
+        List<CertificateData> rootChildren = certificateDataRepository.findAllByAliasNotAndParentAlias("adminroot", "adminroot");
         // kreiranje view-a
-        CertificateViewDTO root = new CertificateViewDTO(rootCertificate.getAlias(), rootCertificate.isRevoked());
+        CertificateViewDTO root = new CertificateViewDTO(rootCertificate.getAlias(), rootCertificate.getCommonName(), rootCertificate.isRevoked());
         List<CertificateViewDTO> childrenView = new ArrayList<>();
-        for (CertificateData c : children) {
-            childrenView.add(new CertificateViewDTO(c.getAlias(), c.isRevoked()));
+        for (CertificateData c : rootChildren) {
+            // dobavljanje dece intermediate CA ako postoje
+            List<CertificateData> intermediateChildren = certificateDataRepository.findAllByParentAlias(c.getAlias());
+            CertificateViewDTO intermediate = new CertificateViewDTO(c.getAlias(), c.getCommonName(), c.isRevoked());
+            if (!intermediateChildren.isEmpty()) {
+                List<CertificateViewDTO> intermediateChildrenView = new ArrayList<>();
+                for (CertificateData interChild : intermediateChildren) {
+                    intermediateChildrenView.add(new CertificateViewDTO(interChild.getAlias(), interChild.getCommonName(), interChild.isRevoked()));
+                }
+                intermediate.setChildren(intermediateChildrenView);
+            }
+            childrenView.add(intermediate);
         }
 
         root.setChildren(childrenView);

@@ -11,6 +11,8 @@ import java.io.File;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @Service
 public class KeyStoreService {
@@ -58,10 +60,15 @@ public class KeyStoreService {
 
     //mozemo i privatni kljuc dodatno da sifrujemo zato postoji rootCAPass
     public void savePrivateKey(String alias, PrivateKey privateKey, Certificate certificate) {
-        this.keyStoreWriter.writePrivateKey(alias, privateKey,rootCAPass.toCharArray(), certificate);
+        this.keyStoreWriter.writePrivateKey(alias, privateKey, rootCAPass.toCharArray(), certificate);
+    }
+
+    public void savePrivateKey(String alias, PrivateKey privateKey, Certificate[] certificateChain) {
+        this.keyStoreWriter.writePrivateKey(alias, privateKey, rootCAPass.toCharArray(), certificateChain);
     }
 
     public PrivateKey loadPrivateKey(String alias) {
+        alias = alias.toLowerCase();
         return this.keyStoreReader.readPrivateKey(
                 keyStorePath + keyStoreName, keyStorePass, alias, rootCAPass);
     }
@@ -71,26 +78,29 @@ public class KeyStoreService {
     }
 
     public Certificate loadCertificate(String alias) {
+        alias = alias.toLowerCase();
         return this.keyStoreReader.readCertificate(
                 keyStorePath + keyStoreName, keyStorePass, alias);
     }
 
     // dobavljanje privatnog kljuca (i podataka o vlasniku) vezanog za sertifikat sa datim aliasom
     public IssuerData loadIssuerData(String alias, String keyPassword) {
+        alias = alias.toLowerCase();
         return this.keyStoreReader.readIssuerFromStore(
                 keyStorePath + keyStoreName, alias,
                         keyStorePass.toCharArray(), keyPassword.toCharArray());
     }
 
     public Certificate[] readCertificateChain(String alias) {
+        alias = alias.toLowerCase();
         return this.keyStoreReader.readCertificateChain(keyStorePath + keyStoreName, keyStorePass, alias);
     }
 
-    public List<IssuerData> loadAllCAIssuers() {
+    public Map<String, IssuerData> loadAllCAIssuers() {
         return this.keyStoreReader.readAllCAIssuers(keyStorePath + keyStoreName, keyStorePass, rootCAPass);
     }
 
-    public CertificateViewDTO loadAllCertificates() {
+    /*public CertificateViewDTO loadAllCertificates() {
         return this.keyStoreReader.readAllCertificates(keyStorePath + keyStoreName, keyStorePass, rootCAPass);
-    }
+    }*/
 }

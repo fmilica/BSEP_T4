@@ -24,6 +24,8 @@ public class CertificateData {
 
     private String alias;
 
+    private String email;
+
     private String parentAlias;
 
     private boolean revoked;
@@ -37,16 +39,14 @@ public class CertificateData {
     @Temporal(TemporalType.TIMESTAMP)
     private Date revocationDate;
 
-    public CertificateData(String commonName, String alias, String parentAlias, Date validFrom, Date validTo) {
+    public CertificateData(String commonName, String alias, String parentAlias, String email, Date validFrom, Date validTo) {
         this.commonName = commonName;
         this.alias = alias;
         this.parentAlias = parentAlias;
+        this.email = email;
         this.revoked = false;
         this.validFrom = validFrom;
         this.validTo = validTo;
     }
 
-    public String getEmail() {
-        return this.alias;
-    }
 }

@@ -41,8 +41,8 @@
             <ng-template matStepLabel>General Info</ng-template>
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Certificate template</mat-label>
-                <mat-select formControlName="certificateType" (selectionChange)="setDates()">
-                    <mat-option disabled value="CA_CERT">Intermediate CA</mat-option>
+                <mat-select formControlName="certificateType" (selectionChange)="setDates();setExtensions();getCertificates()">
+                    <mat-option value="CA_CERT">Intermediate CA</mat-option>
                     <mat-option value="TLS_SERVER">TLS server</mat-option>
                     <mat-option value="TLS_CLIENT">TLS client</mat-option>
                     <mat-option value="END_USER">End user</mat-option>
@@ -63,12 +63,27 @@
                     <mat-datepicker #validTo></mat-datepicker>
                 </mat-form-field>
             </div>
-            <!-- <section class="key-usage-section">
-                <h4>Key usage:</h4>
+            <section class="key-usage-section">
+                <h3 class="key-title">Key usage:</h3>
                 <mat-checkbox formControlName="digitalSignature">Digital signature</mat-checkbox>
                 <mat-checkbox formControlName="nonRepudiation">Non repudiation</mat-checkbox>
                 <mat-checkbox formControlName="keyEncipherment">Key encipherment</mat-checkbox>
-            </section> -->
+                <mat-checkbox formControlName="dataEncipherment">Data encipherment</mat-checkbox>
+                <mat-checkbox formControlName="keyAgreement">Key agreement</mat-checkbox>
+                <mat-checkbox formControlName="keyCertSign">Certificate signing</mat-checkbox>
+                <mat-checkbox formControlName="cRLSign">CRL signing</mat-checkbox>
+                <mat-checkbox formControlName="encipherOnly">Encipher only</mat-checkbox>
+                <mat-checkbox formControlName="decipherOnly">Decipher only</mat-checkbox>
+            </section>
+            <section class="key-usage-section">
+                <h3 class="key-title">Extended key usage:</h3>
+                <mat-checkbox formControlName="serverAuth">TLS Web server authentication</mat-checkbox>
+                <mat-checkbox formControlName="clientAuth">TLS Web client authentication</mat-checkbox>
+                <mat-checkbox formControlName="codeSigning">Signing of downloadable executable code</mat-checkbox>
+                <mat-checkbox formControlName="emailProtection">Email protection</mat-checkbox>
+                <mat-checkbox formControlName="timeStamping">Timestamping</mat-checkbox>
+                <mat-checkbox formControlName="ocspSigning">OCSP Signing</mat-checkbox>
+            </section>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
