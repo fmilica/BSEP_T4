@@ -31,8 +31,8 @@ export class AuthenticationService {
   private refreshedToken = '';
   private expiresInNum = 0;
 
-  login(userLoginDto: UserLogin): Observable<HttpResponse<void>> {
-    return this.http.post<void>('http://localhost:8081/login', userLoginDto, {
+  login(userLoginDto: UserLogin): Observable<HttpResponse<String>> {
+    return this.http.post<String>('http://localhost:8081/auth/login', userLoginDto, {
       headers: this.headers,
       observe: 'response',
     });
