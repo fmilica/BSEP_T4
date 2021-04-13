@@ -1,5 +1,5 @@
 <div class="table-title">Create Certificate Signing Request</div>
-<form id="cultural-site-form" [formGroup] = "newCSRForm" (ngSubmit) = "onSubmit()">
+<form id="cultural-site-form" [formGroup]="newCSRForm" #createCsrDirective="ngForm" (ngSubmit)="onSubmit(createCsrDirective)">
     <div class="row justify-content-md-center">
         <div class="col-md-8 add-box">
             <div class="row justify-content-md-center">
@@ -59,7 +59,6 @@
                 <button
                     id="create-csr"
                     class="btn btn-color"
-                    type="submit"
                     [disabled] = "newCSRForm.invalid"
                 >
                     Create CSR

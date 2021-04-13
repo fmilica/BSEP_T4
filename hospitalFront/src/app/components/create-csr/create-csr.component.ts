@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CSR } from 'src/app/model/csr.model';
@@ -33,7 +33,7 @@ export class CreateCsrComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit() {
+  onSubmit(createCsrDirective: FormGroupDirective) {
     if (this.newCSRForm.invalid) {
       return;
     }
@@ -55,10 +55,12 @@ export class CreateCsrComponent implements OnInit {
         this.toastr.success('Successfully created csr!');
         this.router.navigate(['homepage/csr']);
         this.newCSRForm.reset();
+        createCsrDirective.resetForm();
       },
       error => {
         this.toastr.success('Successfully created csr!');
         this.newCSRForm.reset();
+        createCsrDirective.resetForm();
       });
   }
 

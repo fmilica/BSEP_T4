@@ -23,8 +23,8 @@ export const routes: Routes = [
     {
       path: 'homepage',
       component: HomepageComponent,
-      //canActivate: [RoleGuard],
-      //data: { expectedRoles: 'ROLE_SUPER_ADMIN' },
+      canActivate: [RoleGuard],
+      data: { expectedRoles: 'ROLE_SUPER_ADMIN' },
       children: [
         {
           path: '',
