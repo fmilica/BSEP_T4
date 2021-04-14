@@ -24,8 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 //Kontroler zaduzen za autentifikaciju korisnika
+@CrossOrigin(origins = "https://localhost:4200")
 @RestController
-@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
 
     @Autowired

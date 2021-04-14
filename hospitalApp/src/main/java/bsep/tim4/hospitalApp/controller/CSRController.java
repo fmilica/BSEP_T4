@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4201")
 @RestController
 @RequestMapping(value="api/csr")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
