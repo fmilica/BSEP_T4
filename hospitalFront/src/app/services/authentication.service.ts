@@ -32,7 +32,7 @@ export class AuthenticationService {
   private expiresInNum = 0;
 
   login(userLoginDto: UserLogin): Observable<HttpResponse<String>> {
-    return this.http.post<String>('http://localhost:8081/auth/login', userLoginDto, {
+    return this.http.post<String>(environment.apiEndpoint + 'auth/login', userLoginDto, {
       headers: this.headers,
       observe: 'response',
     });

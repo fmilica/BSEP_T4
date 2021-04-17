@@ -85,6 +85,13 @@
 			<artifactId>bcpkix-jdk15on</artifactId>
 			<version>1.68</version>
 		</dependency>
+
+		<!--Dependecy for http-->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>

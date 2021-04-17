@@ -72,6 +72,9 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "hospitalFront:build",
+            "ssl": true,
+            "sslCert": "./ssl/hospital.crt",
+            "sslKey": "./ssl/hospital.key",
             "port": 4201
           },
           "configurations": {
