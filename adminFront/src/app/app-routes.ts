@@ -6,6 +6,7 @@ import { HomepageComponent } from "./components/homepage/homepage.component";
 import { LoginComponent } from "./components/login/login.component";
 import { LogsComponent } from "./components/logs/logs.component";
 import { UsersComponent } from "./components/users/users.component";
+import { AuthGuard } from "./guards/auth-guard.service";
 import { LoginGuard } from "./guards/login-guard.service";
 import { RoleGuard } from "./guards/role-guard.service";
 
@@ -18,13 +19,14 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
-        canActivate: [LoginGuard]
+        // canActivate: [AuthGuard]
     },
     {
       path: 'homepage',
       component: HomepageComponent,
-      canActivate: [RoleGuard],
-      data: { expectedRoles: 'ROLE_SUPER_ADMIN' },
+      // canActivate: [RoleGuard],
+      //data: { expectedRoles: 'ROLE_SUPER_ADMIN' },
+      // data: { expectedRoles: 'user' },
       children: [
         {
           path: '',

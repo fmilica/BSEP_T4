@@ -16,7 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.mail.MessagingException;
 import java.util.List;
 
-@CrossOrigin(origins = {"https://localhost:4200", "https://localhost:8081"} )
+//@CrossOrigin(origins = {"https://localhost:4200", "https://localhost:8081"} )
+@CrossOrigin()
 @RestController
 @RequestMapping(value="api/csr")
 public class CsrController {
@@ -42,7 +43,7 @@ public class CsrController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<List<CsrDTO>> findAll() {
         List<CSR> csrList = csrService.findAllByVerified(true);
         List<CsrDTO> csrDTOList = csrMapper.toCsrDtoList(csrList);
@@ -51,7 +52,7 @@ public class CsrController {
     }
 
     @PutMapping(value = "accept/{id}")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public void acceptCsr(@PathVariable("id") Long id) {
         try {
             csrService.acceptCsr(id);
@@ -61,7 +62,7 @@ public class CsrController {
     }
 
     @PutMapping(value = "decline/{id}")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public void declineCsr(@PathVariable("id") Long id) {
         try {
             csrService.declineCsr(id);

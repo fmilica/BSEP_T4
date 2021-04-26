@@ -18,7 +18,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "https://localhost:4200")
+//@CrossOrigin(origins = {"https://localhost:4200", "https://localhost:8081"} )
+@CrossOrigin()
 @RestController
 @RequestMapping(value = "api/certificate")
 public class CertificateController {

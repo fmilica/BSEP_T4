@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +34,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ViewCertificateComponent } from './components/view-certificate/view-certificate.component';
 import { RevocationDialogComponent } from './components/revocation-dialog/revocation-dialog.component';
 import { CertificateDetailsComponent } from './components/certificate-details/certificate-details.component';
+import { initializer } from './util/app-init';
+import { KeycloakService } from 'keycloak-angular';
 
 @NgModule({
   declarations: [
@@ -83,6 +85,12 @@ import { CertificateDetailsComponent } from './components/certificate-details/ce
       // ako multi nije true ovo bi bio jedini interceptor i pregazio bi sve defaultne interceptore
       multi: true,
     },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: initializer,
+    //   deps: [KeycloakService],
+    //   multi: true,
+    // },
   ],
   bootstrap: [AppComponent]
 })
