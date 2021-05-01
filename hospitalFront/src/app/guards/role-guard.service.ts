@@ -26,9 +26,17 @@ export class RoleGuard implements CanActivate {
         const info = jwt.decodeToken(token);
         const roles: string[] = expectedRoles.split('|', 2);
 
-        if (roles.indexOf(info.authorities[0].authority) === -1) {
-            this.router.navigate(['login']);
-            this.toastr.error('401 Unauthorized access');
+        const userRoles = info.realm_access.roles;
+        let ind = false
+        for(let role in userRoles) {
+            if(roles.indexOf(userRoles[role]) !== -1) {
+                ind = true;
+                break;
+            }
+        }
+        if (!ind) {
+            this.router.navigate(['unauthorized']);
+            this.toastr.error('403 Unauthorized access');
             return false;
         }
         return true;

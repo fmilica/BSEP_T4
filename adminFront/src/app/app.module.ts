@@ -36,6 +36,7 @@ import { RevocationDialogComponent } from './components/revocation-dialog/revoca
 import { CertificateDetailsComponent } from './components/certificate-details/certificate-details.component';
 import { initializer } from './util/app-init';
 import { KeycloakService } from 'keycloak-angular';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { KeycloakService } from 'keycloak-angular';
     CertificatesComponent,
     ViewCertificateComponent,
     RevocationDialogComponent,
-    CertificateDetailsComponent
+    CertificateDetailsComponent,
+    UnauthorizedComponent
   ],
   imports: [
     RouterModule,

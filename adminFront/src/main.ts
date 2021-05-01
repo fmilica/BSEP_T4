@@ -19,7 +19,7 @@ let initOptions = {
   clientId: 'PKIFrontend',
   'enable-cors': true,
   initOptions: {
-    flow: 'implicit',
+    // flow: 'implicit',
   }
 }
 

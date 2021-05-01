@@ -17,7 +17,7 @@ import javax.mail.MessagingException;
 import java.util.List;
 
 //@CrossOrigin(origins = {"https://localhost:4200", "https://localhost:8081"} )
-@CrossOrigin()
+//@CrossOrigin()
 @RestController
 @RequestMapping(value="api/csr")
 public class CsrController {

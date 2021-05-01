@@ -1,0 +1,7 @@
+{
+  "realm": "BSEPT4",
+  "auth-server-url": "https://localhost:8443/auth",
+  "ssl-required": "external",
+  "resource": "HospitalFrontend",
+  "public-client": true
+}

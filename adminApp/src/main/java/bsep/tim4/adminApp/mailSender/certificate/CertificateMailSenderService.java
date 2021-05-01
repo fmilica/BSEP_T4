@@ -38,7 +38,7 @@ public class CertificateMailSenderService {
         String recipientAddress = certData.getEmail();
         String subject = "Certificate download address";
         String certificateUrl
-                = "https://localhost:8080" + "/api/certificate/download?token=" + token;
+                = "https://localhost:8082" + "/api/certificate/download?token=" + token;
 
         mailSender.setUsername(env.getProperty("spring.mail.username"));
         mailSender.setPassword(env.getProperty("spring.mail.password"));

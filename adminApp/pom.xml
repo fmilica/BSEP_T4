@@ -86,6 +86,7 @@
 			<version>1.68</version>
 		</dependency>
 
+		<!--Dependency for keycloak-->
 		<dependency>
 			<groupId>org.keycloak</groupId>
 			<artifactId>keycloak-spring-boot-starter</artifactId>

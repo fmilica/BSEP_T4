@@ -56,6 +56,9 @@ public class CertificateGenerator {
                 // nije CA
                 certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(false));
             }
+
+            certGen.addExtension(Extension.subjectAlternativeName, false, new GeneralNames(new GeneralName(GeneralName.dNSName, "localhost")));
+
             // dodavanje keyUsages
             certGen.addExtension(Extension.keyUsage, true, new KeyUsage(additionalInfo.getKeyUsages()));
             // dodavanje extended keyUsages

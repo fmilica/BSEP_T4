@@ -87,6 +87,9 @@ public class CertificateService {
             // da li je revoked
             BigInteger serialNumber = x509Certificate.getSerialNumber();
             CertificateData cData = certificateDataService.findById(serialNumber.longValue());
+            if(cData == null){
+                cData = certificateDataService.findById(1L);
+            }
             if (cData.isRevoked()) {
                 return false;
             }
@@ -145,6 +148,12 @@ public class CertificateService {
             Long serialNumb = entry.getKey();
             IssuerData issuer = entry.getValue();
             CertificateData certData = certificateDataService.findById(serialNumb);
+
+            if(certData == null){
+                certData = certificateDataService.findById(1L);
+                validCaIssuers.put(certData.getAlias(), issuer);
+            }
+
             if (!certData.isRevoked()) {
                 validCaIssuers.put(certData.getAlias(), issuer);
             }
