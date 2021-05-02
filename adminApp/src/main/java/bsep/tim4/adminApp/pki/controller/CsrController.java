@@ -9,15 +9,12 @@ import bsep.tim4.adminApp.pki.service.CsrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.mail.MessagingException;
 import java.util.List;
 
-//@CrossOrigin(origins = {"https://localhost:4200", "https://localhost:8081"} )
-//@CrossOrigin()
 @RestController
 @RequestMapping(value="api/csr")
 public class CsrController {
@@ -31,6 +28,7 @@ public class CsrController {
     private final CsrMapper csrMapper = new CsrMapper();
 
     @PostMapping(value="/receive")
+    // ADMIN
     public ResponseEntity<String> receiveCsr(@RequestBody String csr) {
         //Primljen csr se skladisti u bazu i na taj email se salje konfirmacioni link
         csrService.saveCsr(csr);
@@ -38,12 +36,13 @@ public class CsrController {
     }
 
     @GetMapping(value="/verification")
+    // UNAUTHORIZED
     public void verifyCsr(@RequestParam("token") String token) {
         csrService.verifyCsr(token);
     }
 
     @GetMapping
-//    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    // SUPER ADMIN
     public ResponseEntity<List<CsrDTO>> findAll() {
         List<CSR> csrList = csrService.findAllByVerified(true);
         List<CsrDTO> csrDTOList = csrMapper.toCsrDtoList(csrList);
@@ -52,7 +51,7 @@ public class CsrController {
     }
 
     @PutMapping(value = "accept/{id}")
-//    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    // SUPER ADMIN
     public void acceptCsr(@PathVariable("id") Long id) {
         try {
             csrService.acceptCsr(id);
@@ -62,7 +61,7 @@ public class CsrController {
     }
 
     @PutMapping(value = "decline/{id}")
-//    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    // SUPER ADMIN
     public void declineCsr(@PathVariable("id") Long id) {
         try {
             csrService.declineCsr(id);

@@ -1,11 +1,10 @@
-package bsep.tim4.hospitalApp.users.config;
+/*package bsep.tim4.hospitalApp.config;
 
 import bsep.tim4.hospitalApp.users.dto.UserLoginDTO;
 import bsep.tim4.hospitalApp.users.model.User;
 import bsep.tim4.hospitalApp.users.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -51,3 +50,4 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     	httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
     }
 }
+*/

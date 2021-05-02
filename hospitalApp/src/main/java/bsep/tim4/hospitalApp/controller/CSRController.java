@@ -1,9 +1,7 @@
 package bsep.tim4.hospitalApp.controller;
 
 import bsep.tim4.hospitalApp.dto.CSRDto;
-import bsep.tim4.hospitalApp.keystores.KeyStoreReader;
 import bsep.tim4.hospitalApp.service.CSRService;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -17,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,11 +28,8 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 
-//@CrossOrigin(origins = "https://localhost:4201")
-//@CrossOrigin()
 @RestController
 @RequestMapping(value="api/csr")
-//@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class CSRController {
 
     @Autowired
@@ -47,6 +41,7 @@ public class CSRController {
     private final String sendCsrUri = "/csr/receive";
 
     @PostMapping(value="/create")
+    // ADMIN
     public ResponseEntity<String> createCsr(@RequestHeader("Authorization") String token, @Valid @RequestBody CSRDto csrDto) throws KeyStoreException, NoSuchAlgorithmException, IOException, KeyManagementException, CertificateException {
         String csr = csrService.createCSR(csrDto);
 
@@ -55,7 +50,6 @@ public class CSRController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", token);
 
-//        KeyStoreReader keyStoreReader = new KeyStoreReader();
         KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
         trustStore.load(new FileInputStream(new ClassPathResource("truststoreHospital.jks").getFile()),
                 ("HospitalSecretPass").toCharArray());
@@ -67,7 +61,6 @@ public class CSRController {
         ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
         RestTemplate restTemplate = new RestTemplate(requestFactory);
 
-//        RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> request =
                 new HttpEntity<>(csr, headers);
         ResponseEntity<String> responseEntityStr = restTemplate.
