@@ -10,15 +10,22 @@ import bsep.tim4.adminApp.pki.service.CertificateDataService;
 import bsep.tim4.adminApp.pki.service.CertificateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping(value = "api/certificate")
+@Validated
 public class CertificateController {
 
     @Autowired
@@ -30,7 +37,8 @@ public class CertificateController {
 
     @GetMapping( value = "/validate/{serialNumb}" )
     // UNATHORIZED
-    public ResponseEntity<String> validateCertificate(@PathVariable Long serialNumb) {
+    public ResponseEntity<String> validateCertificate(@PathVariable @NotBlank(message = "Serial number cannot be empty")
+                                                          @Positive( message = "Serial number is invalid")Long serialNumb) {
         try {
             String alias = certificateDataService.getDateValidity(serialNumb);
             if (alias != null) {
@@ -49,14 +57,17 @@ public class CertificateController {
 
     @GetMapping( value = "/detailed/{alias}" )
     // SUPER ADMIN
-    public ResponseEntity<CertificateDetailedViewDTO> getDetailedCertificate(@PathVariable String alias) {
+    public ResponseEntity<CertificateDetailedViewDTO> getDetailedCertificate(@PathVariable
+                                @NotBlank(message = "Alias cannot be empty")
+                                @Size( min = 1, max = 50, message = "Alias is too long")
+                                @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Alias is not valid") String alias) {
         CertificateDetailedViewDTO detailedView = certificateService.getDetails(alias);
         return new ResponseEntity<CertificateDetailedViewDTO>(detailedView, HttpStatus.OK);
     }
 
     @PostMapping
     // SUPER ADMIN
-    public ResponseEntity<String> createCertificate(@RequestBody CreateCertificateDTO certDto) {
+    public ResponseEntity<String> createCertificate(@RequestBody @Valid CreateCertificateDTO certDto) {
         String certificate = "";
         try {
             certificate = certificateService.createCertificate(certDto);
@@ -70,7 +81,8 @@ public class CertificateController {
 
     @GetMapping( value = "/download")
     // UNAUTHORIZED
-    public ResponseEntity<Object> downloadCertificate(@RequestParam("token") String token) {
+    public ResponseEntity<Object> downloadCertificate(@RequestParam("token")
+                                @Size(min = 90, max = 90, message = "Download certificate link is invalid") String token) {
         String alias = certificateService.findByToken(token);
         if (alias == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -89,7 +101,10 @@ public class CertificateController {
 
     @GetMapping( value = "/download-any")
     // SUPER ADMIN
-    public ResponseEntity<Object> adminDownloadCertificate(@RequestParam("alias") String alias) {
+    public ResponseEntity<Object> adminDownloadCertificate(@RequestParam("alias")
+                                       @NotBlank(message = "Alias cannot be empty")
+                                       @Size( min = 1, max = 50, message = "Alias is too long")
+                                       @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Alias is not valid") String alias) {
         String certificateChain = null;
         try {
             certificateChain = certificateService.getPemCertificateChain(alias);
@@ -104,7 +119,10 @@ public class CertificateController {
 
     @GetMapping( value = "/download-pkcs12")
     // SUPER ADMIN
-    public ResponseEntity<Object> adminDownloadPkcs12(@RequestParam("alias") String alias) {
+    public ResponseEntity<Object> adminDownloadPkcs12(@RequestParam("alias")
+                                      @NotBlank(message = "Alias cannot be empty")
+                                      @Size( min = 1, max = 50, message = "Alias is too long")
+                                      @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Alias is not valid") String alias) {
         byte[] contents = certificateService.getPkcs12Format(alias);
         HttpHeaders headers = createDownloadCertHeaders();
         return new ResponseEntity<>(contents, headers, HttpStatus.OK);
@@ -132,7 +150,10 @@ public class CertificateController {
 
     @GetMapping( value = "/{alias}")
     // SUPER ADMIN
-    public ResponseEntity<CertificateSignerDTO> getByAlias(@PathVariable String alias) {
+    public ResponseEntity<CertificateSignerDTO> getByAlias(@PathVariable
+                                       @NotBlank(message = "Alias cannot be empty")
+                                       @Size( min = 1, max = 50, message = "Alias is too long")
+                                       @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Alias is not valid") String alias) {
         IssuerData issuerData = certificateService.getByAlias(alias);
         CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto(alias, issuerData);
 
@@ -141,7 +162,11 @@ public class CertificateController {
 
     @PostMapping( value = "revoke/{alias}" )
     // SUPER ADMIN
-    public ResponseEntity<Void> revokeCertificate(@PathVariable String alias, @RequestBody String revocationReason) {
+    public ResponseEntity<Void> revokeCertificate(@PathVariable
+                                      @NotBlank(message = "Alias cannot be empty")
+                                      @Size( min = 1, max = 50, message = "Alias is too long")
+                                      @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Alias is not valid") String alias,
+                                      @RequestBody @Valid String revocationReason) {
         try {
             certificateDataService.revoke(alias, revocationReason);
         } catch (NonExistentIdException | MessagingException e) {

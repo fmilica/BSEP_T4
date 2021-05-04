@@ -7,6 +7,9 @@ import lombok.Setter;
 import org.bouncycastle.asn1.x509.KeyPurposeId;
 import org.bouncycastle.asn1.x509.KeyUsage;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,10 +20,13 @@ import java.util.List;
 @AllArgsConstructor
 public class CertificateAdditionalInfo {
 
+    @NotNull( message = "CA flag cannot be empty")
     private boolean ca;
 
+    @NotEmpty( message = "Key usages cannot be empty")
     private List<Integer> keyUsages;
 
+    @NotEmpty( message = "Extended key usages cannot be empty")
     private List<String> extendedKeyUsages;
 
     public CertificateAdditionalInfo(int root) {

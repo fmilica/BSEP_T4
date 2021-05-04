@@ -42,7 +42,8 @@ public class CSRController {
 
     @PostMapping(value="/create")
     // ADMIN
-    public ResponseEntity<String> createCsr(@RequestHeader("Authorization") String token, @Valid @RequestBody CSRDto csrDto) throws KeyStoreException, NoSuchAlgorithmException, IOException, KeyManagementException, CertificateException {
+    public ResponseEntity<String> createCsr(@RequestHeader("Authorization") String token, @Valid @RequestBody CSRDto csrDto)
+            throws KeyStoreException, NoSuchAlgorithmException, IOException, KeyManagementException, CertificateException {
         String csr = csrService.createCSR(csrDto);
 
         final String sendCsrFullUri = adminApplicationUri +  sendCsrUri;
