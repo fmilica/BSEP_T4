@@ -38,6 +38,8 @@ export class CreateCsrComponent implements OnInit {
       return;
     }
 
+    console.log(this.newCSRForm.value.commonName)
+    
     const csr: CSR = new CSR (
       this.newCSRForm.value.commonName,
       this.newCSRForm.value.name,

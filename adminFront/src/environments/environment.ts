@@ -7,7 +7,7 @@ export const environment = {
   apiEndpoint: 'https://localhost:8082/api/',
   keycloak: {
     // Url of the Identity Provider
-    issuer: 'http://localhost:8443/auth/',
+    issuer: 'https://localhost:8443/auth/',
     // Realm
     realm: 'BSEPT4',
     clientId: 'PKIFrontend',

@@ -22,7 +22,7 @@ export class HomepageComponent implements OnInit {
   logout(): void {
     this.authenticationService.logout();
     this.toastr.info('Logged out successfully!');
-    this.router.navigate([''])
   }
 
 }
+

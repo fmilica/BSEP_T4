@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -23,6 +23,13 @@ export class AuthenticationService {
   role$ = this.role.asObservable();
 
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  // private headersLogout = new HttpHeaders(
+  //   { 
+  //     'Content-Type': 'application/x-www-form-urlencoded',
+  //     'Access-Control-Allow-Methods': 'POST',
+  //     'Access-Control-Allow-Origin': 'https://localhost:4200'
+  //   });
 
   private jwtService: JwtHelperService;
 
@@ -60,17 +67,18 @@ export class AuthenticationService {
   }
 
   logout(): void {
-    // this.keycloakService.logout
-    // this.http.get('https://localhost:8443/auth/realms/PKIFrontend/protocol/openid-connect/logout?' +
-    // 'id_token_hint=' + localStorage.getItem('jwtToken') +'&post_logout_redirect_uri=https://localhost:4200', {
-    //   headers: this.headers,
-    // });
-    localStorage.removeItem('jwtToken');
-    localStorage.removeItem('expiresIn');
-    localStorage.removeItem('ang-refresh-token');
-    this.router.navigate(['']);
+    // let refreshToken = localStorage.getItem('ang-refresh-token');
+    // let body = 'client_id=PKIFrontend&refresh_token=' + refreshToken;
+    // this.http.post<void>(environment.keycloak.issuer + 'realms/BSEPT4/protocol/openid-connect/logout', body, {
+    //   headers: this.headersLogout,
+    //   observe: 'response',
+    // }).subscribe()
     this.role.next('');
     this.stopRefreshTokenTimer();
+    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('ang-refresh-token');
+    // this.router.navigate([''])
+    window.location.href = 'https://localhost:8443/auth/realms/BSEPT4/protocol/openid-connect/logout?redirect_uri=https://localhost:4200';
   }
 
   // geteri i seteri
