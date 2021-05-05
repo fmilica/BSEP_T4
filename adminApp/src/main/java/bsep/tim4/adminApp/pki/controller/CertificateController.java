@@ -10,7 +10,6 @@ import bsep.tim4.adminApp.pki.service.CertificateDataService;
 import bsep.tim4.adminApp.pki.service.CertificateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "https://localhost:4200")
 @RestController
 @RequestMapping(value = "api/certificate")
 public class CertificateController {
@@ -31,6 +29,7 @@ public class CertificateController {
     private final CertificateSignerMapper certificateSignerMapper = new CertificateSignerMapper();
 
     @GetMapping( value = "/validate/{serialNumb}" )
+    // UNATHORIZED
     public ResponseEntity<String> validateCertificate(@PathVariable Long serialNumb) {
         try {
             String alias = certificateDataService.getDateValidity(serialNumb);
@@ -49,14 +48,14 @@ public class CertificateController {
     }
 
     @GetMapping( value = "/detailed/{alias}" )
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    // SUPER ADMIN
     public ResponseEntity<CertificateDetailedViewDTO> getDetailedCertificate(@PathVariable String alias) {
         CertificateDetailedViewDTO detailedView = certificateService.getDetails(alias);
         return new ResponseEntity<CertificateDetailedViewDTO>(detailedView, HttpStatus.OK);
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    // SUPER ADMIN
     public ResponseEntity<String> createCertificate(@RequestBody CreateCertificateDTO certDto) {
         String certificate = "";
         try {
@@ -70,6 +69,7 @@ public class CertificateController {
     }
 
     @GetMapping( value = "/download")
+    // UNAUTHORIZED
     public ResponseEntity<Object> downloadCertificate(@RequestParam("token") String token) {
         String alias = certificateService.findByToken(token);
         if (alias == null) {
@@ -88,7 +88,7 @@ public class CertificateController {
     }
 
     @GetMapping( value = "/download-any")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    // SUPER ADMIN
     public ResponseEntity<Object> adminDownloadCertificate(@RequestParam("alias") String alias) {
         String certificateChain = null;
         try {
@@ -103,7 +103,7 @@ public class CertificateController {
     }
 
     @GetMapping( value = "/download-pkcs12")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    // SUPER ADMIN
     public ResponseEntity<Object> adminDownloadPkcs12(@RequestParam("alias") String alias) {
         byte[] contents = certificateService.getPkcs12Format(alias);
         HttpHeaders headers = createDownloadCertHeaders();
@@ -111,7 +111,7 @@ public class CertificateController {
     }
 
     @GetMapping( value = "/root-certificate")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    // SUPER ADMIN
     public ResponseEntity<CertificateSignerDTO> getRootCertificate() {
         IssuerData issuerData = certificateService.getRootCertificate();
 
@@ -121,7 +121,7 @@ public class CertificateController {
     }
 
     @GetMapping( value = "/ca-certificates")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    // SUPER ADMIN
     public ResponseEntity<List<CertificateSignerDTO>> getCACertificates() {
         Map<String, IssuerData> issuerDataList = certificateService.getAllCAIssuers();
 
@@ -131,7 +131,7 @@ public class CertificateController {
     }
 
     @GetMapping( value = "/{alias}")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    // SUPER ADMIN
     public ResponseEntity<CertificateSignerDTO> getByAlias(@PathVariable String alias) {
         IssuerData issuerData = certificateService.getByAlias(alias);
         CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto(alias, issuerData);
@@ -140,7 +140,7 @@ public class CertificateController {
     }
 
     @PostMapping( value = "revoke/{alias}" )
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    // SUPER ADMIN
     public ResponseEntity<Void> revokeCertificate(@PathVariable String alias, @RequestBody String revocationReason) {
         try {
             certificateDataService.revoke(alias, revocationReason);
@@ -152,7 +152,7 @@ public class CertificateController {
 
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    // SUPER ADMIN
     public ResponseEntity<List<CertificateViewDTO>> getAllCertificates() {
         List<CertificateViewDTO> certificateViewDTOS = certificateDataService.findCertificateView();
         /*CertificateViewDTO root = certificateService.getAllCertificates();*/

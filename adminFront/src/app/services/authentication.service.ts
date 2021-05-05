@@ -60,9 +60,15 @@ export class AuthenticationService {
   }
 
   logout(): void {
+    // this.keycloakService.logout
+    // this.http.get('https://localhost:8443/auth/realms/PKIFrontend/protocol/openid-connect/logout?' +
+    // 'id_token_hint=' + localStorage.getItem('jwtToken') +'&post_logout_redirect_uri=https://localhost:4200', {
+    //   headers: this.headers,
+    // });
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('expiresIn');
-    this.router.navigate(['login-register/login']);
+    localStorage.removeItem('ang-refresh-token');
+    this.router.navigate(['']);
     this.role.next('');
     this.stopRefreshTokenTimer();
   }

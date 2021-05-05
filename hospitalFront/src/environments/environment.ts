@@ -4,7 +4,14 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'https://localhost:8081/api/'
+  apiEndpoint: 'https://localhost:8081/api/',
+  keycloak: {
+    // Url of the Identity Provider
+    issuer: 'http://localhost:8443/auth/',
+    // Realm
+    realm: 'BSEPT4',
+    clientId: 'HospitalFrontend',
+  },
 };
 
 /*

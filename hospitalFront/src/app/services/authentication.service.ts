@@ -60,11 +60,14 @@ export class AuthenticationService {
   }
 
   logout(): void {
+    
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('expiresIn');
-    this.router.navigate(['login']);
+    localStorage.removeItem('ang-refresh-token');
+    this.router.navigate(['']);
     this.role.next('');
     this.stopRefreshTokenTimer();
+    
   }
 
   // geteri i seteri

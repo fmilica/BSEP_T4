@@ -16,11 +16,11 @@ export class AppComponent {
     ) {}
 
   ngOnInit(): void {
-    if (!this.authService.autoLogin()) {
-      this.toastr.info('Please log in.');
-    } else {
-      this.authService.startAutoLoginRefreshTokenTimer();
-    }
+    // if (!this.authService.autoLogin()) {
+    //   this.toastr.info('Please log in.');
+    // } else {
+    //   this.authService.startAutoLoginRefreshTokenTimer();
+    // }
   }
 
 }

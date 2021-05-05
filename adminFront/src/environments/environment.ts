@@ -4,7 +4,14 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'https://localhost:8080/api/'
+  apiEndpoint: 'https://localhost:8082/api/',
+  keycloak: {
+    // Url of the Identity Provider
+    issuer: 'http://localhost:8443/auth/',
+    // Realm
+    realm: 'BSEPT4',
+    clientId: 'PKIFrontend',
+  },
 };
 
 /*
