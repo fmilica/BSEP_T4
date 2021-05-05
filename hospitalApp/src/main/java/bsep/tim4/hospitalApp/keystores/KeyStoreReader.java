@@ -102,4 +102,28 @@ public class KeyStoreReader {
         }
         return null;
     }
+
+    /*
+    * Provera da li postoji sertifikat u keystore-u
+    */
+    public boolean checkCertificate(String keyStoreFile, String keyStorePass, Certificate certificate) {
+        try {
+            // kreiramo instancu KeyStore
+            KeyStore ks = KeyStore.getInstance("JKS", "SUN");
+            // ucitavamo podatke
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
+            ks.load(in, keyStorePass.toCharArray());
+
+            String alias = ks.getCertificateAlias(certificate);
+
+            if (alias == null) {
+                return false;
+            }
+            return true;
+        } catch (KeyStoreException | NoSuchAlgorithmException | NoSuchProviderException | CertificateException
+                | IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
