@@ -54,10 +54,6 @@ public class CSRDto {
 
     @NotBlank(message = "Email cannot be empty.")
     @Size( min = 1, max = 50, message = "Email is too long")
-    @Email
+    @Email(message = "Email is not valid")
     String email;
-
-    //TODO sta je ovo?
-    @NotBlank(message = "Key password cannot be empty.")
-    String keyPassword;
 }

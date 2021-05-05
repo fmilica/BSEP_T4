@@ -40,7 +40,7 @@ public class CsrController {
 
     @GetMapping(value="/verification")
     // UNAUTHORIZED
-    public void verifyCsr(@RequestParam("token") @Size(min = 86, max = 86, message = "Verification link is invalid") String token) {
+    public void verifyCsr(@RequestParam("token") @Size(min = 36, max = 36, message = "Verification link is invalid") String token) {
         csrService.verifyCsr(token);
     }
 
@@ -66,7 +66,7 @@ public class CsrController {
 
     @PutMapping(value = "decline/{id}")
     // SUPER ADMIN
-    public void declineCsr(@PathVariable("id") @NotBlank(message = "Id cannot be empty")
+    public void declineCsr(@PathVariable("id") @NotNull(message = "Id cannot be empty")
                                @Positive( message = "Id is invalid") Long id) {
         try {
             csrService.declineCsr(id);

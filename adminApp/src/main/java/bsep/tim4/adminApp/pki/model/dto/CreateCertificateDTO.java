@@ -17,8 +17,7 @@ public class CreateCertificateDTO {
 
     @NotBlank(message = "Certificate authority alias cannot be empty")
     @Size( min = 1, max = 50, message = "Certificate authority alias is too long")
-    //TODO sta nam je alias zaboravila sam
-    @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Certificate authority alias is not valid")
+    @Pattern(regexp = "[a-zA-Z0-9-]+", message = "Certificate authority alias is not valid")
     private String caAlias;
 
     @NotNull(message = "Begin date cannot be empty")

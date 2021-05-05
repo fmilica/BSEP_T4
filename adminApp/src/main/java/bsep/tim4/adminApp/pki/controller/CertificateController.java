@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +34,8 @@ public class CertificateController {
 
     @GetMapping( value = "/validate/{serialNumb}" )
     // UNATHORIZED
-    public ResponseEntity<String> validateCertificate(@PathVariable @NotBlank(message = "Serial number cannot be empty")
-                                                          @Positive( message = "Serial number is invalid")Long serialNumb) {
+    public ResponseEntity<String> validateCertificate(@PathVariable @NotNull(message = "Serial number cannot be empty")
+                                                          @Positive( message = "Serial number is invalid") Long serialNumb) {
         try {
             String alias = certificateDataService.getDateValidity(serialNumb);
             if (alias != null) {
@@ -60,7 +57,7 @@ public class CertificateController {
     public ResponseEntity<CertificateDetailedViewDTO> getDetailedCertificate(@PathVariable
                                 @NotBlank(message = "Alias cannot be empty")
                                 @Size( min = 1, max = 50, message = "Alias is too long")
-                                @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Alias is not valid") String alias) {
+                                @Pattern(regexp = "[a-zA-Z0-9-]+", message = "Alias is not valid") String alias) {
         CertificateDetailedViewDTO detailedView = certificateService.getDetails(alias);
         return new ResponseEntity<CertificateDetailedViewDTO>(detailedView, HttpStatus.OK);
     }
@@ -82,7 +79,7 @@ public class CertificateController {
     @GetMapping( value = "/download")
     // UNAUTHORIZED
     public ResponseEntity<Object> downloadCertificate(@RequestParam("token")
-                                @Size(min = 90, max = 90, message = "Download certificate link is invalid") String token) {
+                                @Size(min = 36, max = 36, message = "Download certificate link is invalid") String token) {
         String alias = certificateService.findByToken(token);
         if (alias == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -104,7 +101,7 @@ public class CertificateController {
     public ResponseEntity<Object> adminDownloadCertificate(@RequestParam("alias")
                                        @NotBlank(message = "Alias cannot be empty")
                                        @Size( min = 1, max = 50, message = "Alias is too long")
-                                       @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Alias is not valid") String alias) {
+                                       @Pattern(regexp = "[a-zA-Z0-9-]+", message = "Alias is not valid") String alias) {
         String certificateChain = null;
         try {
             certificateChain = certificateService.getPemCertificateChain(alias);
@@ -122,7 +119,7 @@ public class CertificateController {
     public ResponseEntity<Object> adminDownloadPkcs12(@RequestParam("alias")
                                       @NotBlank(message = "Alias cannot be empty")
                                       @Size( min = 1, max = 50, message = "Alias is too long")
-                                      @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Alias is not valid") String alias) {
+                                      @Pattern(regexp = "[a-zA-Z0-9-]+", message = "Alias is not valid") String alias) {
         byte[] contents = certificateService.getPkcs12Format(alias);
         HttpHeaders headers = createDownloadCertHeaders();
         return new ResponseEntity<>(contents, headers, HttpStatus.OK);
@@ -153,7 +150,7 @@ public class CertificateController {
     public ResponseEntity<CertificateSignerDTO> getByAlias(@PathVariable
                                        @NotBlank(message = "Alias cannot be empty")
                                        @Size( min = 1, max = 50, message = "Alias is too long")
-                                       @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Alias is not valid") String alias) {
+                                       @Pattern(regexp = "[a-zA-Z0-9-]+", message = "Alias is not valid") String alias) {
         IssuerData issuerData = certificateService.getByAlias(alias);
         CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto(alias, issuerData);
 
@@ -165,7 +162,7 @@ public class CertificateController {
     public ResponseEntity<Void> revokeCertificate(@PathVariable
                                       @NotBlank(message = "Alias cannot be empty")
                                       @Size( min = 1, max = 50, message = "Alias is too long")
-                                      @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Alias is not valid") String alias,
+                                      @Pattern(regexp = "[a-zA-Z0-9-]+", message = "Alias is not valid") String alias,
                                       @RequestBody @Valid String revocationReason) {
         try {
             certificateDataService.revoke(alias, revocationReason);

@@ -7,8 +7,7 @@ export class CSR {
         public organizationName: string,
         public organizationUnit: string,
         public country: string,
-        public email: string,
-        public keyPassword: string
+        public email: string
     ) {}
 
 }
