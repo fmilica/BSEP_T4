@@ -42,13 +42,13 @@
                     <div class="form-group">
                         <mat-form-field id="country-form-field" appearance="fill" class="form-field">
                             <mat-label>Country</mat-label>
-                            <select formControlName="country">
-                                <option *ngFor="let c of countryValues.split('|')" [value]="c">
+                            <mat-select formControlName="country">
+                                <mat-option *ngFor="let c of countryValues.split('|')" [value]="c">
                                 {{c}}
-                                </option>
-                             </select>
-                            <input id="country-input" matInput placeholder="Ex. Country" formControlName ="country">
-                            <mat-error id="country-error" *ngIf="newCSRForm.get('country')?.invalid">{{getFieldErrorMessage('country')}}</mat-error>
+                                </mat-option>
+                             </mat-select>
+                            <!-- <input id="country-input" matInput placeholder="Ex. Country" formControlName ="country">
+                            <mat-error id="country-error" *ngIf="newCSRForm.get('country')?.invalid">{{getFieldErrorMessage('country')}}</mat-error> -->
                         </mat-form-field>
                     </div>
                     <div class="form-group">

@@ -23,22 +23,22 @@ public class CSRDto {
 
     @NotBlank(message = "Name cannot be empty.")
     @Size( min = 1, max = 50, message = "Name is too long")
-    @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Name is not valid")
+    @Pattern(regexp = "([A-Z][a-z]+[ ]?)+", message = "Name is not valid")
     String name;
 
     @NotBlank(message = "Surname cannot be empty.")
     @Size( min = 1, max = 50, message = "Surname is too long")
-    @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Surname is not valid")
+    @Pattern(regexp = "([A-Z][a-z]+[ ]?)+", message = "Surname is not valid")
     String surname;
 
     @NotBlank(message = "Organization name cannot be empty.")
     @Size( min = 1, max = 50, message = "Organization name is too long")
-    @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Organization name is not valid")
+    @Pattern(regexp = "[A-Z][a-zA-Z ]+", message = "Organization name is not valid")
     String organizationName;
 
     @NotBlank(message = "Organization unit cannot be empty.")
     @Size( min = 1, max = 50, message = "Organization unit is too long")
-    @Pattern(regexp = "[A-Z][a-zA-Z]+", message = "Organization unit is not valid")
+    @Pattern(regexp = "[A-Z][a-zA-Z ]+", message = "Organization unit is not valid")
     String organizationUnit;
 
     @NotBlank(message = "Country cannot be empty.")
@@ -54,6 +54,6 @@ public class CSRDto {
 
     @NotBlank(message = "Email cannot be empty.")
     @Size( min = 1, max = 50, message = "Email is too long")
-    @Email(message = "Email is not valid")
+    @Email(message = "Email format is not valid")
     String email;
 }
