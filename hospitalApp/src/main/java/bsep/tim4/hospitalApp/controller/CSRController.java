@@ -42,7 +42,7 @@ public class CSRController {
 
     @PostMapping(value="/create")
     // ADMIN
-    public ResponseEntity<String> createCsr(@RequestHeader("Authorization") String token, @Valid @RequestBody CSRDto csrDto)
+    public ResponseEntity<Void> createCsr(@RequestHeader("Authorization") String token, @Valid @RequestBody CSRDto csrDto)
             throws KeyStoreException, NoSuchAlgorithmException, IOException, KeyManagementException, CertificateException {
         String csr = csrService.createCSR(csrDto);
 
@@ -68,7 +68,8 @@ public class CSRController {
                 postForEntity(sendCsrFullUri, request, String.class);
 
         String csrReturn = responseEntityStr.getBody();
+        System.out.println(csrReturn);
         //csrService.storeCertificate(certificate);
-        return new ResponseEntity<>(csrReturn, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

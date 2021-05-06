@@ -72,7 +72,7 @@ export class CreateCsrComponent implements OnInit {
         createCsrDirective.resetForm();
       },
       error => {
-        this.toastr.success('Successfully created csr!');
+        this.toastr.error(error.error.fieldErrors[0].defaultMessage)
         this.newCSRForm.reset();
         createCsrDirective.resetForm();
       });

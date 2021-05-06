@@ -269,8 +269,11 @@ export class CreateCertificateComponent implements OnInit {
           this.router.navigate(['homepage/csr']);
         },
         error => {
-          this.toastr.success('Successfully created certificate!');
-          this.router.navigate(['homepage/csr']);
+          if (error.error.fieldErrors) {
+            this.toastr.error(error.error.fieldErrors[0].defaultMessage)
+          } else {
+            this.toastr.error('Invalid date format.')
+          }
         });
   }
 
@@ -346,5 +349,40 @@ export class CreateCertificateComponent implements OnInit {
     this.generalInfoForm.get('emailProtection').setValue(false);
     this.generalInfoForm.get('timeStamping').setValue(false);
     this.generalInfoForm.get('ocspSigning').setValue(false);
+  }
+
+  getFieldErrorMessage(fieldName: string): string {
+    if (this.subjectInfoForm.controls[fieldName].touched) {
+      if (this.subjectInfoForm.controls[fieldName].hasError('required')) {
+        return 'Required field'
+      }
+      else if (this.subjectInfoForm.controls[fieldName].hasError('maxLength')) {
+        return 'Field must not be more than 50 characters long'
+      }
+      else if(fieldName === "commonName") {
+        if (this.subjectInfoForm.controls[fieldName].hasError('pattern')) {
+          return 'Common name can only contain small letters and -'
+        } 
+      }
+      else if(fieldName === "name" || fieldName === "surname") {
+        if (this.subjectInfoForm.controls[fieldName].hasError('pattern')) {
+          return fieldName[0].toUpperCase() + fieldName.substr(1).toLowerCase() + ' must start with a capital letter and can only contain small letters'
+        } 
+      }
+      else if(fieldName === "organizationName") {
+        if (this.subjectInfoForm.controls[fieldName].hasError('pattern')) {
+          return 'Organization name must start with a capital letter and can only contain small letters'
+        } 
+      }
+      else if(fieldName === "organizationUnit") {
+        if (this.subjectInfoForm.controls[fieldName].hasError('pattern')) {
+          return 'Organization unit must start with a capital letter and can only contain small letters'
+        } 
+      }
+      else if (this.subjectInfoForm.controls[fieldName].hasError('email')) {
+        return 'Email format is not valid'
+      }
+    }
+    return '';
   }
 }

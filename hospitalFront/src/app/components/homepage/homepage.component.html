@@ -1,8 +1,17 @@
 <mat-drawer-container class="homepage-container">
     <mat-drawer mode="side" opened>
-        <div class="title">Hospital</div>
+        <div class="title" style="text-align: center">
+            <img style="vertical-align:middle" 
+            src="../../../assets/images/hospital.png" width=43 height=43 alt="">
+            <span style="vertical-align:middle;">Vitals Hospital</span>
+        </div>
         <mat-nav-list>
-            <a mat-list-item [routerLink]="'csr'">Create Certificate Signing Request</a>
+            <a mat-list-item [routerLink]="'csr'" routerLinkActive="active-link">
+                Certificate Signing Request
+            </a>
+            <a mat-list-item [routerLink]="'other'" routerLinkActive="active-link">
+                Other
+            </a>
         </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content>

@@ -6,6 +6,7 @@
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Common name</mat-label>
                 <input matInput formControlName="commonName">
+                <mat-error id="common-name-error" *ngIf="subjectInfoForm.get('commonName')?.invalid">{{getFieldErrorMessage('commonName')}}</mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Given name</mat-label>
@@ -32,7 +33,7 @@
                 <input matInput formControlName="email">
             </mat-form-field>
             <div>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperNext [disabled]="subjectInfoForm.invalid">Next</button>
             </div>
         </form>
     </mat-step>
@@ -86,7 +87,7 @@
             </section>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperNext [disabled]="generalInfoForm.invalid">Next</button>
             </div>
         </form>
     </mat-step>
@@ -132,7 +133,7 @@
             </mat-form-field>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="onSubmit()">Create</button>
+                <button mat-button [disabled]="issuerInfoForm.invalid" (click)="onSubmit()">Create</button>
             </div>
         </form>
     </mat-step>

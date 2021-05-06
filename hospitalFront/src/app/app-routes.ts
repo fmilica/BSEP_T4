@@ -36,6 +36,10 @@ export const routes: Routes = [
           path: 'csr',
           component: CreateCsrComponent,
         },
+        {
+          path: 'other',
+          component: CreateCsrComponent,
+        },
       ],
     }, 
     {

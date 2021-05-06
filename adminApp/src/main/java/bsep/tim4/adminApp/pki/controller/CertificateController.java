@@ -73,7 +73,7 @@ public class CertificateController {
         } catch (CertificateNotCAException | InvalidCertificateException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(certificate, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping( value = "/download")

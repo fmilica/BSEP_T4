@@ -20,13 +20,13 @@ import java.util.List;
 @AllArgsConstructor
 public class CertificateAdditionalInfo {
 
-    @NotNull( message = "CA flag cannot be empty")
+    @NotNull( message = "CA flag cannot be empty.")
     private boolean ca;
 
-    @NotEmpty( message = "Key usages cannot be empty")
+    @NotEmpty( message = "Key usages cannot be empty.")
     private List<Integer> keyUsages;
 
-    @NotEmpty( message = "Extended key usages cannot be empty")
+    @NotEmpty( message = "Extended key usages cannot be empty.")
     private List<String> extendedKeyUsages;
 
     public CertificateAdditionalInfo(int root) {
