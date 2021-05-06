@@ -9,14 +9,17 @@ import bsep.tim4.adminApp.pki.service.CsrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.mail.MessagingException;
+import javax.validation.constraints.*;
 import java.util.List;
 
 @RestController
 @RequestMapping(value="api/csr")
+@Validated
 public class CsrController {
 
     @Autowired
@@ -29,7 +32,7 @@ public class CsrController {
 
     @PostMapping(value="/receive")
     // ADMIN
-    public ResponseEntity<String> receiveCsr(@RequestBody String csr) {
+    public ResponseEntity<String> receiveCsr(@RequestBody @NotBlank(message = "Csr cannot be empty") String csr) {
         //Primljen csr se skladisti u bazu i na taj email se salje konfirmacioni link
         csrService.saveCsr(csr);
         return new ResponseEntity<>(csr, HttpStatus.OK);
@@ -37,7 +40,7 @@ public class CsrController {
 
     @GetMapping(value="/verification")
     // UNAUTHORIZED
-    public void verifyCsr(@RequestParam("token") String token) {
+    public void verifyCsr(@RequestParam("token") @Size(min = 36, max = 36, message = "Verification link is invalid") String token) {
         csrService.verifyCsr(token);
     }
 
@@ -52,7 +55,8 @@ public class CsrController {
 
     @PutMapping(value = "accept/{id}")
     // SUPER ADMIN
-    public void acceptCsr(@PathVariable("id") Long id) {
+    public void acceptCsr(@PathVariable("id") @NotNull(message = "Id cannot be empty")
+                              @Positive( message = "Id is invalid") Long id) {
         try {
             csrService.acceptCsr(id);
         } catch (NonExistentIdException e) {
@@ -62,7 +66,8 @@ public class CsrController {
 
     @PutMapping(value = "decline/{id}")
     // SUPER ADMIN
-    public void declineCsr(@PathVariable("id") Long id) {
+    public void declineCsr(@PathVariable("id") @NotNull(message = "Id cannot be empty")
+                               @Positive( message = "Id is invalid") Long id) {
         try {
             csrService.declineCsr(id);
         } catch (NonExistentIdException | MessagingException e) {

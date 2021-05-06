@@ -8,49 +8,54 @@
                         <mat-form-field id="common-name-form-field" appearance="fill" class="form-field">
                             <mat-label>Common Name</mat-label>
                             <input id="common-name-input" matInput placeholder="Ex. CN" formControlName ="commonName">
-                            <mat-error id="common-name-error" *ngIf="newCSRForm.get('commonName')?.invalid">{{getRequiredFieldErrorMessage('commonName')}}</mat-error>
+                            <mat-error id="common-name-error" *ngIf="newCSRForm.get('commonName')?.invalid">{{getFieldErrorMessage('commonName')}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="form-group">
                         <mat-form-field id="name-form-field" appearance="fill" class="form-field">
                             <mat-label>Name</mat-label>
                             <input id="name-input" matInput placeholder="Ex. Name" formControlName ="name">
-                            <mat-error id="name-error" *ngIf="newCSRForm.get('name')?.invalid">{{getRequiredFieldErrorMessage('name')}}</mat-error>
+                            <mat-error id="name-error" *ngIf="newCSRForm.get('name')?.invalid">{{getFieldErrorMessage('name')}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="form-group">
                         <mat-form-field id="surname-form-field" appearance="fill" class="form-field">
                             <mat-label>Surname</mat-label>
                             <input id="surname-input" matInput placeholder="Ex. Surname" formControlName ="surname">
-                            <mat-error id="surname-error" *ngIf="newCSRForm.get('surname')?.invalid">{{getRequiredFieldErrorMessage('surname')}}</mat-error>
+                            <mat-error id="surname-error" *ngIf="newCSRForm.get('surname')?.invalid">{{getFieldErrorMessage('surname')}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="form-group">
                         <mat-form-field id="organization-name-form-field" appearance="fill" class="form-field">
                             <mat-label>Organization Name</mat-label>
                             <input id="organization-name-input" matInput placeholder="Ex. OrganizationName" formControlName ="organizationName">
-                            <mat-error id="organization-name-error" *ngIf="newCSRForm.get('organizationName')?.invalid">{{getRequiredFieldErrorMessage('organizationName')}}</mat-error>
+                            <mat-error id="organization-name-error" *ngIf="newCSRForm.get('organizationName')?.invalid">{{getFieldErrorMessage('organizationName')}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="form-group">
                         <mat-form-field id="organization-unit-form-field" appearance="fill" class="form-field">
                             <mat-label>Organization Unit</mat-label>
                             <input id="organization-unit-input" matInput placeholder="Ex. OrganizationUnit" formControlName ="organizationUnit">
-                            <mat-error id="organization-Unit-error" *ngIf="newCSRForm.get('organizationUnit')?.invalid">{{getRequiredFieldErrorMessage('organizationUnit')}}</mat-error>
+                            <mat-error id="organization-Unit-error" *ngIf="newCSRForm.get('organizationUnit')?.invalid">{{getFieldErrorMessage('organizationUnit')}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="form-group">
                         <mat-form-field id="country-form-field" appearance="fill" class="form-field">
                             <mat-label>Country</mat-label>
-                            <input id="country-input" matInput placeholder="Ex. Country" formControlName ="country">
-                            <mat-error id="country-error" *ngIf="newCSRForm.get('country')?.invalid">{{getRequiredFieldErrorMessage('country')}}</mat-error>
+                            <mat-select formControlName="country">
+                                <mat-option *ngFor="let c of countryValues.split('|')" [value]="c">
+                                {{c}}
+                                </mat-option>
+                             </mat-select>
+                            <!-- <input id="country-input" matInput placeholder="Ex. Country" formControlName ="country">
+                            <mat-error id="country-error" *ngIf="newCSRForm.get('country')?.invalid">{{getFieldErrorMessage('country')}}</mat-error> -->
                         </mat-form-field>
                     </div>
                     <div class="form-group">
                         <mat-form-field id="email-form-field" appearance="fill" class="form-field">
                             <mat-label>Email</mat-label>
                             <input id="email-input" matInput placeholder="Ex. email@domen.something" formControlName ="email">
-                            <mat-error id="email-error" *ngIf="newCSRForm.get('email')?.invalid">{{getRequiredFieldErrorMessage('email')}}</mat-error>
+                            <mat-error id="email-error" *ngIf="newCSRForm.get('email')?.invalid">{{getFieldErrorMessage('email')}}</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
