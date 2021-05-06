@@ -60,14 +60,11 @@ export class AuthenticationService {
   }
 
   logout(): void {
-    
     localStorage.removeItem('jwtToken');
-    localStorage.removeItem('expiresIn');
     localStorage.removeItem('ang-refresh-token');
-    this.router.navigate(['']);
     this.role.next('');
     this.stopRefreshTokenTimer();
-    
+    window.location.href = 'https://localhost:8443/auth/realms/BSEPT4/protocol/openid-connect/logout?redirect_uri=https://localhost:4201';
   }
 
   // geteri i seteri

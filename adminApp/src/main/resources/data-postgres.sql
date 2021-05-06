@@ -6,3 +6,5 @@ insert into certificate_data (alias, common_name, email, parent_alias, revocatio
     values ('hospital', 'localhost', 'hospital@example.com', 'adminroot', null, null, false, '2021-03-13 12:17:49', '2023-03-13 12:17:49');
 insert into certificate_data (alias, common_name, email, parent_alias, revocation_date, revocation_reason, revoked, valid_from, valid_to)
     values ('keycloak', 'localhost', 'micika4ever@gmail.com', 'adminroot', null, null, false, '2021-04-28 03:49:17', '2023-04-28 03:49:17');
+insert into certificate_data (alias, common_name, email, parent_alias, revocation_date, revocation_reason, revoked, valid_from, valid_to)
+    values ('5-medicaldevice1-rootca', 'MedicalDevice1', 'evaj.evadesign@gmail.com', 'adminroot', null, null, false, '2021-05-03 11:19:04', '2022-05-03 11:19:04');
