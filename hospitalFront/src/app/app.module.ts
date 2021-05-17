@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,9 +26,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { initializer } from './util/app-init';
-import { KeycloakService } from 'keycloak-angular';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { LogsComponent } from './components/logs/logs.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +36,7 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
     HomepageComponent,
     CreateCsrComponent,
     UnauthorizedComponent,
+    LogsComponent,
   ],
   imports: [
     RouterModule,

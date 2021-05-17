@@ -1,8 +1,7 @@
 <mat-drawer-container class="homepage-container">
     <mat-drawer mode="side" opened>
         <div class="title" style="text-align: center">
-            <img style="vertical-align:middle" 
-            src="../../../assets/images/lock.png" width=43 height=43 alt="">
+            <img style="vertical-align:middle" src="../../../assets/images/lock.png" width=43 height=43 alt="">
             <span style="vertical-align:middle; padding-left: 10px;">Vitals Security</span>
         </div>
         <mat-nav-list>
@@ -14,6 +13,9 @@
             </a>
             <a mat-list-item [routerLink]="'logs'" routerLinkActive="active-link">
                 Logs
+            </a>
+            <a mat-list-item (click)="toHospitalLogs()">
+                Hospital Logs
             </a>
         </mat-nav-list>
     </mat-drawer>

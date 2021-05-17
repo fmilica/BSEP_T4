@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -35,7 +32,8 @@ public class LogController {
     private final String validateCertificateUrl = "/certificate/validate/";
 
     @PostMapping(value="/receive")
-    // ADMIN
+    // UNAUTHORIZED
+    // getting data from MedicalDevice application
     public ResponseEntity<String> receiveLog(@RequestBody byte[] signedMessage) {
         try {
             int serialNumber = SignatureUtil.checkTrustedCertificate(signedMessage, trustStore, trustStorePass);
@@ -58,5 +56,11 @@ public class LogController {
             e.printStackTrace();
             return new ResponseEntity<>("Ne verujemo ovom sertifikatu!", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping
+    // SUPER_ADMIN, ADMIN
+    public ResponseEntity<String> viewLogs() {
+        return new ResponseEntity<>("Super admin i admin imaju uvid u logove -> SSO demonstracija.", HttpStatus.OK);
     }
 }

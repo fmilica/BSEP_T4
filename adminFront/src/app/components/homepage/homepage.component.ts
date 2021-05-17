@@ -24,4 +24,8 @@ export class HomepageComponent implements OnInit {
     this.toastr.info('Logged out successfully!');
   }
 
+  toHospitalLogs(): void {
+    window.location.href = "https://localhost:4201/homepage/log";
+  }
+
 }
