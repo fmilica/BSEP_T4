@@ -63,7 +63,9 @@ public class WebSecurityConfiguration extends KeycloakWebSecurityConfigurerAdapt
                 .antMatchers("/api/csr/*").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().cors();
-        http.headers().xssProtection();
+        http.headers().xssProtection()
+        .and().contentSecurityPolicy("script-src 'self'");
+        ;
     }
 
     @Bean("corsConfigurationSource")

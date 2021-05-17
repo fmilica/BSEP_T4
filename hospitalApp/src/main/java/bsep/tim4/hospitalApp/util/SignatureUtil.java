@@ -16,6 +16,7 @@ import org.bouncycastle.util.Store;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.Security;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -24,14 +25,20 @@ import java.util.Collection;
 public class SignatureUtil {
     // CMS = Cryptographic Message Syntax
 
-    public static boolean checkTrustedCertificate(byte[] signedMessage, String trustStore, String trustStorePass)
+    public static int checkTrustedCertificate(byte[] signedMessage, String trustStore, String trustStorePass)
             throws CertificateException, CMSException, IOException {
         // dobavljanje sertifikata iz cms poruke
         X509Certificate signerCertificate = extractCertificate(signedMessage);
+        // dobavljanje serijskog broja sertifikata radi provere da li je revoked
+        BigInteger serialNumber = signerCertificate.getSerialNumber();
         // instanciranje keystore reader objekta i provera postojanja sertifikata u truststore bolnice
         KeyStoreReader keyStoreReader = new KeyStoreReader();
         boolean existing = keyStoreReader.checkCertificate(trustStore, trustStorePass, signerCertificate);
-        return existing;
+        if (existing) {
+            return serialNumber.intValue();
+        } else {
+            return -1;
+        }
     }
 
     public static boolean verifySignature(byte[] signedMessage)

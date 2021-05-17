@@ -34,21 +34,27 @@ public class CertificateController {
 
     @GetMapping( value = "/validate/{serialNumb}" )
     // UNATHORIZED
-    public ResponseEntity<String> validateCertificate(@PathVariable @NotNull(message = "Serial number cannot be empty")
+    public ResponseEntity<Boolean> validateCertificate(@PathVariable @NotNull(message = "Serial number cannot be empty")
                                                           @Positive( message = "Serial number is invalid") Long serialNumb) {
         try {
             String alias = certificateDataService.getDateValidity(serialNumb);
             if (alias != null) {
                 if (certificateService.validateCertificate(alias)) {
-                    return new ResponseEntity<>("VALID", HttpStatus.OK);
+                    // validan sertifikat
+                    return new ResponseEntity<>(true, HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<>("INVALID", HttpStatus.OK);
+                    // nije validan sertifikat
+                    return new ResponseEntity<>(false, HttpStatus.OK);
                 }
             } else {
-                return new ResponseEntity<>("INVALID", HttpStatus.OK);
+                // ne postoji sa tim serijskim brojem
+                // NOT_EXISTANT_SERIAL_NUMBER
+                return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
             }
         } catch (NonExistentIdException e) {
-            return new ResponseEntity<>("NOT_EXISTANT_SERIAL_NUMBER", HttpStatus.NOT_FOUND);
+            // ne postoji sa tim serijskim brojem
+            // NOT_EXISTANT_SERIAL_NUMBER
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
     }
 

@@ -3,15 +3,12 @@ package bsep.tim4.adminApp.pki.service;
 import bsep.tim4.adminApp.pki.keystores.KeyStoreReader;
 import bsep.tim4.adminApp.pki.keystores.KeyStoreWriter;
 import bsep.tim4.adminApp.pki.model.IssuerData;
-import bsep.tim4.adminApp.pki.model.dto.CertificateViewDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 @Service

@@ -18,6 +18,7 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.SSLContext;
@@ -69,7 +70,7 @@ public class CommunicationTestController {
                     postForEntity(testCommsFullUri, request, String.class);
             String testReturn = responseEntityStr.getBody();
             return new ResponseEntity<>(testReturn, HttpStatus.OK);
-        } catch(HttpClientErrorException e) {
+        } catch(HttpClientErrorException | HttpServerErrorException e) {
             return new ResponseEntity<>("Odbila nas bolnica", HttpStatus.BAD_REQUEST);
         }
     }
