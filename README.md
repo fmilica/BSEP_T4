@@ -4,7 +4,6 @@
 https://drive.google.com/file/d/12jDFtlDJgHRzOCccCiHCENiRG2D7R1sp/view?usp=sharing
 
 ### KONTROLNA TACKA 2 DEMO:
-https://drive.google.com/file/d/1hm7uIbRJ8tYZFBVuqyRacaVfbija5pPj/view?usp=sharing
 
 Backend projekte je potrebno otvoriti u razvojnom okruzenju koje podrzava Javu i Spring Boot framework ( na primer: Eclipse, Spting Tool Suite, IntelliJ..). Za instaliranje maven dependencies potrebno je pokrenuti Maven Run.. sa atributom maven clean install. Aplikacije se pokrecu kao Java application.
 
