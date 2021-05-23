@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
 export class RoleGuard implements CanActivate {
 
     constructor(private router: Router,
-                private toastr: ToastrService) {}
+        private toastr: ToastrService) { }
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
         const expectedRoles: string = route.data.expectedRoles;
-        const token = localStorage.getItem('jwtToken');
+        const token = sessionStorage.getItem('jwtToken');
         const jwt: JwtHelperService = new JwtHelperService();
 
         if (!token) {
@@ -28,8 +28,8 @@ export class RoleGuard implements CanActivate {
 
         const userRoles = info.realm_access.roles;
         let ind = false
-        for(let role in userRoles) {
-            if(roles.indexOf(userRoles[role]) !== -1) {
+        for (let role in userRoles) {
+            if (roles.indexOf(userRoles[role]) !== -1) {
                 ind = true;
                 break;
             }

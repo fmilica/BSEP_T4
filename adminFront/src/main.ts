@@ -9,23 +9,17 @@ if (environment.production) {
   enableProdMode();
 }
 
-// platformBrowserDynamic().bootstrapModule(AppModule)
-//   .catch(err => console.error(err));
-
 //keycloak init options
 let initOptions = {
-  url: 'https://localhost:8443/auth', 
-  realm: 'BSEPT4', 
+  url: 'https://localhost:8443/auth',
+  realm: 'BSEPT4',
   clientId: 'PKIFrontend',
   'enable-cors': true,
-  initOptions: {
-    // flow: 'implicit',
-  }
 }
 
 let keycloak = Keycloak(initOptions);
 
-keycloak.init({ onLoad: "login-required" }).success((auth) => {
+keycloak.init({ onLoad: "login-required" }).then((auth) => {
 
   if (!auth) {
     window.location.reload();
@@ -37,25 +31,25 @@ keycloak.init({ onLoad: "login-required" }).success((auth) => {
   platformBrowserDynamic().bootstrapModule(AppModule)
     .catch(err => console.error(err));
 
-
-  localStorage.setItem("jwtToken", keycloak.token);
-  localStorage.setItem("ang-refresh-token", keycloak.refreshToken);
-
-  setTimeout(() => {
-    keycloak.updateToken(70).success((refreshed) => {
-      if (refreshed) {
-        console.debug('Token refreshed' + refreshed);
-      } else {
-        console.warn('Token not refreshed, valid for '
-          + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
-      }
-    }).error(() => {
-      console.error('Failed to refresh token');
-    });
-
-
-  }, 60000)
-
-}).error(() => {
+  sessionStorage.setItem("jwtToken", keycloak.token);
+  sessionStorage.setItem("ang-refresh-token", keycloak.refreshToken);
+}).catch(() => {
   console.error("Authenticated Failed");
 });
+
+keycloak.onTokenExpired = () => {
+  console.log('Token expired.')
+  keycloak.updateToken(30).then((refreshed) => {
+    if (refreshed) {
+      console.log('Token refreshed.');
+      sessionStorage.setItem("jwtToken", keycloak.token);
+      sessionStorage.setItem("ang-refresh-token", keycloak.refreshToken);
+    } else {
+      console.log('Token not refreshed, valid for '
+        + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' more seconds.');
+    }
+  }).catch(() => {
+    console.log('Failed to refresh token.');
+    keycloak.clearToken();
+  });
+}

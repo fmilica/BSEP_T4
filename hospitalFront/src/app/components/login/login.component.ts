@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-//
+
   onSubmit(): void {
     // check if form is valid
     if (!this.loginForm.valid) {
@@ -39,40 +39,22 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.value.password;
 
     const userLoginDto = new UserLogin(email, password);
-
-    this.authService.login(userLoginDto)
-      .subscribe(
-        (response) => {
-          this.toastr.success('Logged in successfully!');
-          // postavljanje u local storage
-          this.authService.setLoggedInUser(response);
-          // reset forme
-          this.loginForm.reset();
-          // preusmerenje
-          this.router.navigate(['homepage']);
-          this.authService.role.next(this.authService.getLoggedInUserAuthority());
-        },
-        (error) => {
-          this.toastr.error(error.error.message)
-          this.loginForm.reset();
-        }
-      );
   }
 
   getEmailErrorMessage(): string {
     if (this.loginForm.controls.email.touched) {
-      if ( this.loginForm.controls.email.hasError('required')) {
+      if (this.loginForm.controls.email.hasError('required')) {
         return 'Required field';
       }
 
-      return  this.loginForm.controls.email.hasError('email') ? 'Not a valid email' : '';
+      return this.loginForm.controls.email.hasError('email') ? 'Not a valid email' : '';
     }
     return '';
   }
 
   getRequiredFieldErrorMessage(fieldName: string): string {
     if (this.loginForm.controls[fieldName].touched) {
-      return  this.loginForm.controls[fieldName].hasError('required') ? 'Required field' : '';
+      return this.loginForm.controls[fieldName].hasError('required') ? 'Required field' : '';
     }
 
     return '';

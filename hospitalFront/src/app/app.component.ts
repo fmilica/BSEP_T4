@@ -13,13 +13,7 @@ export class AppComponent {
   constructor(
     private authService: AuthenticationService,
     private toastr: ToastrService
-    ) {}
+  ) { }
 
-  ngOnInit(): void {
-    // if (!this.authService.autoLogin()) {
-    //   this.toastr.info('Please log in.');
-    // } else {
-    //   this.authService.startAutoLoginRefreshTokenTimer();
-    // }
-  }
+  ngOnInit(): void { }
 }

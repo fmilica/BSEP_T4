@@ -23,26 +23,27 @@ export class LoginComponent implements OnInit {
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', 
-      [
-        Validators.required,
-        /*CustomValidators.patternValidator(/\d/, {hasNumber: true}),
-        CustomValidators.patternValidator(/[A-Z]/, {hasCapitalCase: true}),
-        CustomValidators.patternValidator(/[a-z]/, {hasSmallCase: true}),
-        CustomValidators.patternValidator(
-          /[ !@#$%^&*()_+\-=\[\]{};:\\|,.<>\/?]/,
-          {
-            hasSpecialCharacters: true
-          }
-        ),
-        Validators.minLength(8)*/
-      ])
+      password: new FormControl('',
+        [
+          Validators.required,
+          /*CustomValidators.patternValidator(/\d/, {hasNumber: true}),
+          CustomValidators.patternValidator(/[A-Z]/, {hasCapitalCase: true}),
+          CustomValidators.patternValidator(/[a-z]/, {hasSmallCase: true}),
+          CustomValidators.patternValidator(
+            /[ !@#$%^&*()_+\-=\[\]{};:\\|,.<>\/?]/,
+            {
+              hasSpecialCharacters: true
+            }
+          ),
+          Validators.minLength(8)*/
+        ])
+    }
+    )
   }
-  )}
 
   ngOnInit(): void {
   }
-//
+
   onSubmit(): void {
     // check if form is valid
     if (!this.loginForm.valid) {
@@ -53,40 +54,22 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.value.password;
 
     const userLoginDto = new UserLogin(email, password);
-
-    this.authService.login(userLoginDto)
-      .subscribe(
-        (response) => {
-          this.toastr.success('Logged in successfully!');
-          // postavljanje u local storage
-          this.authService.setLoggedInUser(response);
-          // reset forme
-          this.loginForm.reset();
-          // preusmerenje
-          this.router.navigate(['homepage']);
-          this.authService.role.next(this.authService.getLoggedInUserAuthority());
-        },
-        (error) => {
-          this.toastr.error(error.error.message)
-          this.loginForm.reset();
-        }
-      );
   }
 
   getEmailErrorMessage(): string {
     if (this.loginForm.controls.email.touched) {
-      if ( this.loginForm.controls.email.hasError('required')) {
+      if (this.loginForm.controls.email.hasError('required')) {
         return 'Required field';
       }
 
-      return  this.loginForm.controls.email.hasError('email') ? 'Not a valid email' : '';
+      return this.loginForm.controls.email.hasError('email') ? 'Not a valid email' : '';
     }
     return '';
   }
 
   getPasswordErrorMessage(): string {
     if (this.loginForm.controls.password.touched) {
-      if ( this.loginForm.controls.password.hasError('required')) {
+      if (this.loginForm.controls.password.hasError('required')) {
         return 'Required field';
       } else {
         return 'Invalid password format'

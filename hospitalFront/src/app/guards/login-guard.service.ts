@@ -8,12 +8,12 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginGuard implements CanActivate {
 
     constructor(private router: Router,
-                private toastr: ToastrService) {}
+        private toastr: ToastrService) { }
 
     canActivate(): boolean {
-        if (localStorage.getItem('jwtToken')) {
+        if (sessionStorage.getItem('jwtToken')) {
             this.router.navigate(['/homepage']);
-            this.toastr.info('Already logged in');
+            this.toastr.info('Succesfully logged in');
             return false;
         }
 
