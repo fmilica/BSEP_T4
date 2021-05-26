@@ -1,6 +1,8 @@
 package bsep.tim4.medicalDevice.controller;
 
+import bsep.tim4.medicalDevice.model.PatientStatus;
 import bsep.tim4.medicalDevice.util.SignatureUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -29,6 +31,8 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping(value="api/communication-test")
@@ -60,7 +64,17 @@ public class CommunicationTestController {
 
         final String testCommsFullUri = hospitalApplicationUri +  testCommunicationUri;
 
-        byte[] signedMessage = SignatureUtil.signMessage(testContent, keystore, keystorePass, alias);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        //ThreadLocalRandom.current().nextInt(min, max + 1) mozda ovo za random
+
+        PatientStatus patientStatus = new PatientStatus(80, 70, 110,
+                36.5, 12, "60ae697db04b8d0648494432", timestamp);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String status = objectMapper.writeValueAsString(patientStatus);
+
+        byte[] signedMessage = SignatureUtil.signMessage(status, keystore, keystorePass, alias);
 
         HttpEntity<byte[]> request =
                 new HttpEntity<>(signedMessage);

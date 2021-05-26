@@ -1,6 +1,11 @@
 package bsep.tim4.hospitalApp.controller;
 
+import bsep.tim4.hospitalApp.exceptions.NonExistentIdException;
+import bsep.tim4.hospitalApp.model.PatientStatus;
+import bsep.tim4.hospitalApp.service.PatientStatusService;
 import bsep.tim4.hospitalApp.util.SignatureUtil;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.security.cert.CertificateException;
@@ -16,6 +23,9 @@ import java.security.cert.CertificateException;
 @RestController
 @RequestMapping(value="api/log")
 public class LogController {
+
+    @Autowired
+    PatientStatusService patientStatusService;
 
     @Autowired
     RestTemplate restTemplate;
@@ -45,6 +55,20 @@ public class LogController {
                 boolean valid = responseEntityStr.getBody();
                 if (valid) {
                     if (SignatureUtil.verifySignature(signedMessage)) {
+                        String message = SignatureUtil.readSignedData(signedMessage);
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        PatientStatus patientStatus = null;
+                        try {
+                            patientStatus = objectMapper.readValue(message, PatientStatus.class);
+                        }catch (JsonMappingException | JsonParseException e) {
+                            System.out.println("Deserialization error!");
+                        }
+                        try{
+                            patientStatusService.save(patientStatus);
+                        } catch (NonExistentIdException e) {
+                                throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+                        }
+
                         return new ResponseEntity<>("Potpis validan " + signedMessage, HttpStatus.OK);
                     }
                     return new ResponseEntity<>("Sertifikat je revoked!", HttpStatus.BAD_REQUEST);

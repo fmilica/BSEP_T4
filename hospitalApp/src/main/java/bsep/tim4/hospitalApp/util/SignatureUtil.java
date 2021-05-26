@@ -5,10 +5,7 @@ import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.cms.ContentInfo;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
-import org.bouncycastle.cms.CMSException;
-import org.bouncycastle.cms.CMSSignedData;
-import org.bouncycastle.cms.SignerInformation;
-import org.bouncycastle.cms.SignerInformationStore;
+import org.bouncycastle.cms.*;
 import org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoVerifierBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.OperatorCreationException;
@@ -55,6 +52,14 @@ public class SignatureUtil {
         boolean verified = signer.verify(new JcaSimpleSignerInfoVerifierBuilder()
                         .build(signerCertificate.getPublicKey()));
         return verified;
+    }
+
+    public static String readSignedData(byte[] signedMessage) throws IOException, CMSException {
+        CMSSignedData cmsSignedData = extractCMSData(signedMessage);
+        CMSTypedData cmsTypedData = cmsSignedData.getSignedContent();
+        String message  = new String((byte[]) cmsTypedData.getContent());
+
+        return message;
     }
 
     private static X509Certificate extractCertificate(byte[] signedMessage) throws IOException, CMSException, CertificateException {
