@@ -64,6 +64,7 @@ public class LogController {
                             System.out.println("Deserialization error!");
                         }
                         try{
+                            System.out.println(patientStatus);
                             patientStatusService.save(patientStatus);
                         } catch (NonExistentIdException e) {
                                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

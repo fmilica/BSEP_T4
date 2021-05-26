@@ -1,6 +1,7 @@
 package bsep.tim4.medicalDevice.controller;
 
 import bsep.tim4.medicalDevice.model.PatientStatus;
+import bsep.tim4.medicalDevice.service.PatientStatusService;
 import bsep.tim4.medicalDevice.util.SignatureUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -41,6 +43,9 @@ public class CommunicationTestController {
     @Autowired
     RestTemplate restTemplate;
 
+    @Autowired
+    PatientStatusService patientStatusService;
+
     @Value("${hospital.uri}")
     private String hospitalApplicationUri;
 
@@ -57,19 +62,14 @@ public class CommunicationTestController {
     private String alias;
 
     private final String testCommunicationUri = "/log/receive";
-    private final String testContent = "Ovo je pokusaj slanja poruke.";
 
     @GetMapping
+    @Scheduled(fixedRate = 3000, initialDelay = 5000)
     public ResponseEntity<String> testCommunication() throws IOException, CertificateException, CMSException, OperatorCreationException {
 
         final String testCommsFullUri = hospitalApplicationUri +  testCommunicationUri;
 
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-        //ThreadLocalRandom.current().nextInt(min, max + 1) mozda ovo za random
-
-        PatientStatus patientStatus = new PatientStatus(80, 70, 110,
-                36.5, 12, "60ae697db04b8d0648494432", timestamp);
+        PatientStatus patientStatus = patientStatusService.generatePatientStatus();
 
         ObjectMapper objectMapper = new ObjectMapper();
         String status = objectMapper.writeValueAsString(patientStatus);

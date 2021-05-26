@@ -101,4 +101,16 @@ public class PatientStatus {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
+
+    @Override
+    public String toString() {
+        return "PatientStatus{" +
+                "heartRate=" + heartRate +
+                ", lowerBloodPressure=" + lowerBloodPressure +
+                ", upperBloodPressure=" + upperBloodPressure +
+                ", bodyTemperature=" + bodyTemperature +
+                ", respiratoryRate=" + respiratoryRate +
+                ", patientId='" + patientId + '\'' +
+                '}';
+    }
 }
