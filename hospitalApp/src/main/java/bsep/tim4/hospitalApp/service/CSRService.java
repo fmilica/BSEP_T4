@@ -49,15 +49,10 @@ public class CSRService {
         KeyPair keyPair = this.csrGenerator.generateKeyPair();
         // cuvanje privatnog kljuca
         keyStoreService.loadKeyStore();
-        //keyStoreService.savePrivateKey(csrDto.getEmail(), keyPair.getPrivate(), csrDto.getKeyPassword(), null);
-//        JcaPEMWriter jcaPEMWriter = null;
         try {
             PEMWriter pw = new PEMWriter(new FileWriter("src"+ separator + "main"+ separator +"resources"+ separator +"donottouch.key"));
             pw.writeObject(this.csrGenerator.getPrivateKey());
             pw.close();
-//            jcaPEMWriter = new JcaPEMWriter(new FileWriter("src"+ separator + "main"+ separator +"resources"+ separator +"donottouch.key"));
-//            jcaPEMWriter.writeObject(this.csrGenerator.getPrivateKey(), null);
-//            jcaPEMWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
