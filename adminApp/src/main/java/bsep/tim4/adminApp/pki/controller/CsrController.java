@@ -6,6 +6,8 @@ import bsep.tim4.adminApp.pki.model.dto.CsrDTO;
 import bsep.tim4.adminApp.pki.model.mapper.CsrMapper;
 import bsep.tim4.adminApp.pki.service.CertificateService;
 import bsep.tim4.adminApp.pki.service.CsrService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.mail.MessagingException;
 import javax.validation.constraints.*;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -29,6 +32,8 @@ public class CsrController {
     private CsrService csrService;
 
     private final CsrMapper csrMapper = new CsrMapper();
+
+    Logger logger = LoggerFactory.getLogger(CsrController.class);
 
     @PostMapping(value="/receive")
     // ADMIN
@@ -46,10 +51,13 @@ public class CsrController {
 
     @GetMapping
     // SUPER ADMIN
-    public ResponseEntity<List<CsrDTO>> findAll() {
+    public ResponseEntity<List<CsrDTO>> findAllCsr(Principal principal) {
         List<CSR> csrList = csrService.findAllByVerified(true);
         List<CsrDTO> csrDTOList = csrMapper.toCsrDtoList(csrList);
 
+        // KO(keycloak user id) called method KOJU with status HTTP-STATUS: RAZLOG
+        logger.info(String.format("%s called method %s with status code %s: %s",
+                principal.getName(), "findAllCsr", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(csrDTOList, HttpStatus.OK);
     }
 
