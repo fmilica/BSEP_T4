@@ -126,4 +126,20 @@ public class KeyStoreReader {
         }
         return false;
     }
+
+    public Key getSymKey(String alias, char[] passwordArray, String keyStoreFile, String keyStorePass) {
+        try {
+            // kreiramo instancu KeyStore
+            KeyStore ks = KeyStore.getInstance("JCEKS");
+            // ucitavamo podatke
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
+            ks.load(in, keyStorePass.toCharArray());
+
+            Key symKey = ks.getKey(alias, passwordArray);
+            return symKey;
+        } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException | UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

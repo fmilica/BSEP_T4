@@ -1,13 +1,10 @@
 package bsep.tim4.hospitalApp;
 
-import bsep.tim4.hospitalApp.model.Patient;
-import bsep.tim4.hospitalApp.repository.PatientRepository;
 import bsep.tim4.hospitalApp.repository.PatientStatusRepository;
+import bsep.tim4.hospitalApp.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 @Component
 public class DbSeeder implements CommandLineRunner {
@@ -16,7 +13,7 @@ public class DbSeeder implements CommandLineRunner {
     private PatientStatusRepository patientStatusRepository;
 
     @Autowired
-    private PatientRepository patientRepository;
+    private PatientService patientService;
 
     @Override
     public void run(String... strings) throws Exception {
@@ -28,7 +25,7 @@ public class DbSeeder implements CommandLineRunner {
 
         //Patient patient = new Patient("Marko Markovic", dateOfBirth, "Novi Sad", "Dijabeticar");
 
-        //patientRepository.save(patient);
+        //patientService.save(patient);
 
     }
 }

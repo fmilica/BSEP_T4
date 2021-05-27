@@ -1,7 +1,7 @@
 package bsep.tim4.hospitalApp.service;
 
 import bsep.tim4.hospitalApp.exceptions.NonExistentIdException;
-import bsep.tim4.hospitalApp.model.Patient;
+import bsep.tim4.hospitalApp.model.PatientEncrypted;
 import bsep.tim4.hospitalApp.model.PatientStatus;
 import bsep.tim4.hospitalApp.repository.PatientRepository;
 import bsep.tim4.hospitalApp.repository.PatientStatusRepository;
@@ -21,7 +21,7 @@ public class PatientStatusService {
 
     public PatientStatus save(PatientStatus patientStatus) throws NonExistentIdException {
 
-        Patient patient = patientRepository.findById(patientStatus.getPatientId()).orElse(null);
+        PatientEncrypted patient = patientRepository.findById(patientStatus.getPatientId()).orElse(null);
 
         if(patient == null) {
             throw new NonExistentIdException("Patient");
@@ -35,7 +35,7 @@ public class PatientStatusService {
     }
 
     public List<PatientStatus> findAllByPatientId(String patientId) throws NonExistentIdException {
-        Patient patient = patientRepository.findById(patientId).orElse(null);
+        PatientEncrypted patient = patientRepository.findById(patientId).orElse(null);
 
         if(patient == null) {
             throw new NonExistentIdException("Patient");
