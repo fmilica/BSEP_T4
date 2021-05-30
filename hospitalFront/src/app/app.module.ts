@@ -28,6 +28,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { LogsComponent } from './components/logs/logs.component';
+import { PatientStatusComponent } from './components/patient-status/patient-status.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { LogsComponent } from './components/logs/logs.component';
     CreateCsrComponent,
     UnauthorizedComponent,
     LogsComponent,
+    PatientStatusComponent,
   ],
   imports: [
     RouterModule,

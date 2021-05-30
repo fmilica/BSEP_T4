@@ -126,6 +126,12 @@
 			<version>1.2.3</version>
 		</dependency>
 
+		<!-- WebSocket -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+
 		<!-- Drools dependency -->
 		<dependency>
 			<groupId>com.jayway.jsonpath</groupId>

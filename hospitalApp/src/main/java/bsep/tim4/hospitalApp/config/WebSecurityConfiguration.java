@@ -57,6 +57,8 @@ public class WebSecurityConfiguration extends KeycloakWebSecurityConfigurerAdapt
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
+                .antMatchers("/connect").permitAll()
+                .antMatchers("/topic/patients").permitAll()
                 .antMatchers("/api/patients/status").permitAll()
                 .antMatchers("/api/patients/").hasAnyRole("DOCTOR")
                 .antMatchers("/api/log").hasAnyRole("ADMIN", "SUPER_ADMIN")

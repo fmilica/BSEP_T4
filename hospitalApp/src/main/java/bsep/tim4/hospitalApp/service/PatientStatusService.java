@@ -1,7 +1,6 @@
 package bsep.tim4.hospitalApp.service;
 
 import bsep.tim4.hospitalApp.exceptions.NonExistentIdException;
-import bsep.tim4.hospitalApp.model.Patient;
 import bsep.tim4.hospitalApp.model.PatientAlarm;
 import bsep.tim4.hospitalApp.model.PatientEncrypted;
 import bsep.tim4.hospitalApp.model.PatientStatus;
@@ -12,6 +11,7 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.QueryResults;
 import org.kie.api.runtime.rule.QueryResultsRow;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,6 +31,9 @@ public class PatientStatusService {
 
     @Autowired
     private KieSessionService kieSessionService;
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     public PatientStatus save(PatientStatus patientStatus) throws NonExistentIdException {
 
@@ -53,7 +56,9 @@ public class PatientStatusService {
             alarms.add(alarm);
         }
 
-        patientAlarmRepository.saveAll(alarms);
+        alarms = patientAlarmRepository.saveAll(alarms);
+
+        this.simpMessagingTemplate.convertAndSend("/topic/patients", alarms);
 
         return patientStatus;
     }
