@@ -4,38 +4,109 @@ import bsep.tim4.hospitalApp.model.PatientStatus;
 import bsep.tim4.hospitalApp.model.PatientAlarm;
 import java.sql.Timestamp;
 
-rule "High-blood pressure alarm"
+rule "High blood pressure alarm"
 	when
-		$ps: PatientStatus(lowerBloodPressure > 90, upperBloodPressure > 130)
+		$ps: PatientStatus(lowerBloodPressure > 80, upperBloodPressure > 130)
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
-		"High blood pressure alarm"));
-		System.out.println("High blood pressure alarm");
+		"High blood pressure alarm: " + $ps.getLowerBloodPressure() + "/" + $ps.getUpperBloodPressure()));
+		System.out.println("High blood pressure alarm: " +  + $ps.getLowerBloodPressure() + "/" + $ps.getUpperBloodPressure());
+end
+
+rule "Low blood pressure alarm"
+	when
+		$ps: PatientStatus(lowerBloodPressure < 60, upperBloodPressure < 100)
+	then
+		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
+		"Low blood pressure alarm: " + $ps.getLowerBloodPressure() + "/" + $ps.getUpperBloodPressure()));
+		System.out.println("Low blood pressure alarm: " + $ps.getLowerBloodPressure() + "/" + $ps.getUpperBloodPressure());
 end
 
 rule "High heart rate alarm"
 	when
-		$ps: PatientStatus(heartRate > 120)
+		$ps: PatientStatus(heartRate > 80)
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
-		"High heart rate alarm"));
-		System.out.println("High heart rate alarm");
+		"High heart rate alarm: " + $ps.getHeartRate()));
+		System.out.println("High heart rate alarm: " + $ps.getHeartRate());
+end
+
+rule "Low heart rate alarm"
+	when
+		$ps: PatientStatus(heartRate < 60)
+	then
+		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
+		"Low heart rate alarm: " + $ps.getHeartRate()));
+		System.out.println("Low heart rate alarm: " + $ps.getHeartRate());
 end
 
 rule "High body temperature alarm"
 	when
-		$ps: PatientStatus(bodyTemperature > 37.2)
+		$ps: PatientStatus (bodyTemperature > 37.0)
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
-		"High body temperature alarm"));
-		System.out.println("High body temperature alarm");
+		"High body temperature alarm: " + $ps.getBodyTemperature()));
+		System.out.println("High body temperature alarm: " + $ps.getBodyTemperature());
+end
+
+rule "Low body temperature alarm"
+	when
+		$ps: PatientStatus(bodyTemperature < 36.0)
+	then
+		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
+		"Low body temperature alarm: " + $ps.getBodyTemperature()));
+		System.out.println("Low body temperature alarm: " + $ps.getBodyTemperature());
 end
 
 rule "High respiratory rate alarm"
 	when
-		$ps: PatientStatus(respiratoryRate > 20.0)
+		$ps: PatientStatus(respiratoryRate > 18)
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
-		"High respiratory rate alarm"));
-		System.out.println("High respiratory rate alarm");
+		"High respiratory rate alarm: " + $ps.getRespiratoryRate()));
+		System.out.println("High respiratory rate alarm: " + $ps.getRespiratoryRate());
+end
+
+rule "Low respiratory rate alarm"
+	when
+		$ps: PatientStatus(respiratoryRate < 12)
+	then
+		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
+		"Low respiratory rate alarm: " + $ps.getRespiratoryRate()));
+		System.out.println("Low respiratory rate alarm: " + $ps.getRespiratoryRate());
+end
+
+/*Combinations*/
+rule "Code blue alarm"
+	when
+		$ps: PatientStatus(heartRate < 10, respiratoryRate < 5)
+	then
+		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
+		"Code blue alarm, heart rate: " + $ps.getHeartRate() + " respiratory rate: " + $ps.getRespiratoryRate()));
+		System.out.println("Code blue alarm, heart rate: " + $ps.getHeartRate() + " respiratory rate: "
+		 + $ps.getRespiratoryRate());
+end
+
+rule "Panic attack alarm"
+	when
+		$ps: PatientStatus(heartRate > 90, respiratoryRate > 20)
+	then
+		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
+		"Panic attack alarm, heart rate: " + $ps.getHeartRate() + " respiratory rate: " + $ps.getRespiratoryRate()));
+		System.out.println("Panic attack alarm, heart rate: " + $ps.getHeartRate() + " respiratory rate: "
+		 + $ps.getRespiratoryRate());
+end
+
+rule "Cardiac arrest alarm"
+	when
+		$ps: PatientStatus(heartRate > 140, lowerBloodPressure > 100, upperBloodPressure > 150,
+		respiratoryRate < 5)
+	then
+		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
+		"Cardiac arrest alarm, heart rate: " + $ps.getHeartRate() + 
+		" blood pressure: " + $ps.getLowerBloodPressure() + "/" + $ps.getUpperBloodPressure() +
+		" respiratory rate: " + $ps.getRespiratoryRate()));
+		System.out.println("Cardiac arrest alarm, heart rate: " + $ps.getHeartRate() + 
+		" blood pressure: " + $ps.getLowerBloodPressure() + "/" + $ps.getUpperBloodPressure() +
+		" respiratory rate: " + $ps.getRespiratoryRate());
 end
