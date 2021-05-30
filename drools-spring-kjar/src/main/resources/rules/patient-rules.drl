@@ -1,0 +1,10 @@
+package rules;
+
+import bsep.tim4.hospitalApp.model.PatientStatus;
+
+rule "High-blood pressure alarm"
+	when
+		PatientStatus()
+	then
+		System.out.println("Hello");
+end

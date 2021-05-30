@@ -5,6 +5,7 @@ import bsep.tim4.hospitalApp.model.PatientEncrypted;
 import bsep.tim4.hospitalApp.model.PatientStatus;
 import bsep.tim4.hospitalApp.repository.PatientRepository;
 import bsep.tim4.hospitalApp.repository.PatientStatusRepository;
+import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class PatientStatusService {
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private KieSessionService kieSessionService;
+
     public PatientStatus save(PatientStatus patientStatus) throws NonExistentIdException {
 
         PatientEncrypted patient = patientRepository.findById(patientStatus.getPatientId()).orElse(null);
@@ -27,7 +31,11 @@ public class PatientStatusService {
             throw new NonExistentIdException("Patient");
         }
 
-        return patientStatusRepository.save(patientStatus);
+        patientStatus = patientStatusRepository.save(patientStatus);
+        KieSession kieSession = kieSessionService.getRulesSession();
+        kieSession.insert(patientStatus);
+        kieSession.fireAllRules();
+        return patientStatus;
     }
 
     public List<PatientStatus> findAll() {

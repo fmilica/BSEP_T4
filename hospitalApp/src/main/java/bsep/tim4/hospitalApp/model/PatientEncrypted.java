@@ -11,6 +11,8 @@ public class PatientEncrypted {
 
     private byte[] personalInfo;
 
+    public PatientEncrypted() {}
+
     public PatientEncrypted(byte[] personalInfo) {
         this.personalInfo = personalInfo;
     }
