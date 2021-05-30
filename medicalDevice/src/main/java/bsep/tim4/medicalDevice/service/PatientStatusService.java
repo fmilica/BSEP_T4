@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class PatientStatusService {
 
     public PatientStatus generateNormalPatientStatus() {
 
-        int heartRate = (int)Math.floor(Math.random()*(100-60+1)+60);
+        int heartRate = (int)Math.floor(Math.random()*(80-60+1)+60);
         int lowerBloodPressure = (int)Math.floor(Math.random()*(80-60+1)+60);
         int upperBloodPressure = (int)Math.floor(Math.random()*(120-90+1)+90);
         double bodyTemperature =  Double.valueOf(df.format(Math.random()*(37.2-35.7+0.1)+35.7));
@@ -76,6 +75,26 @@ public class PatientStatusService {
 
         return patientStatus;
     }
+
+   /* public PatientStatus generateCriticalPatientStatus() {
+
+    }
+
+    public int generateHeartRate() {
+        final int ran = (int) Math.floor(Math.random()*100);
+        //high heart rate
+        if (ran <= 20)  {
+            return (int)Math.floor(Math.random()*(-120+1)+120);
+        }
+        //low heart rate
+        else if(20 < ran && ran <=40) {
+            return (int)Math.floor(Math.random()*(60-0+1)+0);
+        }
+        //normal heart rate
+        else if(40 < ran && ran <=60) {
+            return (int)Math.floor(Math.random()*(120-90+1)+90);
+        }
+    }*/
 
     public PatientStatus generateCardiacArrest() {
 

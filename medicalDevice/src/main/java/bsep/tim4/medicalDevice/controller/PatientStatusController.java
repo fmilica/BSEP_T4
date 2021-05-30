@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.security.cert.CertificateException;
 
 @Service
-public class CommunicationTestController {
+public class PatientStatusController {
 
     @Autowired
     RestTemplate restTemplate;
