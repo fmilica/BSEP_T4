@@ -26,19 +26,19 @@ public class SignatureUtil {
     // CMS = Cryptographic Message Syntax
 
     public static byte[] encryptMessage(String message, SecretKey symKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        System.out.println(message);
         Cipher aesCipher = Cipher.getInstance("AES");
         aesCipher.init(Cipher.ENCRYPT_MODE, symKey);
         byte[] encryptedMessage = aesCipher.doFinal(message.getBytes());
-
         return encryptedMessage;
     }
 
     public static String decryptMessage(byte[] encryptedMessage, SecretKey symKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-
         Cipher aesCipher = Cipher.getInstance("AES");
         aesCipher.init(Cipher.DECRYPT_MODE, symKey);
         byte[] bytePlainText = aesCipher.doFinal(encryptedMessage);
         String message = new String(bytePlainText);
+        System.out.println(message);
         return message;
     }
 

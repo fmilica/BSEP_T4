@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Component
@@ -20,17 +19,21 @@ public class DbSeeder implements CommandLineRunner {
     @Autowired
     private PatientService patientService;
 
+    @Autowired
+    private PatientRepository patientRepository;
+
     @Override
     public void run(String... strings) throws Exception {
 
         //drop all patient statuses
-        /*this.patientStatusRepository.deleteAll();
+        this.patientStatusRepository.deleteAll();
+        this.patientRepository.deleteAll();
 
-        LocalDate dateOfBirth = LocalDate.parse("1996-05-16");
+        Date dateOfBirth = new Date();
 
         Patient patient = new Patient("Petar Petrovic", dateOfBirth, "Novi Sad", "Bulimican");
 
-        patientService.save(patient);*/
+        patientService.save(patient);
 
     }
 }

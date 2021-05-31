@@ -18,7 +18,10 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -99,7 +102,6 @@ public class PatientService {
     private Patient decryptPatient(PatientEncrypted patientEncrypted) throws JsonProcessingException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
         SecretKey symKey = (SecretKey) keyStoreService.getSymKey();
         String patientJson = SignatureUtil.decryptMessage(patientEncrypted.getPersonalInfo(), symKey);
-
 
         ObjectMapper om = new ObjectMapper();
         Patient patient = om.readValue(patientJson, Patient.class);

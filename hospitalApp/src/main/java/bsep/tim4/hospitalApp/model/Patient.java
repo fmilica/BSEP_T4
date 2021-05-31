@@ -1,6 +1,6 @@
 package bsep.tim4.hospitalApp.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Patient {
 
@@ -8,7 +8,8 @@ public class Patient {
 
     private String name;
 
-    private LocalDate dateOfBirth;
+    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private Date dateOfBirth;
 
     private String placeOfBirth;
 
@@ -16,7 +17,7 @@ public class Patient {
 
     public Patient() {}
 
-    public Patient(String name, LocalDate dateOfBirth, String placeOfBirth, String illnesses) {
+    public Patient(String name, Date dateOfBirth, String placeOfBirth, String illnesses) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.placeOfBirth = placeOfBirth;
@@ -39,11 +40,11 @@ public class Patient {
         this.name = name;
     }
 
-    public LocalDate getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
