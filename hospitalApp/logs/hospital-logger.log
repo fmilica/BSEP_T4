@@ -1747,3 +1747,452 @@ java.lang.RuntimeException: Query 'getAllAlarmsByPatientStatusId' does not exist
 2021-05-31 10:03:21,183 INFO bsep.tim4.hospitalApp.controller.PatientController [https-jsse-nio-8081-exec-5] Medical device called method receivePatientStatus with status code 200 OK: patient status received
 2021-05-31 10:03:24,161 INFO bsep.tim4.hospitalApp.controller.PatientController [https-jsse-nio-8081-exec-7] Medical device called method receivePatientStatus with status code 200 OK: patient status received
 2021-05-31 10:03:27,190 INFO bsep.tim4.hospitalApp.controller.PatientController [https-jsse-nio-8081-exec-8] Medical device called method receivePatientStatus with status code 200 OK: patient status received
+2021-05-31 23:06:34,726 INFO org.springframework.boot.StartupInfoLogger [main] Starting HospitalAppApplication using Java 11.0.10 on DESKTOP-JOKUTI3 with PID 9328 (C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp\target\classes started by admin in C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp)
+2021-05-31 23:06:34,726 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.1.7.Final
+2021-05-31 23:06:34,751 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-05-31 23:06:37,884 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-05-31 23:06:37,893 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-05-31 23:06:38,055 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientAlarmRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-05-31 23:06:38,064 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-05-31 23:06:38,070 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientStatusRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-05-31 23:06:38,074 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 111 ms. Found 0 JPA repository interfaces.
+2021-05-31 23:06:38,193 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-05-31 23:06:38,194 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-05-31 23:06:38,294 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 98 ms. Found 3 MongoDB repository interfaces.
+2021-05-31 23:06:40,405 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (https)
+2021-05-31 23:06:40,431 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2021-05-31 23:06:40,433 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2021-05-31 23:06:40,434 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.44]
+2021-05-31 23:06:40,886 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2021-05-31 23:06:40,886 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 5828 ms
+2021-05-31 23:06:41,072 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-05-31 23:06:41,377 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-05-31 23:06:41,545 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.29.Final
+2021-05-31 23:06:41,942 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-05-31 23:06:42,269 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2021-05-31 23:06:42,831 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2021-05-31 23:06:42,877 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2021-05-31 23:06:44,246 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-05-31 23:06:44,269 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-05-31 23:06:47,201 INFO com.mongodb.diagnostics.logging.SLF4JLogger [main] Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-05-31 23:06:47,607 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-rtt-ClusterId{value='60b54fe7ebaca358a330a4fc', description='null'}-localhost:27017] Opened connection [connectionId{localValue:1, serverValue:11}] to localhost:27017
+2021-05-31 23:06:47,608 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b54fe7ebaca358a330a4fc', description='null'}-localhost:27017] Opened connection [connectionId{localValue:2, serverValue:10}] to localhost:27017
+2021-05-31 23:06:47,610 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b54fe7ebaca358a330a4fc', description='null'}-localhost:27017] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=9, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=56710700}
+2021-05-31 23:06:49,157 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/kie/kie-ci/7.17.0.Final/kie-ci-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:06:49,163 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.KieScannerFactoryServiceImpl
+
+2021-05-31 23:06:49,170 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.MavenClassLoaderResolver
+
+2021-05-31 23:06:49,172 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/drools/drools-core/7.17.0.Final/drools-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:06:49,175 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.io.impl.ResourceFactoryServiceImpl
+
+2021-05-31 23:06:49,181 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.marshalling.impl.MarshallerProviderImpl
+
+2021-05-31 23:06:49,183 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.concurrent.ExecutorProviderImpl
+
+2021-05-31 23:06:49,185 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/drools/drools-compiler/7.17.0.Final/drools-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:06:49,196 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.kie.builder.impl.KieServicesImpl
+
+2021-05-31 23:06:49,203 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.builder.impl.KnowledgeBuilderFactoryServiceImpl
+
+2021-05-31 23:06:49,204 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/kie/kie-internal/7.17.0.Final/kie-internal-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:06:49,243 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieAssemblersImpl
+
+2021-05-31 23:06:49,261 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieRuntimesImpl
+
+2021-05-31 23:06:49,266 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieWeaversImpl
+
+2021-05-31 23:06:49,270 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieBeliefsImpl
+
+2021-05-31 23:06:49,272 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/jbpm/jbpm-flow/7.17.0.Final/jbpm-flow-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:06:49,281 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.marshalling.impl.ProcessMarshallerFactoryServiceImpl
+
+2021-05-31 23:06:49,285 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.process.instance.ProcessRuntimeFactoryServiceImpl
+
+2021-05-31 23:06:49,287 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/kie/kie-dmn-core/7.17.0.Final/kie-dmn-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:06:49,423 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.assembler.DMNAssemblerService
+
+2021-05-31 23:06:49,436 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.runtime.DMNRuntimeService
+
+2021-05-31 23:06:49,443 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.weaver.DMNWeaverService
+
+2021-05-31 23:06:49,449 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/drools/drools-model-compiler/7.17.0.Final/drools-model-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:06:49,473 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.modelcompiler.CanonicalKieModuleProvider
+
+2021-05-31 23:06:49,485 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/drools/drools-decisiontables/7.17.0.Final/drools-decisiontables-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:06:49,506 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.decisiontable.DecisionTableProviderImpl
+
+2021-05-31 23:06:49,784 WARN org.appformer.maven.integration.embedder.MavenSettings [main] Environment variable M2_HOME is not set
+2021-05-31 23:06:57,329 WARN org.appformer.maven.integration.MavenRepository [main] Unable to resolve artifact: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+2021-05-31 23:06:59,500 WARN org.appformer.maven.integration.MavenRepository [main] Unable to resolve artifact: bsep.tim4:drools-spring-kjar:pom:0.0.1-SNAPSHOT
+2021-05-31 23:06:59,503 WARN org.springframework.context.support.AbstractApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'patientController': Unsatisfied dependency expressed through field 'patientStatusService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'patientStatusService': Unsatisfied dependency expressed through field 'kieSessionService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'kieSessionService' defined in file [C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp\target\classes\bsep\tim4\hospitalApp\service\KieSessionService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'kieContainer' defined in bsep.tim4.hospitalApp.HospitalAppApplication: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.kie.api.runtime.KieContainer]: Factory method 'kieContainer' threw exception; nested exception is java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+2021-05-31 23:06:59,509 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-05-31 23:06:59,510 INFO org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl [main] HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2021-05-31 23:06:59,513 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Shutdown initiated...
+2021-05-31 23:06:59,525 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Shutdown completed.
+2021-05-31 23:06:59,529 INFO org.apache.juli.logging.DirectJDKLog [main] Stopping service [Tomcat]
+2021-05-31 23:06:59,550 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [main] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-05-31 23:06:59,583 ERROR org.springframework.boot.SpringApplication [main] Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'patientController': Unsatisfied dependency expressed through field 'patientStatusService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'patientStatusService': Unsatisfied dependency expressed through field 'kieSessionService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'kieSessionService' defined in file [C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp\target\classes\bsep\tim4\hospitalApp\service\KieSessionService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'kieContainer' defined in bsep.tim4.hospitalApp.HospitalAppApplication: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.kie.api.runtime.KieContainer]: Factory method 'kieContainer' threw exception; nested exception is java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:660)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:640)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:399)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1413)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:944)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:769)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:761)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1313)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302)
+	at bsep.tim4.hospitalApp.HospitalAppApplication.main(HospitalAppApplication.java:14)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'patientStatusService': Unsatisfied dependency expressed through field 'kieSessionService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'kieSessionService' defined in file [C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp\target\classes\bsep\tim4\hospitalApp\service\KieSessionService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'kieContainer' defined in bsep.tim4.hospitalApp.HospitalAppApplication: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.kie.api.runtime.KieContainer]: Factory method 'kieContainer' threw exception; nested exception is java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:660)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:640)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:399)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1413)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1380)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1300)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:657)
+	... 21 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'kieSessionService' defined in file [C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp\target\classes\bsep\tim4\hospitalApp\service\KieSessionService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'kieContainer' defined in bsep.tim4.hospitalApp.HospitalAppApplication: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.kie.api.runtime.KieContainer]: Factory method 'kieContainer' threw exception; nested exception is java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1354)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1204)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:564)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1380)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1300)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:657)
+	... 35 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'kieContainer' defined in bsep.tim4.hospitalApp.HospitalAppApplication: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.kie.api.runtime.KieContainer]: Factory method 'kieContainer' threw exception; nested exception is java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:658)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:486)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1177)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:564)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1380)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1300)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 48 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.kie.api.runtime.KieContainer]: Factory method 'kieContainer' threw exception; nested exception is java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	... 62 common frames omitted
+Caused by: java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+	at org.drools.compiler.kie.builder.impl.KieServicesImpl.newKieContainer(KieServicesImpl.java:186)
+	at org.drools.compiler.kie.builder.impl.KieServicesImpl.newKieContainer(KieServicesImpl.java:172)
+	at bsep.tim4.hospitalApp.HospitalAppApplication.kieContainer(HospitalAppApplication.java:21)
+	at bsep.tim4.hospitalApp.HospitalAppApplication$$EnhancerBySpringCGLIB$$88589483.CGLIB$kieContainer$0(<generated>)
+	at bsep.tim4.hospitalApp.HospitalAppApplication$$EnhancerBySpringCGLIB$$88589483$$FastClassBySpringCGLIB$$ef9a5aa2.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:244)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:331)
+	at bsep.tim4.hospitalApp.HospitalAppApplication$$EnhancerBySpringCGLIB$$88589483.kieContainer(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	... 63 common frames omitted
+2021-05-31 23:27:39,207 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.1.7.Final
+2021-05-31 23:27:39,297 INFO org.springframework.boot.StartupInfoLogger [main] Starting HospitalAppApplication using Java 11.0.10 on DESKTOP-JOKUTI3 with PID 5232 (C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp\target\classes started by admin in C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp)
+2021-05-31 23:27:39,300 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-05-31 23:27:41,495 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-05-31 23:27:41,503 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-05-31 23:27:41,601 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientAlarmRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-05-31 23:27:41,605 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-05-31 23:27:41,615 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientStatusRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-05-31 23:27:41,618 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 76 ms. Found 0 JPA repository interfaces.
+2021-05-31 23:27:41,671 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-05-31 23:27:41,673 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-05-31 23:27:41,811 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 131 ms. Found 3 MongoDB repository interfaces.
+2021-05-31 23:27:43,350 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (https)
+2021-05-31 23:27:43,371 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2021-05-31 23:27:43,373 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2021-05-31 23:27:43,374 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.44]
+2021-05-31 23:27:43,660 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2021-05-31 23:27:43,661 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 4250 ms
+2021-05-31 23:27:43,762 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-05-31 23:27:44,174 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-05-31 23:27:44,306 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.29.Final
+2021-05-31 23:27:44,568 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-05-31 23:27:44,718 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2021-05-31 23:27:45,050 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2021-05-31 23:27:45,084 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2021-05-31 23:27:46,156 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-05-31 23:27:46,171 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-05-31 23:27:47,363 INFO com.mongodb.diagnostics.logging.SLF4JLogger [main] Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-05-31 23:27:47,504 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b554d3baeabc460e3d3372', description='null'}-localhost:27017] Opened connection [connectionId{localValue:1, serverValue:12}] to localhost:27017
+2021-05-31 23:27:47,506 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b554d3baeabc460e3d3372', description='null'}-localhost:27017] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=9, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=33396900}
+2021-05-31 23:27:47,504 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-rtt-ClusterId{value='60b554d3baeabc460e3d3372', description='null'}-localhost:27017] Opened connection [connectionId{localValue:2, serverValue:13}] to localhost:27017
+2021-05-31 23:27:48,012 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/kie/kie-ci/7.17.0.Final/kie-ci-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:27:48,017 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.KieScannerFactoryServiceImpl
+
+2021-05-31 23:27:48,020 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.MavenClassLoaderResolver
+
+2021-05-31 23:27:48,021 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/drools/drools-core/7.17.0.Final/drools-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:27:48,023 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.io.impl.ResourceFactoryServiceImpl
+
+2021-05-31 23:27:48,027 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.marshalling.impl.MarshallerProviderImpl
+
+2021-05-31 23:27:48,029 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.concurrent.ExecutorProviderImpl
+
+2021-05-31 23:27:48,030 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/drools/drools-compiler/7.17.0.Final/drools-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:27:48,039 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.kie.builder.impl.KieServicesImpl
+
+2021-05-31 23:27:48,044 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.builder.impl.KnowledgeBuilderFactoryServiceImpl
+
+2021-05-31 23:27:48,045 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/kie/kie-internal/7.17.0.Final/kie-internal-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:27:48,047 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieAssemblersImpl
+
+2021-05-31 23:27:48,050 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieRuntimesImpl
+
+2021-05-31 23:27:48,052 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieWeaversImpl
+
+2021-05-31 23:27:48,054 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieBeliefsImpl
+
+2021-05-31 23:27:48,054 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/jbpm/jbpm-flow/7.17.0.Final/jbpm-flow-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:27:48,057 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.marshalling.impl.ProcessMarshallerFactoryServiceImpl
+
+2021-05-31 23:27:48,061 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.process.instance.ProcessRuntimeFactoryServiceImpl
+
+2021-05-31 23:27:48,062 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/kie/kie-dmn-core/7.17.0.Final/kie-dmn-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:27:48,068 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.assembler.DMNAssemblerService
+
+2021-05-31 23:27:48,070 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.runtime.DMNRuntimeService
+
+2021-05-31 23:27:48,072 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.weaver.DMNWeaverService
+
+2021-05-31 23:27:48,073 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/drools/drools-model-compiler/7.17.0.Final/drools-model-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:27:48,077 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.modelcompiler.CanonicalKieModuleProvider
+
+2021-05-31 23:27:48,078 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/drools/drools-decisiontables/7.17.0.Final/drools-decisiontables-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:27:48,081 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.decisiontable.DecisionTableProviderImpl
+
+2021-05-31 23:27:48,140 WARN org.appformer.maven.integration.embedder.MavenSettings [main] Environment variable M2_HOME is not set
+2021-05-31 23:27:52,516 WARN org.appformer.maven.integration.MavenRepository [main] Unable to resolve artifact: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+2021-05-31 23:27:54,516 WARN org.appformer.maven.integration.MavenRepository [main] Unable to resolve artifact: bsep.tim4:drools-spring-kjar:pom:0.0.1-SNAPSHOT
+2021-05-31 23:27:54,524 WARN org.springframework.context.support.AbstractApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'patientController': Unsatisfied dependency expressed through field 'patientStatusService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'patientStatusService': Unsatisfied dependency expressed through field 'kieSessionService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'kieSessionService' defined in file [C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp\target\classes\bsep\tim4\hospitalApp\service\KieSessionService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'kieContainer' defined in bsep.tim4.hospitalApp.HospitalAppApplication: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.kie.api.runtime.KieContainer]: Factory method 'kieContainer' threw exception; nested exception is java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+2021-05-31 23:27:54,536 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-05-31 23:27:54,537 INFO org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl [main] HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2021-05-31 23:27:54,541 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Shutdown initiated...
+2021-05-31 23:27:54,560 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Shutdown completed.
+2021-05-31 23:27:54,564 INFO org.apache.juli.logging.DirectJDKLog [main] Stopping service [Tomcat]
+2021-05-31 23:27:54,585 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [main] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-05-31 23:27:54,609 ERROR org.springframework.boot.SpringApplication [main] Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'patientController': Unsatisfied dependency expressed through field 'patientStatusService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'patientStatusService': Unsatisfied dependency expressed through field 'kieSessionService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'kieSessionService' defined in file [C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp\target\classes\bsep\tim4\hospitalApp\service\KieSessionService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'kieContainer' defined in bsep.tim4.hospitalApp.HospitalAppApplication: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.kie.api.runtime.KieContainer]: Factory method 'kieContainer' threw exception; nested exception is java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:660)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:640)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:399)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1413)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:944)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:769)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:761)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1313)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302)
+	at bsep.tim4.hospitalApp.HospitalAppApplication.main(HospitalAppApplication.java:14)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'patientStatusService': Unsatisfied dependency expressed through field 'kieSessionService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'kieSessionService' defined in file [C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp\target\classes\bsep\tim4\hospitalApp\service\KieSessionService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'kieContainer' defined in bsep.tim4.hospitalApp.HospitalAppApplication: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.kie.api.runtime.KieContainer]: Factory method 'kieContainer' threw exception; nested exception is java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:660)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:640)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:399)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1413)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1380)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1300)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:657)
+	... 21 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'kieSessionService' defined in file [C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp\target\classes\bsep\tim4\hospitalApp\service\KieSessionService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'kieContainer' defined in bsep.tim4.hospitalApp.HospitalAppApplication: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.kie.api.runtime.KieContainer]: Factory method 'kieContainer' threw exception; nested exception is java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1354)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1204)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:564)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1380)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1300)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:657)
+	... 35 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'kieContainer' defined in bsep.tim4.hospitalApp.HospitalAppApplication: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.kie.api.runtime.KieContainer]: Factory method 'kieContainer' threw exception; nested exception is java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:658)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:486)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1177)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:564)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1380)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1300)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 48 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.kie.api.runtime.KieContainer]: Factory method 'kieContainer' threw exception; nested exception is java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	... 62 common frames omitted
+Caused by: java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-spring-kjar:0.0.1-SNAPSHOT
+	at org.drools.compiler.kie.builder.impl.KieServicesImpl.newKieContainer(KieServicesImpl.java:186)
+	at org.drools.compiler.kie.builder.impl.KieServicesImpl.newKieContainer(KieServicesImpl.java:172)
+	at bsep.tim4.hospitalApp.HospitalAppApplication.kieContainer(HospitalAppApplication.java:21)
+	at bsep.tim4.hospitalApp.HospitalAppApplication$$EnhancerBySpringCGLIB$$3bea351a.CGLIB$kieContainer$0(<generated>)
+	at bsep.tim4.hospitalApp.HospitalAppApplication$$EnhancerBySpringCGLIB$$3bea351a$$FastClassBySpringCGLIB$$ea21dd46.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:244)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:331)
+	at bsep.tim4.hospitalApp.HospitalAppApplication$$EnhancerBySpringCGLIB$$3bea351a.kieContainer(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	... 63 common frames omitted
+2021-05-31 23:32:02,408 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.1.7.Final
+2021-05-31 23:32:02,436 INFO org.springframework.boot.StartupInfoLogger [main] Starting HospitalAppApplication using Java 11.0.10 on DESKTOP-JOKUTI3 with PID 11372 (C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp\target\classes started by admin in C:\Users\admin\Desktop\bsep\BSEP_T4\hospitalApp)
+2021-05-31 23:32:02,439 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-05-31 23:32:03,809 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-05-31 23:32:03,815 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-05-31 23:32:03,920 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientAlarmRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-05-31 23:32:03,925 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-05-31 23:32:03,932 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientStatusRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-05-31 23:32:03,937 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 100 ms. Found 0 JPA repository interfaces.
+2021-05-31 23:32:03,990 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-05-31 23:32:03,993 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-05-31 23:32:04,091 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 89 ms. Found 3 MongoDB repository interfaces.
+2021-05-31 23:32:05,798 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (https)
+2021-05-31 23:32:05,824 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2021-05-31 23:32:05,826 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2021-05-31 23:32:05,827 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.44]
+2021-05-31 23:32:06,103 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2021-05-31 23:32:06,104 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 3540 ms
+2021-05-31 23:32:06,229 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-05-31 23:32:06,407 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-05-31 23:32:06,520 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.29.Final
+2021-05-31 23:32:06,726 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-05-31 23:32:06,872 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2021-05-31 23:32:07,233 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2021-05-31 23:32:07,276 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2021-05-31 23:32:08,362 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-05-31 23:32:08,375 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-05-31 23:32:09,514 INFO com.mongodb.diagnostics.logging.SLF4JLogger [main] Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-05-31 23:32:09,656 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b555d9fd1c821f5adf0664', description='null'}-localhost:27017] Opened connection [connectionId{localValue:2, serverValue:15}] to localhost:27017
+2021-05-31 23:32:09,658 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b555d9fd1c821f5adf0664', description='null'}-localhost:27017] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=9, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=29626400}
+2021-05-31 23:32:09,656 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-rtt-ClusterId{value='60b555d9fd1c821f5adf0664', description='null'}-localhost:27017] Opened connection [connectionId{localValue:1, serverValue:14}] to localhost:27017
+2021-05-31 23:32:10,129 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/kie/kie-ci/7.17.0.Final/kie-ci-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:32:10,133 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.KieScannerFactoryServiceImpl
+
+2021-05-31 23:32:10,137 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.MavenClassLoaderResolver
+
+2021-05-31 23:32:10,138 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/drools/drools-core/7.17.0.Final/drools-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:32:10,141 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.io.impl.ResourceFactoryServiceImpl
+
+2021-05-31 23:32:10,145 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.marshalling.impl.MarshallerProviderImpl
+
+2021-05-31 23:32:10,147 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.concurrent.ExecutorProviderImpl
+
+2021-05-31 23:32:10,148 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/drools/drools-compiler/7.17.0.Final/drools-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:32:10,156 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.kie.builder.impl.KieServicesImpl
+
+2021-05-31 23:32:10,162 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.builder.impl.KnowledgeBuilderFactoryServiceImpl
+
+2021-05-31 23:32:10,162 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/kie/kie-internal/7.17.0.Final/kie-internal-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:32:10,165 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieAssemblersImpl
+
+2021-05-31 23:32:10,166 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieRuntimesImpl
+
+2021-05-31 23:32:10,168 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieWeaversImpl
+
+2021-05-31 23:32:10,169 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieBeliefsImpl
+
+2021-05-31 23:32:10,170 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/jbpm/jbpm-flow/7.17.0.Final/jbpm-flow-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:32:10,172 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.marshalling.impl.ProcessMarshallerFactoryServiceImpl
+
+2021-05-31 23:32:10,174 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.process.instance.ProcessRuntimeFactoryServiceImpl
+
+2021-05-31 23:32:10,175 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/kie/kie-dmn-core/7.17.0.Final/kie-dmn-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:32:10,180 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.assembler.DMNAssemblerService
+
+2021-05-31 23:32:10,182 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.runtime.DMNRuntimeService
+
+2021-05-31 23:32:10,184 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.weaver.DMNWeaverService
+
+2021-05-31 23:32:10,184 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/drools/drools-model-compiler/7.17.0.Final/drools-model-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:32:10,187 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.modelcompiler.CanonicalKieModuleProvider
+
+2021-05-31 23:32:10,188 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/admin/.m2/repository/org/drools/drools-decisiontables/7.17.0.Final/drools-decisiontables-7.17.0.Final.jar!/META-INF/kie.conf in classloader jdk.internal.loader.ClassLoaders$AppClassLoader@16f65612
+2021-05-31 23:32:10,190 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.decisiontable.DecisionTableProviderImpl
+
+2021-05-31 23:32:10,204 INFO org.drools.compiler.kie.builder.impl.KieRepositoryImpl [main] Adding KieModule from classpath: file:/C:/Users/admin/.m2/repository/bsep/tim4/drools-spring-kjar/0.0.1-SNAPSHOT/drools-spring-kjar-0.0.1-SNAPSHOT.jar
+2021-05-31 23:32:10,854 WARN org.appformer.maven.integration.embedder.MavenSettings [main] Environment variable M2_HOME is not set
+2021-05-31 23:32:12,429 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'clientInboundChannelExecutor'
+2021-05-31 23:32:12,436 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'clientOutboundChannelExecutor'
+2021-05-31 23:32:12,439 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'brokerChannelExecutor'
+2021-05-31 23:32:12,676 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5fc44b4b, org.springframework.security.web.context.SecurityContextPersistenceFilter@43ab4e83, org.springframework.security.web.header.HeaderWriterFilter@42210d27, org.springframework.web.filter.CorsFilter@1c8e4810, org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter@633a11eb, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter@5dba3fdc, org.springframework.security.web.authentication.logout.LogoutFilter@748015f8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6f2f4b9e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@406cf37f, org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter@764db16c, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticatedActionsFilter@45cb5307, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7e3062f0, org.springframework.security.web.session.SessionManagementFilter@6a063931, org.springframework.security.web.access.ExceptionTranslationFilter@12418d3f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@97e9568]
+2021-05-31 23:32:12,707 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'messageBrokerTaskScheduler'
+2021-05-31 23:32:13,267 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["https-jsse-nio-8081"]
+2021-05-31 23:32:13,575 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (https) with context path ''
+2021-05-31 23:32:13,577 INFO org.springframework.core.log.CompositeLog [main] Starting...
+2021-05-31 23:32:13,578 INFO org.springframework.core.log.CompositeLog [main] BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@271df4c0]]
+2021-05-31 23:32:13,579 INFO org.springframework.core.log.CompositeLog [main] Started.
+2021-05-31 23:32:13,592 INFO org.springframework.boot.StartupInfoLogger [main] Started HospitalAppApplication in 12.972 seconds (JVM running for 14.324)
+2021-05-31 23:33:12,766 INFO org.springframework.web.socket.config.WebSocketMessageBrokerStats [MessageBroker-1] WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.kie.api.definition.type.Role;
+import org.kie.api.definition.type.Timestamp;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,6 +16,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "Log")
+@Role(Role.Type.EVENT)
+@Timestamp("timestamp")
 public class Log {
 
     @Id
@@ -24,7 +28,8 @@ public class Log {
     private String message;
     private String source;
     private String type;
-    private String ip_address;
+    private String ipAddress;
     private String error;
     private int status_code;
+    private boolean processed;
 }

@@ -1,0 +1,47 @@
+package cep;
+
+import bsep.tim4.hospitalApp.model.Log;
+import bsep.tim4.hospitalApp.model.LogLevel;
+import bsep.tim4.hospitalApp.model.LogAlarm;
+import bsep.tim4.hospitalApp.model.LogAlarmType;
+
+import java.util.Date;
+
+rule "More than 50 logs for login in 1 minute"
+    when
+        $log1: Log(processed == false, type != "LOGIN_ERROR" || type != "LOGIN")
+        accumulate(
+            $log2: Log(
+                this != $log1,
+                processed == false
+            ) over window:time( 1m ),
+            $logs: collectList($log2)
+        )
+        eval($logs.size() >= 50)
+    then
+        insert(new LogAlarm(new Date(), "", LogAlarmType.DOS, "Many logs in one minute"));
+        modify($log1){setProcessed(true);};
+        for (Log log: $logs) {
+            modify(log){setProcessed(true);};
+        }
+end
+
+
+rule "More than 50 login logs in 1 minute"
+    when
+        $log1: Log(processed == false, type == "LOGIN_ERROR" || type == "LOGIN")
+        accumulate(
+            $log2: Log(
+                this != $log1,
+                processed == false
+            ) over window:time( 1m ),
+            $logs: collectList($log2)
+        )
+        eval($logs.size() >= 10)
+    then
+        insert(new LogAlarm(new Date(), "", , LogAlarmType.BRUTE_FORCE, "Many logs in one minute"));
+        modify($log1){setProcessed(true);};
+        for (Log log: $logs) {
+            modify(log){setProcessed(true);};
+        }
+end

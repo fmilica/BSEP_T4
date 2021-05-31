@@ -1,0 +1,51 @@
+package cep;
+
+import bsep.tim4.hospitalApp.model.Log;
+import bsep.tim4.hospitalApp.model.LogLevel;
+import bsep.tim4.hospitalApp.model.LogAlarm;
+import bsep.tim4.hospitalApp.model.LogAlarmType;
+
+import java.util.Date;
+
+global List<String> maliciousIpAdresses;
+
+rule "Login or failed login form malicious ip address"
+    when
+        $log1: Log(type == "LOGIN_ERROR" || type == "LOGIN", $source: source, processed == false, $ipAddress : ipAddress)
+        eval(maliciousIpAdresses.contains(ipAddress))
+    then
+        insert(new LogAlarm(new Date(), $source, LogAlarmType.BLACKLIST_IP, "Login from malicious ip address: " + $ipAddress));
+        modify($log1){setProcessed(true);};
+end
+
+
+rule "Log with malicious ip address"
+    when
+        $log1: Log(processed == false, $ipAddress : ipAddress, $source : source)
+        eval(maliciousIpAdresses.contains(ipAddress))
+    then
+        insert(new LogAlarm(new Date(), $source, LogAlarmType.BLACKLIST_IP, "Log with malicious ip address: "+ipAddress));
+        modify($log1){setProcessed(true);};
+end
+
+rule "More than 30 login attempts in 24 hours from one ip address"
+    when
+        $log1: Log(type == "LOGIN_ERROR", $source: source, processed == false, $ipAddress : ipAddress)
+        accumulate(
+            $log2: Log(
+                this != $log1,
+                type == "LOGIN_ERROR",
+                processed == false,
+                ipAddress == $ipAddress
+            ) over window:time( 24h ),
+            $logs: collectList($log2)
+        )
+        eval($logs.size() >= 30 and maliciousIpAdresses.contains(ipAddress))
+    then
+        insert(new LogAlarm(new Date(), $source, LogAlarmType.BLACKLIST_IP, "Many login attempts from ip address: " + $ipAddress));
+        modify($log1){setProcessed(true);};
+        for (Log log: $logs) {
+            modify(log){setProcessed(true);};
+        }
+        maliciousIpAdresses.add($ipAddress)
+end
