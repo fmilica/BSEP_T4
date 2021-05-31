@@ -1,6 +1,7 @@
 package bsep.tim4.hospitalApp.controller;
 
 import bsep.tim4.hospitalApp.dto.PatientDTO;
+import bsep.tim4.hospitalApp.dto.RuleDto;
 import bsep.tim4.hospitalApp.exceptions.NonExistentIdException;
 import bsep.tim4.hospitalApp.model.Patient;
 import bsep.tim4.hospitalApp.model.PatientStatus;
@@ -10,6 +11,7 @@ import bsep.tim4.hospitalApp.util.SignatureUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.slf4j.Logger;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.security.cert.CertificateException;
@@ -147,7 +150,7 @@ public class PatientController {
 
     @GetMapping(value = "/patientsStatuses/{patientId}")
     public ResponseEntity<List<PatientStatus>> findAllPatientStatusesForPatient(Principal principal,
-                                            @PathVariable("patientId") String patientId){
+                                                                                @PathVariable("patientId") String patientId){
         try {
             List<PatientStatus> patientStatuses = patientStatusService.findAllByPatientId(patientId);
             logger.info(String.format("%s called method %s with status code %s: %s",
@@ -157,6 +160,26 @@ public class PatientController {
             logger.error(String.format("%s called method %s with status code %s: %s",
                     principal.getName(), "findAllPatientStatusesForPatient", HttpStatus.NOT_FOUND, "non existent patient id"));
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping(value = "/create-rule")
+    public ResponseEntity<Void> createRule(/*Principal principal, */@Valid @RequestBody RuleDto ruleDto) {
+        try {
+            patientService.createRule(ruleDto);
+//            logger.info(String.format("%s called method %s with status code %s: %s",
+//                    principal.getName(), "createRule", HttpStatus.OK, "authorized"));
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NonExistentIdException e) {
+            e.printStackTrace();
+//            logger.error(String.format("%s called method %s with status code %s: %s",
+//                    principal.getName(), "createRule", HttpStatus.BAD_REQUEST, "non existent patient id"));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (IOException | MavenInvocationException e) {
+            e.printStackTrace();
+//            logger.error(String.format("%s called method %s with status code %s: %s",
+//                    principal.getName(), "createRule", HttpStatus.INTERNAL_SERVER_ERROR, "new drl file error"));
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

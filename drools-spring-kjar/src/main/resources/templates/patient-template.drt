@@ -1,0 +1,30 @@
+template header
+patientId
+ruleConditions
+
+package rules;
+
+import bsep.tim4.hospitalApp.model.PatientStatus;
+import bsep.tim4.hospitalApp.model.PatientAlarm;
+import java.sql.Timestamp;
+
+template "patient-template"
+
+rule "Patient template rule @{row.rowNumber}"
+	when
+		$ps: PatientStatus(patientId == "@{patientId}", @{ruleConditions})
+	then
+		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
+		"Custom alarm for patient: " + "@{patientId}" +
+		", heart rate: " + $ps.getHeartRate() +
+        " blood pressure: " + $ps.getLowerBloodPressure() + "/" + $ps.getUpperBloodPressure() +
+        " respiratory rate: " + $ps.getRespiratoryRate() +
+        " temperature: " + $ps.getBodyTemperature()));
+        System.out.println("Custom alarm for patient: " + "@{patientId}" +
+        ", heart rate: " + $ps.getHeartRate() +
+        " blood pressure: " + $ps.getLowerBloodPressure() + "/" + $ps.getUpperBloodPressure() +
+        " respiratory rate: " + $ps.getRespiratoryRate() +
+        " temperature: " + $ps.getBodyTemperature());
+end
+
+end template
