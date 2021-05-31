@@ -1,14 +1,17 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Client } from "@stomp/stompjs";
+import { environment } from "src/environments/environment";
+import { Patient } from "../model/patient.model";
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PatientService {
 
-    constructor() {
-        this.initializeWebSocketConnection();
-    }
+    constructor(private http: HttpClient) {}
 
     public patientStompClient;
 
@@ -41,4 +44,12 @@ export class PatientService {
         this.patientStompClient.activate();
     }
 
+    findAllPatients() {
+        return this.http
+        .get<Patient[]>(environment.apiEndpoint + 'patients')
+        .pipe(
+          map((patients: Patient[]) => patients),
+          catchError((err) => throwError(err))
+      );
+    }
 }
