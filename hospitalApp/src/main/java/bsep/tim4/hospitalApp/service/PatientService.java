@@ -14,8 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import java.io.*;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,7 +43,7 @@ public class PatientService {
     @Autowired
     PatientRepository patientRepository;
 
-    public Patient findById(String patientId) throws NonExistentIdException {
+    public Patient findById(String patientId) throws NonExistentIdException, JsonProcessingException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException {
         PatientEncrypted patientEncrypted = patientRepository.findById(patientId).orElse(null);
 
         if (patientEncrypted == null) {
@@ -48,7 +53,7 @@ public class PatientService {
         return decryptPatient(patientEncrypted);
     }
 
-    public List<Patient> findAll() {
+    public List<Patient> findAll() throws JsonProcessingException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException {
         List<Patient> patients = new ArrayList<>();
         List<PatientEncrypted> encryptedPatients = patientRepository.findAll();
         for (PatientEncrypted pe: encryptedPatients) {
@@ -57,19 +62,15 @@ public class PatientService {
         return patients;
     }
 
-    public PatientEncrypted save(Patient patient) {
-        try {
-            ObjectMapper om = new ObjectMapper();
-            String patientJson = om.writeValueAsString(patient);
-            SecretKey symKey = (SecretKey) keyStoreService.getSymKey();
-            byte[] encryptedPatient = SignatureUtil.encryptMessage(patientJson, symKey);
-            PatientEncrypted patientEncrypted = new PatientEncrypted(encryptedPatient);
+    public PatientEncrypted save(Patient patient) throws JsonProcessingException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
 
-            return patientRepository.save(patientEncrypted);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return null;
+        ObjectMapper om = new ObjectMapper();
+        String patientJson = om.writeValueAsString(patient);
+        SecretKey symKey = (SecretKey) keyStoreService.getSymKey();
+        byte[] encryptedPatient = SignatureUtil.encryptMessage(patientJson, symKey);
+        PatientEncrypted patientEncrypted = new PatientEncrypted(encryptedPatient);
+
+        return patientRepository.save(patientEncrypted);
     }
 
     public void createRule(RuleDto rule) throws NonExistentIdException, IOException, MavenInvocationException {
@@ -95,19 +96,15 @@ public class PatientService {
         kieSessionService.updateRulesJar();
     }
 
-    private Patient decryptPatient(PatientEncrypted patientEncrypted) {
+    private Patient decryptPatient(PatientEncrypted patientEncrypted) throws JsonProcessingException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
         SecretKey symKey = (SecretKey) keyStoreService.getSymKey();
         String patientJson = SignatureUtil.decryptMessage(patientEncrypted.getPersonalInfo(), symKey);
 
-        try {
-            ObjectMapper om = new ObjectMapper();
-            Patient patient = om.readValue(patientJson, Patient.class);
-            patient.setId(patientEncrypted.getId());
-            return patient;
-        } catch(JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return null;
+
+        ObjectMapper om = new ObjectMapper();
+        Patient patient = om.readValue(patientJson, Patient.class);
+        patient.setId(patientEncrypted.getId());
+        return patient;
     }
 
 }

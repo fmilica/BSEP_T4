@@ -2,6 +2,7 @@ package bsep.tim4.hospitalApp.controller;
 
 import bsep.tim4.hospitalApp.dto.CSRDto;
 import bsep.tim4.hospitalApp.service.CSRService;
+import org.bouncycastle.operator.OperatorCreationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 
 @RestController
@@ -36,7 +38,14 @@ public class CSRController {
     @PostMapping(value="/create")
     // ADMIN
     public ResponseEntity<Void> createCsr(Principal principal, @RequestHeader("Authorization") String token, @Valid @RequestBody CSRDto csrDto) {
-        String csr = csrService.createCSR(csrDto);
+        String csr = null;
+        try {
+            csr = csrService.createCSR(csrDto);
+        } catch (OperatorCreationException | IOException e) {
+            logger.error(String.format("%s called method %s with status code %s: %s",
+                    principal.getName(), "createCsr", HttpStatus.BAD_REQUEST, "CSR builder failed"));
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         final String sendCsrFullUri = adminApplicationUri +  sendCsrUri;
 
@@ -48,7 +57,6 @@ public class CSRController {
         ResponseEntity<String> responseEntityStr = restTemplate.
                 postForEntity(sendCsrFullUri, request, String.class);
 
-        String csrReturn = responseEntityStr.getBody();
         logger.info(String.format("%s called method %s with status code %s: %s",
                 principal.getName(), "createCsr", HttpStatus.OK, "CSR created and sent"));
         return new ResponseEntity<>(HttpStatus.OK);

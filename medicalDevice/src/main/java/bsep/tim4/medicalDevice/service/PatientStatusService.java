@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class PatientStatusService {
 
-    private List<String> patientIds = Arrays.asList("60ae697db04b8d0648494432");
+    private List<String> patientIds = Arrays.asList("60b4b7ae66d3ad10f18d084d");
     private final DecimalFormat df = new DecimalFormat("#.##");
 
     public PatientStatus generatePatientStatus() {

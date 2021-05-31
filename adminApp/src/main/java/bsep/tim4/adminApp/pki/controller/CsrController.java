@@ -37,9 +37,11 @@ public class CsrController {
 
     @PostMapping(value="/receive")
     // ADMIN
-    public ResponseEntity<String> receiveCsr(@RequestBody @NotBlank(message = "Csr cannot be empty") String csr) {
+    public ResponseEntity<String> receiveCsr(Principal principal, @RequestBody @NotBlank(message = "Csr cannot be empty") String csr) {
         //Primljen csr se skladisti u bazu i na taj email se salje konfirmacioni link
         csrService.saveCsr(csr);
+        logger.info(String.format("%s called method %s with status code %s: %s",
+                principal.getName(), "receiveCsr", HttpStatus.OK, "csr received"));
         return new ResponseEntity<>(csr, HttpStatus.OK);
     }
 
@@ -47,6 +49,8 @@ public class CsrController {
     // UNAUTHORIZED
     public void verifyCsr(@RequestParam("token") @Size(min = 36, max = 36, message = "Verification link is invalid") String token) {
         csrService.verifyCsr(token);
+        logger.info(String.format("%s called method %s with status code %s: %s",
+                "Email link", "verifyCsr", HttpStatus.OK, "csr verified"));
     }
 
     @GetMapping
@@ -55,7 +59,6 @@ public class CsrController {
         List<CSR> csrList = csrService.findAllByVerified(true);
         List<CsrDTO> csrDTOList = csrMapper.toCsrDtoList(csrList);
 
-        // KO(keycloak user id) called method KOJU with status HTTP-STATUS: RAZLOG
         logger.info(String.format("%s called method %s with status code %s: %s",
                 principal.getName(), "findAllCsr", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(csrDTOList, HttpStatus.OK);
@@ -63,22 +66,30 @@ public class CsrController {
 
     @PutMapping(value = "accept/{id}")
     // SUPER ADMIN
-    public void acceptCsr(@PathVariable("id") @NotNull(message = "Id cannot be empty")
+    public void acceptCsr(Principal principal, @PathVariable("id") @NotNull(message = "Id cannot be empty")
                               @Positive( message = "Id is invalid") Long id) {
         try {
             csrService.acceptCsr(id);
+            logger.info(String.format("%s called method %s with status code %s: %s",
+                    principal.getName(), "acceptCsr", HttpStatus.OK, "csr accepted"));
         } catch (NonExistentIdException e) {
+            logger.error(String.format("%s called method %s with status code %s: %s",
+                    principal.getName(), "acceptCsr", HttpStatus.NOT_FOUND, "non existing csr id"));
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
     @PutMapping(value = "decline/{id}")
     // SUPER ADMIN
-    public void declineCsr(@PathVariable("id") @NotNull(message = "Id cannot be empty")
+    public void declineCsr(Principal principal, @PathVariable("id") @NotNull(message = "Id cannot be empty")
                                @Positive( message = "Id is invalid") Long id) {
         try {
             csrService.declineCsr(id);
+            logger.info(String.format("%s called method %s with status code %s: %s",
+                    principal.getName(), "declineCsr", HttpStatus.OK, "csr declined"));
         } catch (NonExistentIdException | MessagingException e) {
+            logger.error(String.format("%s called method %s with status code %s: %s",
+                    principal.getName(), "declineCsr", HttpStatus.NOT_FOUND, "non existing csr id"));
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }

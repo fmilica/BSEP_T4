@@ -47,16 +47,6 @@ public class KeyStoreService {
         this.keyStoreWriter.saveKeyStore(keyStorePath + keyStoreName, keyStorePass.toCharArray());
     }
 
-    public void loadKeyStore() {
-        String keyStoreFullName = keyStorePath + keyStoreName;
-        File keyStoreFile = new File(keyStoreFullName);
-        if (!keyStoreFile.exists()) {
-            this.keyStoreWriter.createKeyStore(keyStoreFullName, keyStorePass.toCharArray());
-        } else {
-            this.keyStoreWriter.loadKeyStore(keyStoreFullName, keyStorePass.toCharArray());
-        }
-    }
-
     public void loadSymKeyStore() {
         String keyStoreFullName = keyStorePath + symKeyKeystore;
         File keyStoreFile = new File(keyStoreFullName);
@@ -67,54 +57,18 @@ public class KeyStoreService {
         }
     }
 
-    public void saveKeyStore() {
-        this.keyStoreWriter.saveKeyStore(keyStorePath + keyStoreName, keyStorePass.toCharArray());
-    }
-
-    public void saveSymKeyStore() {
-        this.keyStoreWriter.saveKeyStore(keyStorePath + symKeyKeystore, keyStorePass.toCharArray());
-    }
-
-    public void savePrivateKey(String alias, PrivateKey privateKey, String keyPassword, Certificate certificate) {
-        this.keyStoreWriter.writePrivateKey(alias, privateKey, keyPassword.toCharArray(), certificate);
-    }
-
-    public PrivateKey loadPrivateKey(String alias, String keyPassword) {
-        return this.keyStoreReader.readPrivateKey(
-                keyStorePath + keyStoreName, keyStorePass, alias, keyPassword);
-    }
-
-    public void saveCertificate(String alias, Certificate certificate) {
-        this.keyStoreWriter.writeCertificate(alias, certificate);
-    }
-
-    public Certificate loadCertificate(String alias) {
-        return this.keyStoreReader.readCertificate(
-                keyStorePath + keyStoreName, keyStorePass, alias);
-    }
-
-    // dobavljanje privatnog kljuca (i podataka o vlasniku) vezanog za sertifikat sa datim aliasom
-    public IssuerData loadIssuerData(String alias, String keyPassword) {
-        return this.keyStoreReader.readIssuerFromStore(
-                keyStorePath + keyStoreName, alias,
-                        keyStorePass.toCharArray(), keyPassword.toCharArray());
-    }
-
     public Key getSymKey() {
         return this.keyStoreReader.getSymKey(symKeyAlias, keyStorePass.toCharArray(),
                 keyStorePath + symKeyKeystore, keyStorePass);
     }
 
-    public void createSymetricKey() {
-        try {
-            KeyGenerator generator = KeyGenerator.getInstance("AES");
-            // minimum 128, 256 idealno
-            generator.init(256);
-            SecretKey secKey = generator.generateKey();
-            this.keyStoreWriter.writeSecretKey(symKeyAlias, secKey,
-                    keyStorePass.toCharArray(), keyStorePath + symKeyKeystore);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+    public void createSymetricKey() throws NoSuchAlgorithmException {
+        KeyGenerator generator = KeyGenerator.getInstance("AES");
+        // minimum 128, 256 idealno
+        generator.init(256);
+        SecretKey secKey = generator.generateKey();
+        this.keyStoreWriter.writeSecretKey(symKeyAlias, secKey,
+                keyStorePass.toCharArray(), keyStorePath + symKeyKeystore);
+
     }
 }

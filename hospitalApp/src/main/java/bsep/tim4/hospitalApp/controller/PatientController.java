@@ -9,6 +9,7 @@ import bsep.tim4.hospitalApp.service.PatientService;
 import bsep.tim4.hospitalApp.service.PatientStatusService;
 import bsep.tim4.hospitalApp.util.SignatureUtil;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.maven.shared.invoker.MavenInvocationException;
@@ -24,8 +25,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
@@ -122,12 +128,31 @@ public class PatientController {
             logger.error(String.format("%s called method %s with status code %s: %s",
                     principal.getName(), "findById", HttpStatus.NOT_FOUND, "non existent patient id"));
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } catch (JsonProcessingException e) {
+            logger.error(String.format("%s called method %s with status code %s: %s",
+                    principal.getName(), "findById", HttpStatus.BAD_REQUEST, "json parse exception"));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException |  InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+            logger.error(String.format("%s called method %s with status code %s: %s",
+                    principal.getName(), "findById", HttpStatus.INTERNAL_SERVER_ERROR, "decryption exception"));
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping
     public ResponseEntity<List<PatientDTO>> findAllPatients(Principal principal) {
-        List<Patient> patients = patientService.findAll();
+        List<Patient> patients = null;
+        try {
+            patients = patientService.findAll();
+        } catch (JsonProcessingException e) {
+            logger.error(String.format("%s called method %s with status code %s: %s",
+                    principal.getName(), "findById", HttpStatus.BAD_REQUEST, "json parse exception"));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException |  InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+            logger.error(String.format("%s called method %s with status code %s: %s",
+                    principal.getName(), "findAllPatients", HttpStatus.INTERNAL_SERVER_ERROR, "decryption exception"));
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         List<PatientDTO> patientDTOS = new ArrayList<>();
         for(Patient patient : patients) {
@@ -164,21 +189,21 @@ public class PatientController {
     }
 
     @PostMapping(value = "/create-rule")
-    public ResponseEntity<Void> createRule(/*Principal principal, */@Valid @RequestBody RuleDto ruleDto) {
+    public ResponseEntity<Void> createRule(Principal principal, @Valid @RequestBody RuleDto ruleDto) {
         try {
             patientService.createRule(ruleDto);
-//            logger.info(String.format("%s called method %s with status code %s: %s",
-//                    principal.getName(), "createRule", HttpStatus.OK, "authorized"));
+            logger.info(String.format("%s called method %s with status code %s: %s",
+                    principal.getName(), "createRule", HttpStatus.OK, "authorized"));
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NonExistentIdException e) {
             e.printStackTrace();
-//            logger.error(String.format("%s called method %s with status code %s: %s",
-//                    principal.getName(), "createRule", HttpStatus.BAD_REQUEST, "non existent patient id"));
+            logger.error(String.format("%s called method %s with status code %s: %s",
+                    principal.getName(), "createRule", HttpStatus.BAD_REQUEST, "non existent patient id"));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } catch (IOException | MavenInvocationException e) {
             e.printStackTrace();
-//            logger.error(String.format("%s called method %s with status code %s: %s",
-//                    principal.getName(), "createRule", HttpStatus.INTERNAL_SERVER_ERROR, "new drl file error"));
+            logger.error(String.format("%s called method %s with status code %s: %s",
+                    principal.getName(), "createRule", HttpStatus.INTERNAL_SERVER_ERROR, "new drl file error"));
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
