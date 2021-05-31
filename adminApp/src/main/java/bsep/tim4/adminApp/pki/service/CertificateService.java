@@ -68,7 +68,7 @@ public class CertificateService {
         return issuerData;
     }
 
-    public boolean validateCertificate(String alias) {
+    public boolean validateCertificate(String alias) throws NoSuchProviderException, CertificateException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         // da li je on revoked
         CertificateData certData = certificateDataService.findByAlias(alias);
         if (certData.isRevoked()) {
@@ -96,26 +96,19 @@ public class CertificateService {
             // validnost potpisivanja
             // da li je prethodni u lancu potpisao trenutni
             // https://support.acquia.com/hc/en-us/articles/360004119234-Verifying-the-validity-of-an-SSL-certificate
-            try {
+
                 // root potpisuje samog sebe
-                if (i == chain.length - 1) {
-                    x509Certificate.verify(x509Certificate.getPublicKey());
-                } else {
-                    X509Certificate issuerCertificate = (X509Certificate) chain[i + 1];
-                    x509Certificate.verify(issuerCertificate.getPublicKey());
-                }
-            } catch (InvalidKeyException | SignatureException e) {
-                // greska u potpisu
-                return false;
-            }
-            catch (CertificateException | NoSuchAlgorithmException | NoSuchProviderException e) {
-                e.printStackTrace();
+            if (i == chain.length - 1) {
+                x509Certificate.verify(x509Certificate.getPublicKey());
+            } else {
+                X509Certificate issuerCertificate = (X509Certificate) chain[i + 1];
+                x509Certificate.verify(issuerCertificate.getPublicKey());
             }
         }
         return true;
     }
 
-    public CertificateDetailedViewDTO getDetails(String alias) {
+    public CertificateDetailedViewDTO getDetails(String alias) throws CertificateEncodingException {
         X509Certificate certificate = (X509Certificate) keyStoreService.loadCertificate(alias);
         CertificateDetailedViewDTO certDetails = new CertificateDetailedViewDTO();
         // certificate information
@@ -126,17 +119,15 @@ public class CertificateService {
         certDetails.setValidUntil(certificate.getNotAfter());
         certDetails.setSignatureAlgorithm(certificate.getSigAlgName());
         certDetails.setPublicKey(certificate.getPublicKey().getEncoded());
-        try {
-            X500Name x500name = new JcaX509CertificateHolder(certificate).getSubject();
-            RDN cn = x500name.getRDNs(BCStyle.CN)[0];
-            certDetails.setCommonName(cn.getFirst().getValue().toString());
-            X500Principal subject = certificate.getSubjectX500Principal();
-            certDetails.setSubjectData(subject.toString());
-            X500Principal issuer = certificate.getIssuerX500Principal();
-            certDetails.setIssuerData(issuer.toString());
-        } catch (CertificateEncodingException e) {
-            e.printStackTrace();
-        }
+
+        X500Name x500name = new JcaX509CertificateHolder(certificate).getSubject();
+        RDN cn = x500name.getRDNs(BCStyle.CN)[0];
+        certDetails.setCommonName(cn.getFirst().getValue().toString());
+        X500Principal subject = certificate.getSubjectX500Principal();
+        certDetails.setSubjectData(subject.toString());
+        X500Principal issuer = certificate.getIssuerX500Principal();
+        certDetails.setIssuerData(issuer.toString());
+
         return certDetails;
     }
 
@@ -165,7 +156,7 @@ public class CertificateService {
         return keyStoreService.loadAllCertificates();
     }*/
 
-    public String createCertificate(CreateCertificateDTO certDto) throws NonExistentIdException, MessagingException, InvalidCertificateException, CertificateNotCAException {
+    public String createCertificate(CreateCertificateDTO certDto) throws NonExistentIdException, MessagingException, InvalidCertificateException, CertificateNotCAException, CertificateException, NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException, SignatureException {
         // postavljanje statusa na accepted
         csrService.acceptCsr(certDto.getCsrId());
         // dobavljanje csr-a
@@ -180,68 +171,57 @@ public class CertificateService {
 
     public CertificateData generateCertificate(
             CSR csr, String caAlias, Date startDate, Date endDate, CertificateAdditionalInfo additionalInfo)
-            throws InvalidCertificateException, CertificateNotCAException {
-        try {
-            // provera validnosti CA sertifikata
-            if (!validateCertificate(caAlias)) {
-                throw new InvalidCertificateException(caAlias);
-            }
-            // provera da li je sertifikat CA
-            // https://stackoverflow.com/questions/12092457/how-to-check-if-x509certificate-is-ca-certificate
-            Certificate[] issuerCertificateChain = keyStoreService.readCertificateChain(caAlias);
-            X509Certificate issuer = (X509Certificate) issuerCertificateChain[0];
-            try {
-                if (issuer.getBasicConstraints() == -1 || !issuer.getKeyUsage()[5]) {
-                    throw new CertificateNotCAException(caAlias);
-                }
-            } catch (NullPointerException e) {
-                // u slucaju da nije postavljen basicConstraint ili keyUsage
-            }
+            throws InvalidCertificateException, CertificateNotCAException, NoSuchAlgorithmException, CertificateException, NoSuchProviderException, InvalidKeyException, SignatureException {
 
-            // generisanje kljuceva
-            KeyPair keyPair = KeyPairGenerator.generateKeyPair();
-
-            SubjectData subjectData = generateSubjectData(csr, startDate, endDate, keyPair);
-            IssuerData issuerData = generateIssuerData(caAlias);
-
-            // email
-            RDN emailRDN = subjectData.getX500name().getRDNs(BCStyle.E)[0];
-            String email = emailRDN.getFirst().getValue().toString();
-            // alias za keystore
-            // = commonName + issuerCommonName + serialNumber
-            RDN commonNameRDN = subjectData.getX500name().getRDNs(BCStyle.CN)[0];
-            String commonName = commonNameRDN.getFirst().getValue().toString();
-            RDN issuerCommonNameRDN = issuerData.getX500name().getRDNs(BCStyle.CN)[0];
-            String issuerCommonName = issuerCommonNameRDN.getFirst().getValue().toString();
-            String alias = commonName + "-" + issuerCommonName;
-
-            // generisanje za bazu
-            /*RDN commonNameRDN = subjectData.getX500name().getRDNs(BCStyle.CN)[0];
-            String commonName = commonNameRDN.getFirst().getValue().toString();*/
-            CertificateData certData = generateCertificateData(commonName, alias, caAlias, email, startDate, endDate);
-            alias = certData.getId().toString() + "-" + alias;
-            alias = alias.toLowerCase();
-            certData.setAlias(alias);
-            certificateDataService.save(certData);
-            subjectData.setSerialNumber(certData.getId().toString());
-
-            //generisanje sertifikata
-            Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, additionalInfo);
-
-            // postavljanje lanca sertifikata
-            keyStoreService.loadKeyStore();
-            // dodaje novi sertifikat na pocetak lanca
-            Certificate[] newCertificateChain = createCertificateChain(certificate, issuerCertificateChain);
-
-            // cuvanje sertifikata (niza sertifikata)
-            keyStoreService.savePrivateKey(alias, keyPair.getPrivate(), newCertificateChain);
-            keyStoreService.saveKeyStore();
-
-            return certData;
-        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
-            e.printStackTrace();
+        // provera validnosti CA sertifikata
+        if (!validateCertificate(caAlias)) {
+            throw new InvalidCertificateException(caAlias);
         }
-        return null;
+        // provera da li je sertifikat CA
+        // https://stackoverflow.com/questions/12092457/how-to-check-if-x509certificate-is-ca-certificate
+        Certificate[] issuerCertificateChain = keyStoreService.readCertificateChain(caAlias);
+        X509Certificate issuer = (X509Certificate) issuerCertificateChain[0];
+
+        // generisanje kljuceva
+        KeyPair keyPair = KeyPairGenerator.generateKeyPair();
+
+        SubjectData subjectData = generateSubjectData(csr, startDate, endDate, keyPair);
+        IssuerData issuerData = generateIssuerData(caAlias);
+
+        // email
+        RDN emailRDN = subjectData.getX500name().getRDNs(BCStyle.E)[0];
+        String email = emailRDN.getFirst().getValue().toString();
+        // alias za keystore
+        // = commonName + issuerCommonName + serialNumber
+        RDN commonNameRDN = subjectData.getX500name().getRDNs(BCStyle.CN)[0];
+        String commonName = commonNameRDN.getFirst().getValue().toString();
+        RDN issuerCommonNameRDN = issuerData.getX500name().getRDNs(BCStyle.CN)[0];
+        String issuerCommonName = issuerCommonNameRDN.getFirst().getValue().toString();
+        String alias = commonName + "-" + issuerCommonName;
+
+        // generisanje za bazu
+        /*RDN commonNameRDN = subjectData.getX500name().getRDNs(BCStyle.CN)[0];
+        String commonName = commonNameRDN.getFirst().getValue().toString();*/
+        CertificateData certData = generateCertificateData(commonName, alias, caAlias, email, startDate, endDate);
+        alias = certData.getId().toString() + "-" + alias;
+        alias = alias.toLowerCase();
+        certData.setAlias(alias);
+        certificateDataService.save(certData);
+        subjectData.setSerialNumber(certData.getId().toString());
+
+        //generisanje sertifikata
+        Certificate certificate = CertificateGenerator.generateCertificate(subjectData, issuerData, additionalInfo);
+
+        // postavljanje lanca sertifikata
+        keyStoreService.loadKeyStore();
+        // dodaje novi sertifikat na pocetak lanca
+        Certificate[] newCertificateChain = createCertificateChain(certificate, issuerCertificateChain);
+
+        // cuvanje sertifikata (niza sertifikata)
+        keyStoreService.savePrivateKey(alias, keyPair.getPrivate(), newCertificateChain);
+        keyStoreService.saveKeyStore();
+
+        return certData;
     }
 
     public SubjectData generateSubjectData(CSR csr, Date startDate, Date endDate, KeyPair keyPair) throws NoSuchAlgorithmException, InvalidKeyException {
@@ -298,11 +278,6 @@ public class CertificateService {
 
         CertificateData certData = certificateLink.getCertificateData();
 
-        //TODO uvesti expiration date za verification links
-        /*if (verificationToken.isExpired()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Verification token has expired! Please register again");
-        }*/
-
         return certData.getAlias();
     }
 
@@ -344,26 +319,21 @@ public class CertificateService {
         return writer.toString();
     }
 
-    public byte[] getPkcs12Format(String alias) {
+    public byte[] getPkcs12Format(String alias) throws NoSuchProviderException, KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException {
         keyStoreService.loadKeyStore();
         PrivateKey key = keyStoreService.loadPrivateKey(alias);
         Certificate[] chain = keyStoreService.readCertificateChain(alias);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        try {
-            // create keystore
-            Security.addProvider(new BouncyCastleProvider());
-            KeyStore keystore = KeyStore.getInstance("PKCS12", BouncyCastleProvider.PROVIDER_NAME);
-            // initialize
-            keystore.load(null);
-            // add your key and cert
-            keystore.setKeyEntry(alias, key, keyStorePass.toCharArray(), chain);
-            // save the keystore to file
-            keystore.store(bos, keyStorePass.toCharArray());
-            bos.close();
-            return bos.toByteArray();
-        } catch (NoSuchProviderException | IOException | NoSuchAlgorithmException | CertificateException | KeyStoreException e) {
-            e.printStackTrace();
-        }
-        return null;
+        // create keystore
+        Security.addProvider(new BouncyCastleProvider());
+        KeyStore keystore = KeyStore.getInstance("PKCS12", BouncyCastleProvider.PROVIDER_NAME);
+        // initialize
+        keystore.load(null);
+        // add your key and cert
+        keystore.setKeyEntry(alias, key, keyStorePass.toCharArray(), chain);
+        // save the keystore to file
+        keystore.store(bos, keyStorePass.toCharArray());
+        bos.close();
+        return bos.toByteArray();
     }
 }

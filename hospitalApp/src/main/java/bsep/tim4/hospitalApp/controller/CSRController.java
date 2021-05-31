@@ -42,7 +42,7 @@ public class CSRController {
         try {
             csr = csrService.createCSR(csrDto);
         } catch (OperatorCreationException | IOException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "createCsr", HttpStatus.BAD_REQUEST, "CSR builder failed"));
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -57,7 +57,7 @@ public class CSRController {
         ResponseEntity<String> responseEntityStr = restTemplate.
                 postForEntity(sendCsrFullUri, request, String.class);
 
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "createCsr", HttpStatus.OK, "CSR created and sent"));
         return new ResponseEntity<>(HttpStatus.OK);
     }
