@@ -93,7 +93,7 @@ public class PatientController {
                             patientStatusService.save(patientStatus);
                             return new ResponseEntity<Void>(HttpStatus.OK);
                         } catch (NonExistentIdException e) {
-                            logger.error(String.format("%s called method %s with status code %s: %s",
+                            logger.warn(String.format("%s called method %s with status code %s: %s",
                                     "Medical device", "receivePatientStatus", HttpStatus.NOT_FOUND, "non existent patient id"));
                             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
                         }
@@ -120,20 +120,20 @@ public class PatientController {
     public ResponseEntity<Patient> findById(Principal principal, @PathVariable("patientId") String patientId) {
         try {
             Patient patient = patientService.findById(patientId);
-            logger.info(String.format("%s called method %s with status code %s: %s",
+            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "findById", HttpStatus.OK, "authorized"));
             return new ResponseEntity<>(patient, HttpStatus.OK);
 
         } catch (NonExistentIdException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "findById", HttpStatus.NOT_FOUND, "non existent patient id"));
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } catch (JsonProcessingException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "findById", HttpStatus.BAD_REQUEST, "json parse exception"));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } catch (NoSuchPaddingException | NoSuchAlgorithmException |  InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "findById", HttpStatus.INTERNAL_SERVER_ERROR, "decryption exception"));
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -145,11 +145,11 @@ public class PatientController {
         try {
             patients = patientService.findAll();
         } catch (JsonProcessingException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "findById", HttpStatus.BAD_REQUEST, "json parse exception"));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } catch (NoSuchPaddingException | NoSuchAlgorithmException |  InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "findAllPatients", HttpStatus.INTERNAL_SERVER_ERROR, "decryption exception"));
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -159,7 +159,7 @@ public class PatientController {
             patientDTOS.add(new PatientDTO(patient.getId(), patient.getName()));
         }
 
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "findAllPatients", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(patientDTOS, HttpStatus.OK);
     }
@@ -168,7 +168,7 @@ public class PatientController {
     public ResponseEntity<List<PatientStatus>> findAllPatientStatuses(Principal principal){
         List<PatientStatus> patientStatuses = patientStatusService.findAll();
 
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "findAllPatientStatuses", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(patientStatuses, HttpStatus.OK);
     }
@@ -178,11 +178,11 @@ public class PatientController {
                                                                                 @PathVariable("patientId") String patientId){
         try {
             List<PatientStatus> patientStatuses = patientStatusService.findAllByPatientId(patientId);
-            logger.info(String.format("%s called method %s with status code %s: %s",
+            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "findAllPatientStatuses", HttpStatus.OK, "authorized"));
             return new ResponseEntity<>(patientStatuses, HttpStatus.OK);
         } catch (NonExistentIdException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "findAllPatientStatusesForPatient", HttpStatus.NOT_FOUND, "non existent patient id"));
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -192,17 +192,17 @@ public class PatientController {
     public ResponseEntity<Void> createRule(Principal principal, @Valid @RequestBody RuleDto ruleDto) {
         try {
             patientService.createRule(ruleDto);
-            logger.info(String.format("%s called method %s with status code %s: %s",
+            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "createRule", HttpStatus.OK, "authorized"));
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NonExistentIdException e) {
             e.printStackTrace();
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "createRule", HttpStatus.BAD_REQUEST, "non existent patient id"));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } catch (IOException | MavenInvocationException e) {
             e.printStackTrace();
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "createRule", HttpStatus.INTERNAL_SERVER_ERROR, "new drl file error"));
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -19,7 +19,9 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.IOException;
-import java.security.Principal;
+import java.security.*;
+import java.security.cert.CertificateEncodingException;
+import java.security.cert.CertificateException;
 import java.util.List;
 import java.util.Map;
 
@@ -58,16 +60,20 @@ public class CertificateController {
             } else {
                 // ne postoji sa tim serijskim brojem
                 // NOT_EXISTANT_SERIAL_NUMBER
-                logger.error(String.format("%s called method %s with status code %s: %s",
+                logger.warn(String.format("%s called method %s with status code %s: %s",
                         "Hospital", "validateCertificate", HttpStatus.NOT_FOUND, "non existing serial number"));
                 return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
             }
         } catch (NonExistentIdException e) {
             // ne postoji sa tim serijskim brojem
             // NOT_EXISTANT_SERIAL_NUMBER
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.warn(String.format("%s called method %s with status code %s: %s",
                     "Hospital", "validateCertificate", HttpStatus.NOT_FOUND, "non existing serial number"));
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        } catch (NoSuchProviderException | CertificateException | NoSuchAlgorithmException | InvalidKeyException | SignatureException e){
+            logger.error(String.format("%s called method %s with status code %s: %s",
+                    "Hospital", "validateCertificate", HttpStatus.INTERNAL_SERVER_ERROR, "certificate error"));
+            return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -79,8 +85,15 @@ public class CertificateController {
                                 @NotBlank(message = "Alias cannot be empty")
                                 @Size( min = 1, max = 50, message = "Alias is too long")
                                 @Pattern(regexp = "[a-zA-Z0-9-]+", message = "Alias is not valid") String alias) {
-        CertificateDetailedViewDTO detailedView = certificateService.getDetails(alias);
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        CertificateDetailedViewDTO detailedView = null;
+        try {
+            detailedView = certificateService.getDetails(alias);
+        } catch (CertificateEncodingException e) {
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "getDetailedCertificate", HttpStatus.INTERNAL_SERVER_ERROR, "certificate encoding error"));
+            return new ResponseEntity<CertificateDetailedViewDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "getDetailedCertificate", HttpStatus.OK, "authorized"));
         return new ResponseEntity<CertificateDetailedViewDTO>(detailedView, HttpStatus.OK);
     }
@@ -92,16 +105,21 @@ public class CertificateController {
         try {
             certificate = certificateService.createCertificate(certDto);
         } catch (NonExistentIdException | MessagingException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "createCertificate", HttpStatus.NOT_FOUND, "non existing csr id"));
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (CertificateNotCAException | InvalidCertificateException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "createCertificate", HttpStatus.BAD_REQUEST, "invalid certificate data"));
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (CertificateException | NoSuchAlgorithmException | InvalidKeyException | SignatureException | NoSuchProviderException e) {
+            e.printStackTrace();
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "createCertificate", HttpStatus.BAD_REQUEST, "certificate creation"));
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "createCertificate", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -112,7 +130,7 @@ public class CertificateController {
                                 @Size(min = 36, max = 36, message = "Download certificate link is invalid") String token) {
         String alias = certificateService.findByToken(token);
         if (alias == null) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.warn(String.format("%s called method %s with status code %s: %s",
                     "Email link", "downloadCertificate", HttpStatus.NOT_FOUND, "non existing certificate alias"));
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -145,7 +163,7 @@ public class CertificateController {
         try {
             certificateChain = certificateService.getPemCertificateChain(alias);
         } catch (IOException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "adminDownloadCertificate", HttpStatus.INTERNAL_SERVER_ERROR, "file exception"));
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -153,7 +171,7 @@ public class CertificateController {
 
         byte[] contents = certificateChain.getBytes();
         HttpHeaders headers = createDownloadCertHeaders();
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "adminDownloadCertificate", HttpStatus.OK, "existing certificate alias"));
         return new ResponseEntity<>(contents, headers, HttpStatus.OK);
     }
@@ -166,7 +184,20 @@ public class CertificateController {
                                       @NotBlank(message = "Alias cannot be empty")
                                       @Size( min = 1, max = 50, message = "Alias is too long")
                                       @Pattern(regexp = "[a-zA-Z0-9-]+", message = "Alias is not valid") String alias) {
-        byte[] contents = certificateService.getPkcs12Format(alias);
+        byte[] contents = new byte[0];
+        try {
+            contents = certificateService.getPkcs12Format(alias);
+        } catch (NoSuchProviderException | KeyStoreException | CertificateException| NoSuchAlgorithmException e) {
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "adminDownloadPkcs12", HttpStatus.INTERNAL_SERVER_ERROR, "certificate exception"));
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (IOException e) {
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "adminDownloadPkcs12", HttpStatus.INTERNAL_SERVER_ERROR, "file exception"));
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         HttpHeaders headers = createDownloadCertHeaders();
         logger.info(String.format("%s called method %s with status code %s: %s",
                 principal.getName(), "adminDownloadPkcs12", HttpStatus.OK, "existing certificate alias"));
@@ -180,7 +211,7 @@ public class CertificateController {
 
         CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto("adminroot", issuerData);
 
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "getRootCertificate", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(certificateSignerDTO, HttpStatus.OK);
     }
@@ -192,7 +223,7 @@ public class CertificateController {
 
         List<CertificateSignerDTO> certificateSignerDTOList = certificateSignerMapper.toCertificateSignerDtoList(issuerDataList);
 
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "getCACertificates", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(certificateSignerDTOList, HttpStatus.OK);
     }
@@ -208,7 +239,7 @@ public class CertificateController {
         IssuerData issuerData = certificateService.getByAlias(alias);
         CertificateSignerDTO certificateSignerDTO = certificateSignerMapper.toCertificateSignerDto(alias, issuerData);
 
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "getByAlias", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(certificateSignerDTO, HttpStatus.OK);
     }
@@ -225,12 +256,12 @@ public class CertificateController {
         try {
             certificateDataService.revoke(alias, revocationReason);
         } catch (NonExistentIdException | MessagingException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "revokeCertificate", HttpStatus.NOT_FOUND, "non existing certificate alias"));
             e.printStackTrace();
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "revokeCertificate", HttpStatus.OK, "authorized"));
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -241,7 +272,7 @@ public class CertificateController {
     public ResponseEntity<List<CertificateViewDTO>> getAllCertificates(Principal principal) {
         List<CertificateViewDTO> certificateViewDTOS = certificateDataService.findCertificateView();
 
-        logger.error(String.format("%s called method %s with status code %s: %s",
+        logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "getAllCertificates", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(certificateViewDTOS, HttpStatus.OK);
     }

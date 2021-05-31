@@ -97,7 +97,4 @@ public class KeyStoreService {
         return this.keyStoreReader.readAllCAIssuers(keyStorePath + keyStoreName, keyStorePass, rootCAPass);
     }
 
-    /*public CertificateViewDTO loadAllCertificates() {
-        return this.keyStoreReader.readAllCertificates(keyStorePath + keyStoreName, keyStorePass, rootCAPass);
-    }*/
 }

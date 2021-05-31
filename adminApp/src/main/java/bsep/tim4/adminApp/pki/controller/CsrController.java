@@ -17,6 +17,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.mail.MessagingException;
 import javax.validation.constraints.*;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.util.List;
 
@@ -39,8 +42,21 @@ public class CsrController {
     // ADMIN
     public ResponseEntity<String> receiveCsr(Principal principal, @RequestBody @NotBlank(message = "Csr cannot be empty") String csr) {
         //Primljen csr se skladisti u bazu i na taj email se salje konfirmacioni link
-        csrService.saveCsr(csr);
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        try {
+            csrService.saveCsr(csr);
+        } catch (NoSuchAlgorithmException | InvalidKeyException | MessagingException e) {
+            e.printStackTrace();
+            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "receiveCsr", HttpStatus.BAD_REQUEST, "invalid csr format"));
+            return new ResponseEntity<>(csr, HttpStatus.BAD_REQUEST);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "receiveCsr", HttpStatus.INTERNAL_SERVER_ERROR, "io exception"));
+            return new ResponseEntity<>(csr, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "receiveCsr", HttpStatus.OK, "csr received"));
         return new ResponseEntity<>(csr, HttpStatus.OK);
     }
@@ -70,10 +86,10 @@ public class CsrController {
                               @Positive( message = "Id is invalid") Long id) {
         try {
             csrService.acceptCsr(id);
-            logger.info(String.format("%s called method %s with status code %s: %s",
+            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "acceptCsr", HttpStatus.OK, "csr accepted"));
         } catch (NonExistentIdException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "acceptCsr", HttpStatus.NOT_FOUND, "non existing csr id"));
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -85,10 +101,10 @@ public class CsrController {
                                @Positive( message = "Id is invalid") Long id) {
         try {
             csrService.declineCsr(id);
-            logger.info(String.format("%s called method %s with status code %s: %s",
+            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "declineCsr", HttpStatus.OK, "csr declined"));
         } catch (NonExistentIdException | MessagingException e) {
-            logger.error(String.format("%s called method %s with status code %s: %s",
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "declineCsr", HttpStatus.NOT_FOUND, "non existing csr id"));
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
