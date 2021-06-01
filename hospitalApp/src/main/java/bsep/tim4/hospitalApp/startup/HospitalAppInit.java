@@ -1,6 +1,7 @@
 package bsep.tim4.hospitalApp.startup;
 
 import bsep.tim4.hospitalApp.service.KeyStoreService;
+import bsep.tim4.hospitalApp.service.LogReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -10,6 +11,9 @@ import java.security.Key;
 
 @Component
 public class HospitalAppInit implements ApplicationRunner {
+
+    @Autowired
+    private LogReaderService logReaderService;
 
     @Autowired
     private KeyStoreService keyStoreService;
@@ -23,5 +27,7 @@ public class HospitalAppInit implements ApplicationRunner {
         if (symKey == null) {
             keyStoreService.createSymetricKey();
         }
+        // citanje log konfiguracije
+        logReaderService.readConfiguration();
     }
 }

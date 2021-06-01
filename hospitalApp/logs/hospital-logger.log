@@ -2196,3 +2196,412 @@ Caused by: java.lang.RuntimeException: Cannot find KieModule: bsep.tim4:drools-s
 2021-05-31 23:32:13,579 INFO org.springframework.core.log.CompositeLog [main] Started.
 2021-05-31 23:32:13,592 INFO org.springframework.boot.StartupInfoLogger [main] Started HospitalAppApplication in 12.972 seconds (JVM running for 14.324)
 2021-05-31 23:33:12,766 INFO org.springframework.web.socket.config.WebSocketMessageBrokerStats [MessageBroker-1] WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2021-06-01 16:53:41,488 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.1.7.Final
+2021-06-01 16:53:41,607 INFO org.springframework.boot.StartupInfoLogger [main] Starting HospitalAppApplication using Java 1.8.0_191 on DESKTOP-TLS5H9V with PID 16676 (C:\Users\evaje\OneDrive\Desktop\Skola\8_Semestar\Bezbednost u sistemima elektronskog poslovanja\projekat\BSEP_T4\hospitalApp\target\classes started by evaje in C:\Users\evaje\OneDrive\Desktop\Skola\8_Semestar\Bezbednost u sistemima elektronskog poslovanja\projekat\BSEP_T4\hospitalApp)
+2021-06-01 16:53:41,610 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-06-01 16:53:44,113 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-06-01 16:53:44,125 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-06-01 16:53:44,264 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientAlarmRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-01 16:53:44,271 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-01 16:53:44,278 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientStatusRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-01 16:53:44,283 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 127 ms. Found 0 JPA repository interfaces.
+2021-06-01 16:53:44,403 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-06-01 16:53:44,405 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-06-01 16:53:44,549 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 124 ms. Found 3 MongoDB repository interfaces.
+2021-06-01 16:53:48,263 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (https)
+2021-06-01 16:53:48,342 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2021-06-01 16:53:48,351 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2021-06-01 16:53:48,356 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.44]
+2021-06-01 16:53:49,149 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2021-06-01 16:53:49,150 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 7349 ms
+2021-06-01 16:53:49,418 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-06-01 16:53:49,894 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-06-01 16:53:50,211 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.29.Final
+2021-06-01 16:53:50,763 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-06-01 16:53:51,197 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2021-06-01 16:53:51,518 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2021-06-01 16:53:51,570 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2021-06-01 16:53:52,696 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-06-01 16:53:52,728 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-06-01 16:53:55,351 INFO com.mongodb.diagnostics.logging.SLF4JLogger [main] Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-06-01 16:53:55,584 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b64a0385beb44d5f84f2d4', description='null'}-localhost:27017] Opened connection [connectionId{localValue:1, serverValue:115}] to localhost:27017
+2021-06-01 16:53:55,585 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b64a0385beb44d5f84f2d4', description='null'}-localhost:27017] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=9, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=70132600}
+2021-06-01 16:53:55,590 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-rtt-ClusterId{value='60b64a0385beb44d5f84f2d4', description='null'}-localhost:27017] Opened connection [connectionId{localValue:2, serverValue:114}] to localhost:27017
+2021-06-01 16:53:56,537 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/kie/kie-ci/7.17.0.Final/kie-ci-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:53:56,542 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.KieScannerFactoryServiceImpl
+
+2021-06-01 16:53:56,549 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.MavenClassLoaderResolver
+
+2021-06-01 16:53:56,551 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-core/7.17.0.Final/drools-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:53:56,556 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.io.impl.ResourceFactoryServiceImpl
+
+2021-06-01 16:53:56,563 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.marshalling.impl.MarshallerProviderImpl
+
+2021-06-01 16:53:56,567 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.concurrent.ExecutorProviderImpl
+
+2021-06-01 16:53:56,568 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-compiler/7.17.0.Final/drools-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:53:56,582 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.kie.builder.impl.KieServicesImpl
+
+2021-06-01 16:53:56,592 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.builder.impl.KnowledgeBuilderFactoryServiceImpl
+
+2021-06-01 16:53:56,593 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/kie/kie-internal/7.17.0.Final/kie-internal-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:53:56,597 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieAssemblersImpl
+
+2021-06-01 16:53:56,600 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieRuntimesImpl
+
+2021-06-01 16:53:56,603 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieWeaversImpl
+
+2021-06-01 16:53:56,607 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieBeliefsImpl
+
+2021-06-01 16:53:56,608 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/jbpm/jbpm-flow/7.17.0.Final/jbpm-flow-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:53:56,613 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.marshalling.impl.ProcessMarshallerFactoryServiceImpl
+
+2021-06-01 16:53:56,619 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.process.instance.ProcessRuntimeFactoryServiceImpl
+
+2021-06-01 16:53:56,621 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/kie/kie-dmn-core/7.17.0.Final/kie-dmn-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:53:56,631 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.assembler.DMNAssemblerService
+
+2021-06-01 16:53:56,636 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.runtime.DMNRuntimeService
+
+2021-06-01 16:53:56,639 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.weaver.DMNWeaverService
+
+2021-06-01 16:53:56,641 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-model-compiler/7.17.0.Final/drools-model-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:53:56,647 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.modelcompiler.CanonicalKieModuleProvider
+
+2021-06-01 16:53:56,649 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-decisiontables/7.17.0.Final/drools-decisiontables-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:53:56,653 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.decisiontable.DecisionTableProviderImpl
+
+2021-06-01 16:53:56,685 INFO org.drools.compiler.kie.builder.impl.KieRepositoryImpl [main] Adding KieModule from classpath: file:/C:/Users/evaje/.m2/repository/bsep/tim4/drools-spring-kjar/0.0.1-SNAPSHOT/drools-spring-kjar-0.0.1-SNAPSHOT.jar
+2021-06-01 16:54:00,682 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'clientInboundChannelExecutor'
+2021-06-01 16:54:00,700 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'clientOutboundChannelExecutor'
+2021-06-01 16:54:00,708 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'brokerChannelExecutor'
+2021-06-01 16:54:00,755 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService
+2021-06-01 16:54:00,759 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskExecutor'
+2021-06-01 16:54:01,215 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@592efd6, org.springframework.security.web.context.SecurityContextPersistenceFilter@363d3958, org.springframework.security.web.header.HeaderWriterFilter@4a2891d1, org.springframework.web.filter.CorsFilter@33903444, org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter@6ffbf0ac, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter@7f77e065, org.springframework.security.web.authentication.logout.LogoutFilter@4ca37d40, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4ca6e265, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4248608d, org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter@1b8ee69d, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticatedActionsFilter@2b400bd0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6149adee, org.springframework.security.web.session.SessionManagementFilter@14cf30b3, org.springframework.security.web.access.ExceptionTranslationFilter@395ac2e5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@122bfaac]
+2021-06-01 16:54:01,288 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'messageBrokerTaskScheduler'
+2021-06-01 16:54:02,459 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["https-jsse-nio-8081"]
+2021-06-01 16:54:02,882 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (https) with context path ''
+2021-06-01 16:54:02,885 INFO org.springframework.core.log.CompositeLog [main] Starting...
+2021-06-01 16:54:02,890 INFO org.springframework.core.log.CompositeLog [main] BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@5c934077]]
+2021-06-01 16:54:02,891 INFO org.springframework.core.log.CompositeLog [main] Started.
+2021-06-01 16:54:02,924 INFO org.springframework.boot.StartupInfoLogger [main] Started HospitalAppApplication in 23.396 seconds (JVM running for 27.668)
+2021-06-01 16:54:03,530 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [main] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-06-01 16:54:03,594 ERROR org.springframework.boot.SpringApplication [main] Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:800)
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:787)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:333)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1313)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302)
+	at bsep.tim4.hospitalApp.HospitalAppApplication.main(HospitalAppApplication.java:14)
+Caused by: com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException: Unrecognized field "logDirs" (class bsep.tim4.hospitalApp.dto.LogConfigList), not marked as ignorable (one known property: "logConfigList"])
+ at [Source: (File); line: 2, column: 15] (through reference chain: bsep.tim4.hospitalApp.dto.LogConfigList["logDirs"])
+	at com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException.from(UnrecognizedPropertyException.java:61)
+	at com.fasterxml.jackson.databind.DeserializationContext.handleUnknownProperty(DeserializationContext.java:855)
+	at com.fasterxml.jackson.databind.deser.std.StdDeserializer.handleUnknownProperty(StdDeserializer.java:1212)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.handleUnknownProperty(BeanDeserializerBase.java:1604)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.handleUnknownVanilla(BeanDeserializerBase.java:1582)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.vanillaDeserialize(BeanDeserializer.java:299)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:156)
+	at com.fasterxml.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:4526)
+	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:3333)
+	at bsep.tim4.hospitalApp.service.LogReaderService.readConfiguration(LogReaderService.java:26)
+	at bsep.tim4.hospitalApp.startup.HospitalAppInit.run(HospitalAppInit.java:31)
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:797)
+	... 5 common frames omitted
+2021-06-01 16:54:03,615 INFO org.springframework.core.log.CompositeLog [main] Stopping...
+2021-06-01 16:54:03,615 INFO org.springframework.core.log.CompositeLog [main] BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@5c934077]]
+2021-06-01 16:54:03,617 INFO org.springframework.core.log.CompositeLog [main] Stopped.
+2021-06-01 16:54:04,304 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Shutting down ExecutorService 'messageBrokerTaskScheduler'
+2021-06-01 16:54:04,306 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Shutting down ExecutorService 'taskExecutor'
+2021-06-01 16:54:04,308 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Shutting down ExecutorService 'brokerChannelExecutor'
+2021-06-01 16:54:04,310 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Shutting down ExecutorService 'clientOutboundChannelExecutor'
+2021-06-01 16:54:04,313 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Shutting down ExecutorService 'clientInboundChannelExecutor'
+2021-06-01 16:54:04,327 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-06-01 16:54:04,328 INFO org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl [main] HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2021-06-01 16:54:04,334 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Shutdown initiated...
+2021-06-01 16:54:04,355 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Shutdown completed.
+2021-06-01 16:55:07,946 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.1.7.Final
+2021-06-01 16:55:08,003 INFO org.springframework.boot.StartupInfoLogger [main] Starting HospitalAppApplication using Java 1.8.0_191 on DESKTOP-TLS5H9V with PID 5280 (C:\Users\evaje\OneDrive\Desktop\Skola\8_Semestar\Bezbednost u sistemima elektronskog poslovanja\projekat\BSEP_T4\hospitalApp\target\classes started by evaje in C:\Users\evaje\OneDrive\Desktop\Skola\8_Semestar\Bezbednost u sistemima elektronskog poslovanja\projekat\BSEP_T4\hospitalApp)
+2021-06-01 16:55:08,017 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-06-01 16:55:10,572 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-06-01 16:55:10,581 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-06-01 16:55:10,703 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientAlarmRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-01 16:55:10,710 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-01 16:55:10,716 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientStatusRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-01 16:55:10,724 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 120 ms. Found 0 JPA repository interfaces.
+2021-06-01 16:55:10,788 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-06-01 16:55:10,789 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-06-01 16:55:10,901 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 111 ms. Found 3 MongoDB repository interfaces.
+2021-06-01 16:55:13,752 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (https)
+2021-06-01 16:55:13,826 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2021-06-01 16:55:13,832 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2021-06-01 16:55:13,833 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.44]
+2021-06-01 16:55:14,262 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2021-06-01 16:55:14,263 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 6044 ms
+2021-06-01 16:55:14,518 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-06-01 16:55:14,879 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-06-01 16:55:15,084 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.29.Final
+2021-06-01 16:55:15,554 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-06-01 16:55:16,003 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2021-06-01 16:55:16,346 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2021-06-01 16:55:16,401 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2021-06-01 16:55:17,572 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-06-01 16:55:17,604 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-06-01 16:55:20,239 INFO com.mongodb.diagnostics.logging.SLF4JLogger [main] Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-06-01 16:55:20,480 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b64a58285b3a6ba088ebe7', description='null'}-localhost:27017] Opened connection [connectionId{localValue:2, serverValue:117}] to localhost:27017
+2021-06-01 16:55:20,482 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b64a58285b3a6ba088ebe7', description='null'}-localhost:27017] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=9, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=74506100}
+2021-06-01 16:55:20,491 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-rtt-ClusterId{value='60b64a58285b3a6ba088ebe7', description='null'}-localhost:27017] Opened connection [connectionId{localValue:1, serverValue:116}] to localhost:27017
+2021-06-01 16:55:21,480 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/kie/kie-ci/7.17.0.Final/kie-ci-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:55:21,488 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.KieScannerFactoryServiceImpl
+
+2021-06-01 16:55:21,495 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.MavenClassLoaderResolver
+
+2021-06-01 16:55:21,500 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-core/7.17.0.Final/drools-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:55:21,505 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.io.impl.ResourceFactoryServiceImpl
+
+2021-06-01 16:55:21,514 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.marshalling.impl.MarshallerProviderImpl
+
+2021-06-01 16:55:21,519 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.concurrent.ExecutorProviderImpl
+
+2021-06-01 16:55:21,520 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-compiler/7.17.0.Final/drools-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:55:21,535 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.kie.builder.impl.KieServicesImpl
+
+2021-06-01 16:55:21,547 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.builder.impl.KnowledgeBuilderFactoryServiceImpl
+
+2021-06-01 16:55:21,549 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/kie/kie-internal/7.17.0.Final/kie-internal-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:55:21,554 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieAssemblersImpl
+
+2021-06-01 16:55:21,557 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieRuntimesImpl
+
+2021-06-01 16:55:21,561 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieWeaversImpl
+
+2021-06-01 16:55:21,564 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieBeliefsImpl
+
+2021-06-01 16:55:21,565 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/jbpm/jbpm-flow/7.17.0.Final/jbpm-flow-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:55:21,570 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.marshalling.impl.ProcessMarshallerFactoryServiceImpl
+
+2021-06-01 16:55:21,579 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.process.instance.ProcessRuntimeFactoryServiceImpl
+
+2021-06-01 16:55:21,581 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/kie/kie-dmn-core/7.17.0.Final/kie-dmn-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:55:21,593 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.assembler.DMNAssemblerService
+
+2021-06-01 16:55:21,597 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.runtime.DMNRuntimeService
+
+2021-06-01 16:55:21,601 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.weaver.DMNWeaverService
+
+2021-06-01 16:55:21,602 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-model-compiler/7.17.0.Final/drools-model-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:55:21,609 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.modelcompiler.CanonicalKieModuleProvider
+
+2021-06-01 16:55:21,611 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-decisiontables/7.17.0.Final/drools-decisiontables-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:55:21,616 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.decisiontable.DecisionTableProviderImpl
+
+2021-06-01 16:55:21,650 INFO org.drools.compiler.kie.builder.impl.KieRepositoryImpl [main] Adding KieModule from classpath: file:/C:/Users/evaje/.m2/repository/bsep/tim4/drools-spring-kjar/0.0.1-SNAPSHOT/drools-spring-kjar-0.0.1-SNAPSHOT.jar
+2021-06-01 16:55:25,753 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'clientInboundChannelExecutor'
+2021-06-01 16:55:25,771 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'clientOutboundChannelExecutor'
+2021-06-01 16:55:25,782 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'brokerChannelExecutor'
+2021-06-01 16:55:25,827 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService
+2021-06-01 16:55:25,828 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskExecutor'
+2021-06-01 16:55:26,257 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@52813ba4, org.springframework.security.web.context.SecurityContextPersistenceFilter@6b334a1, org.springframework.security.web.header.HeaderWriterFilter@73c21b13, org.springframework.web.filter.CorsFilter@62291850, org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter@731e0bff, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter@6d0a14c2, org.springframework.security.web.authentication.logout.LogoutFilter@2ee91bdf, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@64df3f4b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@52d0a5fe, org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter@2bd2430f, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticatedActionsFilter@2890e479, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2518245b, org.springframework.security.web.session.SessionManagementFilter@1964a3f, org.springframework.security.web.access.ExceptionTranslationFilter@5536542e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7ebc2975]
+2021-06-01 16:55:26,327 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'messageBrokerTaskScheduler'
+2021-06-01 16:55:27,415 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["https-jsse-nio-8081"]
+2021-06-01 16:55:27,871 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (https) with context path ''
+2021-06-01 16:55:27,874 INFO org.springframework.core.log.CompositeLog [main] Starting...
+2021-06-01 16:55:27,880 INFO org.springframework.core.log.CompositeLog [main] BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@231c8be4]]
+2021-06-01 16:55:27,881 INFO org.springframework.core.log.CompositeLog [main] Started.
+2021-06-01 16:55:27,912 INFO org.springframework.boot.StartupInfoLogger [main] Started HospitalAppApplication in 22.36 seconds (JVM running for 24.727)
+2021-06-01 16:56:26,456 INFO org.springframework.web.socket.config.WebSocketMessageBrokerStats [MessageBroker-1] WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2021-06-01 16:56:49,342 INFO org.springframework.core.log.CompositeLog [SpringContextShutdownHook] Stopping...
+2021-06-01 16:56:49,345 INFO org.springframework.core.log.CompositeLog [SpringContextShutdownHook] BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@231c8be4]]
+2021-06-01 16:56:49,347 INFO org.springframework.core.log.CompositeLog [SpringContextShutdownHook] Stopped.
+2021-06-01 16:56:49,868 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'messageBrokerTaskScheduler'
+2021-06-01 16:56:49,871 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'taskExecutor'
+2021-06-01 16:56:49,872 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'brokerChannelExecutor'
+2021-06-01 16:56:49,877 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'clientOutboundChannelExecutor'
+2021-06-01 16:56:49,881 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'clientInboundChannelExecutor'
+2021-06-01 16:56:49,892 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringContextShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-06-01 16:56:49,893 INFO org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl [SpringContextShutdownHook] HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2021-06-01 16:56:49,901 INFO com.zaxxer.hikari.HikariDataSource [SpringContextShutdownHook] HikariPool-1 - Shutdown initiated...
+2021-06-01 16:56:49,933 INFO com.zaxxer.hikari.HikariDataSource [SpringContextShutdownHook] HikariPool-1 - Shutdown completed.
+2021-06-01 16:59:03,870 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.1.7.Final
+2021-06-01 16:59:03,958 INFO org.springframework.boot.StartupInfoLogger [main] Starting HospitalAppApplication using Java 1.8.0_191 on DESKTOP-TLS5H9V with PID 7744 (C:\Users\evaje\OneDrive\Desktop\Skola\8_Semestar\Bezbednost u sistemima elektronskog poslovanja\projekat\BSEP_T4\hospitalApp\target\classes started by evaje in C:\Users\evaje\OneDrive\Desktop\Skola\8_Semestar\Bezbednost u sistemima elektronskog poslovanja\projekat\BSEP_T4\hospitalApp)
+2021-06-01 16:59:03,962 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-06-01 16:59:09,770 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-06-01 16:59:09,787 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-06-01 16:59:10,287 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientAlarmRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-01 16:59:10,325 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-01 16:59:10,388 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientStatusRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-01 16:59:10,462 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 511 ms. Found 0 JPA repository interfaces.
+2021-06-01 16:59:10,679 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-06-01 16:59:10,682 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-06-01 16:59:10,833 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 150 ms. Found 3 MongoDB repository interfaces.
+2021-06-01 16:59:14,959 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (https)
+2021-06-01 16:59:15,001 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2021-06-01 16:59:15,006 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2021-06-01 16:59:15,012 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.44]
+2021-06-01 16:59:15,634 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2021-06-01 16:59:15,635 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 11424 ms
+2021-06-01 16:59:15,933 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-06-01 16:59:16,395 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-06-01 16:59:16,647 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.29.Final
+2021-06-01 16:59:17,353 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-06-01 16:59:17,935 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2021-06-01 16:59:18,336 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2021-06-01 16:59:18,415 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2021-06-01 16:59:19,806 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-06-01 16:59:19,840 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-06-01 16:59:23,205 INFO com.mongodb.diagnostics.logging.SLF4JLogger [main] Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-06-01 16:59:23,484 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-rtt-ClusterId{value='60b64b4b58bbd617d3a5538d', description='null'}-localhost:27017] Opened connection [connectionId{localValue:2, serverValue:119}] to localhost:27017
+2021-06-01 16:59:23,485 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b64b4b58bbd617d3a5538d', description='null'}-localhost:27017] Opened connection [connectionId{localValue:1, serverValue:118}] to localhost:27017
+2021-06-01 16:59:23,494 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b64b4b58bbd617d3a5538d', description='null'}-localhost:27017] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=9, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=108019800}
+2021-06-01 16:59:24,743 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/kie/kie-ci/7.17.0.Final/kie-ci-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:59:24,751 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.KieScannerFactoryServiceImpl
+
+2021-06-01 16:59:24,760 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.MavenClassLoaderResolver
+
+2021-06-01 16:59:24,762 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-core/7.17.0.Final/drools-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:59:24,776 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.io.impl.ResourceFactoryServiceImpl
+
+2021-06-01 16:59:24,785 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.marshalling.impl.MarshallerProviderImpl
+
+2021-06-01 16:59:24,788 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.concurrent.ExecutorProviderImpl
+
+2021-06-01 16:59:24,790 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-compiler/7.17.0.Final/drools-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:59:24,808 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.kie.builder.impl.KieServicesImpl
+
+2021-06-01 16:59:24,838 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.builder.impl.KnowledgeBuilderFactoryServiceImpl
+
+2021-06-01 16:59:24,840 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/kie/kie-internal/7.17.0.Final/kie-internal-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:59:24,845 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieAssemblersImpl
+
+2021-06-01 16:59:24,852 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieRuntimesImpl
+
+2021-06-01 16:59:24,856 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieWeaversImpl
+
+2021-06-01 16:59:24,860 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieBeliefsImpl
+
+2021-06-01 16:59:24,862 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/jbpm/jbpm-flow/7.17.0.Final/jbpm-flow-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:59:24,871 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.marshalling.impl.ProcessMarshallerFactoryServiceImpl
+
+2021-06-01 16:59:24,883 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.process.instance.ProcessRuntimeFactoryServiceImpl
+
+2021-06-01 16:59:24,885 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/kie/kie-dmn-core/7.17.0.Final/kie-dmn-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:59:24,897 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.assembler.DMNAssemblerService
+
+2021-06-01 16:59:24,904 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.runtime.DMNRuntimeService
+
+2021-06-01 16:59:24,908 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.weaver.DMNWeaverService
+
+2021-06-01 16:59:24,910 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-model-compiler/7.17.0.Final/drools-model-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:59:24,920 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.modelcompiler.CanonicalKieModuleProvider
+
+2021-06-01 16:59:24,921 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-decisiontables/7.17.0.Final/drools-decisiontables-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 16:59:24,926 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.decisiontable.DecisionTableProviderImpl
+
+2021-06-01 16:59:24,969 INFO org.drools.compiler.kie.builder.impl.KieRepositoryImpl [main] Adding KieModule from classpath: file:/C:/Users/evaje/.m2/repository/bsep/tim4/drools-spring-kjar/0.0.1-SNAPSHOT/drools-spring-kjar-0.0.1-SNAPSHOT.jar
+2021-06-01 16:59:30,098 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'clientInboundChannelExecutor'
+2021-06-01 16:59:30,124 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'clientOutboundChannelExecutor'
+2021-06-01 16:59:30,147 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'brokerChannelExecutor'
+2021-06-01 16:59:30,230 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService
+2021-06-01 16:59:30,231 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskExecutor'
+2021-06-01 16:59:30,771 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@47858d7c, org.springframework.security.web.context.SecurityContextPersistenceFilter@563bf9d2, org.springframework.security.web.header.HeaderWriterFilter@30407f28, org.springframework.web.filter.CorsFilter@5a5cd0af, org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter@4cadd4d4, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter@355493bf, org.springframework.security.web.authentication.logout.LogoutFilter@71d3dfd5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7e0fc5d0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@648639f1, org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter@396f2724, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticatedActionsFilter@1b465fa9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@16cc5e51, org.springframework.security.web.session.SessionManagementFilter@367a245e, org.springframework.security.web.access.ExceptionTranslationFilter@21c7415e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@20c7a91d]
+2021-06-01 16:59:30,872 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'messageBrokerTaskScheduler'
+2021-06-01 16:59:32,555 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["https-jsse-nio-8081"]
+2021-06-01 16:59:33,138 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (https) with context path ''
+2021-06-01 16:59:33,142 INFO org.springframework.core.log.CompositeLog [main] Starting...
+2021-06-01 16:59:33,146 INFO org.springframework.core.log.CompositeLog [main] BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@40c4b938]]
+2021-06-01 16:59:33,147 INFO org.springframework.core.log.CompositeLog [main] Started.
+2021-06-01 16:59:33,186 INFO org.springframework.boot.StartupInfoLogger [main] Started HospitalAppApplication in 32.825 seconds (JVM running for 36.781)
+2021-06-01 17:00:18,263 WARN com.zaxxer.hikari.pool.HikariPool$HouseKeeper [HikariPool-1 housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=59s822ms951µs700ns).
+2021-06-01 17:00:35,491 INFO org.springframework.web.socket.config.WebSocketMessageBrokerStats [MessageBroker-1] WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2021-06-01 17:01:14,826 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.1.7.Final
+2021-06-01 17:01:14,916 INFO org.springframework.boot.StartupInfoLogger [main] Starting HospitalAppApplication using Java 1.8.0_191 on DESKTOP-TLS5H9V with PID 13012 (C:\Users\evaje\OneDrive\Desktop\Skola\8_Semestar\Bezbednost u sistemima elektronskog poslovanja\projekat\BSEP_T4\hospitalApp\target\classes started by evaje in C:\Users\evaje\OneDrive\Desktop\Skola\8_Semestar\Bezbednost u sistemima elektronskog poslovanja\projekat\BSEP_T4\hospitalApp)
+2021-06-01 17:01:14,918 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-06-01 17:01:17,452 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-06-01 17:01:17,476 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-06-01 17:01:17,571 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientAlarmRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-01 17:01:17,578 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-01 17:01:17,583 INFO org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport [main] Spring Data JPA - Could not safely identify store assignment for repository candidate interface bsep.tim4.hospitalApp.repository.PatientStatusRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-01 17:01:17,589 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 87 ms. Found 0 JPA repository interfaces.
+2021-06-01 17:01:17,657 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-06-01 17:01:17,658 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-06-01 17:01:17,782 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 122 ms. Found 3 MongoDB repository interfaces.
+2021-06-01 17:01:20,357 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (https)
+2021-06-01 17:01:20,378 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2021-06-01 17:01:20,380 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2021-06-01 17:01:20,382 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.44]
+2021-06-01 17:01:20,723 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2021-06-01 17:01:20,725 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 5626 ms
+2021-06-01 17:01:20,972 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-06-01 17:01:21,329 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-06-01 17:01:21,508 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.29.Final
+2021-06-01 17:01:21,964 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-06-01 17:01:22,337 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2021-06-01 17:01:22,626 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2021-06-01 17:01:22,685 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2021-06-01 17:01:23,775 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-06-01 17:01:23,800 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-06-01 17:01:26,300 INFO com.mongodb.diagnostics.logging.SLF4JLogger [main] Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-06-01 17:01:26,536 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-rtt-ClusterId{value='60b64bc62f00473e35bf25ee', description='null'}-localhost:27017] Opened connection [connectionId{localValue:2, serverValue:120}] to localhost:27017
+2021-06-01 17:01:26,539 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b64bc62f00473e35bf25ee', description='null'}-localhost:27017] Opened connection [connectionId{localValue:1, serverValue:121}] to localhost:27017
+2021-06-01 17:01:26,552 INFO com.mongodb.diagnostics.logging.SLF4JLogger [cluster-ClusterId{value='60b64bc62f00473e35bf25ee', description='null'}-localhost:27017] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=9, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=71476200}
+2021-06-01 17:01:27,459 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/kie/kie-ci/7.17.0.Final/kie-ci-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 17:01:27,476 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.KieScannerFactoryServiceImpl
+
+2021-06-01 17:01:27,484 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.scanner.MavenClassLoaderResolver
+
+2021-06-01 17:01:27,491 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-core/7.17.0.Final/drools-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 17:01:27,496 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.io.impl.ResourceFactoryServiceImpl
+
+2021-06-01 17:01:27,528 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.marshalling.impl.MarshallerProviderImpl
+
+2021-06-01 17:01:27,531 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.core.concurrent.ExecutorProviderImpl
+
+2021-06-01 17:01:27,533 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-compiler/7.17.0.Final/drools-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 17:01:27,547 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.kie.builder.impl.KieServicesImpl
+
+2021-06-01 17:01:27,562 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.compiler.builder.impl.KnowledgeBuilderFactoryServiceImpl
+
+2021-06-01 17:01:27,564 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/kie/kie-internal/7.17.0.Final/kie-internal-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 17:01:27,569 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieAssemblersImpl
+
+2021-06-01 17:01:27,573 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieRuntimesImpl
+
+2021-06-01 17:01:27,576 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieWeaversImpl
+
+2021-06-01 17:01:27,579 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.kie.internal.services.KieBeliefsImpl
+
+2021-06-01 17:01:27,581 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/jbpm/jbpm-flow/7.17.0.Final/jbpm-flow-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 17:01:27,585 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.marshalling.impl.ProcessMarshallerFactoryServiceImpl
+
+2021-06-01 17:01:27,593 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.jbpm.process.instance.ProcessRuntimeFactoryServiceImpl
+
+2021-06-01 17:01:27,595 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/kie/kie-dmn-core/7.17.0.Final/kie-dmn-core-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 17:01:27,605 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.assembler.DMNAssemblerService
+
+2021-06-01 17:01:27,609 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.runtime.DMNRuntimeService
+
+2021-06-01 17:01:27,612 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service +org.kie.dmn.core.weaver.DMNWeaverService
+
+2021-06-01 17:01:27,614 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-model-compiler/7.17.0.Final/drools-model-compiler-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 17:01:27,631 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.modelcompiler.CanonicalKieModuleProvider
+
+2021-06-01 17:01:27,634 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Loading kie.conf from  jar:file:/C:/Users/evaje/.m2/repository/org/drools/drools-decisiontables/7.17.0.Final/drools-decisiontables-7.17.0.Final.jar!/META-INF/kie.conf in classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2021-06-01 17:01:27,638 INFO org.kie.api.internal.utils.ServiceDiscoveryImpl [main] Adding Service org.drools.decisiontable.DecisionTableProviderImpl
+
+2021-06-01 17:01:27,664 INFO org.drools.compiler.kie.builder.impl.KieRepositoryImpl [main] Adding KieModule from classpath: file:/C:/Users/evaje/.m2/repository/bsep/tim4/drools-spring-kjar/0.0.1-SNAPSHOT/drools-spring-kjar-0.0.1-SNAPSHOT.jar
+2021-06-01 17:01:31,865 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'clientInboundChannelExecutor'
+2021-06-01 17:01:31,893 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'clientOutboundChannelExecutor'
+2021-06-01 17:01:31,903 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'brokerChannelExecutor'
+2021-06-01 17:01:31,980 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService
+2021-06-01 17:01:31,981 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskExecutor'
+2021-06-01 17:01:32,390 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@578c99ac, org.springframework.security.web.context.SecurityContextPersistenceFilter@748aa7dc, org.springframework.security.web.header.HeaderWriterFilter@68cb8e52, org.springframework.web.filter.CorsFilter@6ca30886, org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter@7d0cd23c, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter@4270b142, org.springframework.security.web.authentication.logout.LogoutFilter@7298c2d9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@c4455b4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6d658aa8, org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter@4837f97e, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticatedActionsFilter@53314f76, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7bf16972, org.springframework.security.web.session.SessionManagementFilter@74f92d14, org.springframework.security.web.access.ExceptionTranslationFilter@7e36d508, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5b407336]
+2021-06-01 17:01:32,453 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'messageBrokerTaskScheduler'
+2021-06-01 17:01:33,508 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["https-jsse-nio-8081"]
+2021-06-01 17:01:33,979 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (https) with context path ''
+2021-06-01 17:01:33,981 INFO org.springframework.core.log.CompositeLog [main] Starting...
+2021-06-01 17:01:33,987 INFO org.springframework.core.log.CompositeLog [main] BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@d863bb]]
+2021-06-01 17:01:33,988 INFO org.springframework.core.log.CompositeLog [main] Started.
+2021-06-01 17:01:34,013 INFO org.springframework.boot.StartupInfoLogger [main] Started HospitalAppApplication in 21.825 seconds (JVM running for 24.042)

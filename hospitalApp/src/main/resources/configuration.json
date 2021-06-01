@@ -1,0 +1,9 @@
+{
+  "logConfigList": [
+    {
+      "path": "C:\\Users\\evaje\\OneDrive\\Desktop\\Skola\\8_Semestar\\Bezbednost u sistemima elektronskog poslovanja\\projekat\\BSEP_T4\\hospitalApp\\logs",
+      "readInterval": 3,
+      "filter": ""
+    }
+  ]
+}
