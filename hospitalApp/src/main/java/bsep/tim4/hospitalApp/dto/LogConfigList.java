@@ -14,4 +14,13 @@ import java.util.List;
 public class LogConfigList {
 
     List<LogConfig> logConfigList;
+
+    public boolean containsFolder(String folderPath) {
+        for (LogConfig logConfig : logConfigList) {
+            if (logConfig.getPath().equals(folderPath)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

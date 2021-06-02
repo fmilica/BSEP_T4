@@ -13,8 +13,6 @@ public class HospitalAppApplication {
 
 	public static void main(String[] args) throws InterruptedException {
 		ConfigurableApplicationContext ctx = SpringApplication.run(HospitalAppApplication.class, args);
-		//Thread.sleep(60000);
-		//ctx.close();
 	}
 
 	@Bean

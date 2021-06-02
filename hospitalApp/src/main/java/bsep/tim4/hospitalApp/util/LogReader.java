@@ -18,6 +18,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LogReader implements Runnable {
 
@@ -35,7 +37,7 @@ public class LogReader implements Runnable {
     }
 
     @Override
-    public void run() /*throws IOException, InterruptedException*/ {
+    public void run() {
         try {
             WatchService watchService = FileSystems.getDefault().newWatchService();
             Path path = Paths.get(logConfig.getPath());
@@ -75,8 +77,8 @@ public class LogReader implements Runnable {
 
         String line;
         while ((line = raf.readLine()) != null) {
-            if (line.contains(logConfig.getFilter())) {
-                Log log = parseLog(line);
+            Log log = parseLog(line);
+            if (log != null) {
                 logs.add(log);
             }
         }
@@ -84,10 +86,19 @@ public class LogReader implements Runnable {
         logConfig.setLogFilePointer(fileName, endPos);
         raf.close();
 
-        logRepository.saveAll(logs);
+        // OVDE
+        //logRepository.saveAll(logs);
     }
 
     private Log parseLog(String logLine) throws JsonProcessingException {
+        // provera da li odgovara filteru
+        if (logConfig.getFilter() != null) {
+            Pattern pattern = Pattern.compile(logConfig.getFilter());
+            Matcher matcher = pattern.matcher(logLine);
+            if (!matcher.find()) {
+                return null;
+            }
+        }
         ObjectMapper om = new ObjectMapper();
         JsonNode logTree = om.readTree(logLine);
         String timestampString;
