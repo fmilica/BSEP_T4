@@ -30,6 +30,19 @@ public class Log {
     private String type;
     private String ipAddress;
     private String error;
-    private int status_code;
+    private String statusCode;
     private boolean processed;
+
+    public Log(Date timestamp, LogLevel level, String message, String source, String type, String ipAddress,
+               String error, String statusCode) {
+        this.timestamp = timestamp;
+        this.level = level;
+        this.message = message;
+        this.source = source;
+        this.type = type;
+        this.ipAddress = ipAddress;
+        this.error = error;
+        this.statusCode = statusCode;
+        this.processed = false;
+    }
 }
