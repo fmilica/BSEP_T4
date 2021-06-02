@@ -2,7 +2,6 @@ package bsep.tim4.hospitalApp.service;
 
 import bsep.tim4.hospitalApp.dto.LogConfig;
 import bsep.tim4.hospitalApp.dto.LogConfigList;
-import bsep.tim4.hospitalApp.exceptions.ExistingConfigurationFolderException;
 import bsep.tim4.hospitalApp.repository.LogRepository;
 import bsep.tim4.hospitalApp.util.LogReader;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -52,17 +51,20 @@ public class LogReaderService {
         }
     }
 
-    public void addConfiguration(LogConfig logConfig) throws IOException, ExistingConfigurationFolderException {
-        // check if folder exists
-        checkFolderPath(logConfig.getPath());
-        // check if folder is already in configuration
-        if (logConfigList.containsFolder(logConfig.getPath())) {
-            throw new ExistingConfigurationFolderException(logConfig.getPath());
-        };
-        logConfigList.getLogConfigList().add(logConfig);
-        LogReader reader = new LogReader(logRepository, logConfig);
-        taskExecutor.execute(reader);
-        readers.add(reader);
+    public void handleConfiguration(List<LogConfig> newLogConfigs) throws IOException {
+        for (LogConfig logConfig : newLogConfigs) {
+            // check if folder exists
+            checkFolderPath(logConfig.getPath());
+            // check if folder is already in configuration
+            if (logConfigList.containsFolder(logConfig.getPath())) {
+                newLogConfigs.remove(logConfig);
+            };
+            // create new thread for processing new folders
+            LogReader reader = new LogReader(logRepository, logConfig);
+            taskExecutor.execute(reader);
+            readers.add(reader);
+        }
+        logConfigList.getLogConfigList().addAll(newLogConfigs);
     }
 
     @PreDestroy
