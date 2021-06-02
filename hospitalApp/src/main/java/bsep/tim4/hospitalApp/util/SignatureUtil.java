@@ -25,31 +25,19 @@ import java.util.Collection;
 public class SignatureUtil {
     // CMS = Cryptographic Message Syntax
 
-    public static byte[] encryptMessage(String message, SecretKey symKey) {
-        try {
-            Cipher aesCipher = Cipher.getInstance("AES");
-            aesCipher.init(Cipher.ENCRYPT_MODE, symKey);
-            byte[] encryptedMessage = aesCipher.doFinal(message.getBytes());
-
-            return encryptedMessage;
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | BadPaddingException |
-                IllegalBlockSizeException | InvalidKeyException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static byte[] encryptMessage(String message, SecretKey symKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.ENCRYPT_MODE, symKey);
+        byte[] encryptedMessage = aesCipher.doFinal(message.getBytes());
+        return encryptedMessage;
     }
 
-    public static String decryptMessage(byte[] encryptedMessage, SecretKey symKey) {
-        try {
-            Cipher aesCipher = Cipher.getInstance("AES");
-            aesCipher.init(Cipher.DECRYPT_MODE, symKey);
-            byte[] bytePlainText = aesCipher.doFinal(encryptedMessage);
-            String message = new String(bytePlainText);
-            return message;
-        } catch(NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static String decryptMessage(byte[] encryptedMessage, SecretKey symKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.DECRYPT_MODE, symKey);
+        byte[] bytePlainText = aesCipher.doFinal(encryptedMessage);
+        String message = new String(bytePlainText);
+        return message;
     }
 
     public static int checkTrustedCertificate(byte[] signedMessage, String trustStore, String trustStorePass)

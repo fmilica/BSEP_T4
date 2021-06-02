@@ -4,12 +4,20 @@
             <img style="vertical-align:middle" src="../../../assets/images/hospital.png" width=43 height=43 alt="">
             <span style="vertical-align:middle;">Vitals Hospital</span>
         </div>
-        <mat-nav-list>
+        <mat-nav-list *ngIf="role==='ADMIN'">
             <a mat-list-item [routerLink]="'csr'" routerLinkActive="active-link">
                 Certificate Signing Request
             </a>
             <a mat-list-item [routerLink]="'log'" routerLinkActive="active-link">
                 Logs
+            </a>
+        </mat-nav-list>
+        <mat-nav-list *ngIf="role==='DOCTOR'">
+            <a mat-list-item [routerLink]="'patients'" routerLinkActive="active-link">
+                Patients
+            </a>
+            <a mat-list-item [routerLink]="'patient-statuses'" routerLinkActive="active-link">
+                Patient statuses
             </a>
         </mat-nav-list>
     </mat-drawer>

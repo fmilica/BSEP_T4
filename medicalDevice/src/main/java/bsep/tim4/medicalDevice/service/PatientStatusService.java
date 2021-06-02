@@ -6,12 +6,13 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class PatientStatusService {
 
-    private List<String> patientIds = Arrays.asList("60ae697db04b8d0648494432");
+    private List<String> patientIds = Arrays.asList("60b758455babfb672608e6b8");
     private final DecimalFormat df = new DecimalFormat("#.##");
 
     public PatientStatus generatePatientStatus() {
@@ -45,7 +46,7 @@ public class PatientStatusService {
         int respiratoryRate = (int)Math.floor(Math.random()*(18-12+1)+12);
         int index = (int)Math.floor(Math.random()*(patientIds.size()));
         String patientId = patientIds.get(index);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Date timestamp = new Date();
 
         PatientStatus patientStatus = new PatientStatus(heartRate, lowerBloodPressure, upperBloodPressure, bodyTemperature,
                 respiratoryRate, patientId, timestamp);
@@ -61,7 +62,7 @@ public class PatientStatusService {
         int respiratoryRate = generateRespiratoryRate();
         int index = (int)Math.floor(Math.random()*(patientIds.size()));
         String patientId = patientIds.get(index);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Date timestamp = new Date();
 
         PatientStatus patientStatus = new PatientStatus(heartRate, lowerBloodPressure, upperBloodPressure, bodyTemperature,
                 respiratoryRate, patientId, timestamp);
@@ -159,7 +160,7 @@ public class PatientStatusService {
         int respiratoryRate = (int)Math.floor(Math.random()*(5-3)+3);
         int index = (int)Math.floor(Math.random()*(patientIds.size()));
         String patientId = patientIds.get(index);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Date timestamp = new Date();
 
         PatientStatus patientStatus = new PatientStatus(heartRate, lowerBloodPressure, upperBloodPressure, bodyTemperature,
                 respiratoryRate, patientId, timestamp);
@@ -176,7 +177,7 @@ public class PatientStatusService {
         int respiratoryRate = (int)Math.floor(Math.random()*(5-0+1)+0);
         int index = (int)Math.floor(Math.random()*(patientIds.size()));
         String patientId = patientIds.get(index);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Date timestamp = new Date();
 
         PatientStatus patientStatus = new PatientStatus(heartRate, lowerBloodPressure, upperBloodPressure, bodyTemperature,
                 respiratoryRate, patientId, timestamp);
@@ -193,7 +194,7 @@ public class PatientStatusService {
         int respiratoryRate = (int)Math.floor(Math.random()*(60-20+1)+20);
         int index = (int)Math.floor(Math.random()*(patientIds.size()));
         String patientId = patientIds.get(index);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Date timestamp = new Date();
 
         PatientStatus patientStatus = new PatientStatus(heartRate, lowerBloodPressure, upperBloodPressure, bodyTemperature,
                 respiratoryRate, patientId, timestamp);

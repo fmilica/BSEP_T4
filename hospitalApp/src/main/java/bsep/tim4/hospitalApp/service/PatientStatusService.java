@@ -1,19 +1,30 @@
 package bsep.tim4.hospitalApp.service;
 
+import bsep.tim4.hospitalApp.dto.PatientStatusDto;
 import bsep.tim4.hospitalApp.exceptions.NonExistentIdException;
+import bsep.tim4.hospitalApp.model.Patient;
 import bsep.tim4.hospitalApp.model.PatientAlarm;
 import bsep.tim4.hospitalApp.model.PatientEncrypted;
 import bsep.tim4.hospitalApp.model.PatientStatus;
 import bsep.tim4.hospitalApp.repository.PatientAlarmRepository;
 import bsep.tim4.hospitalApp.repository.PatientRepository;
 import bsep.tim4.hospitalApp.repository.PatientStatusRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.QueryResults;
 import org.kie.api.runtime.rule.QueryResultsRow;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +39,9 @@ public class PatientStatusService {
 
     @Autowired
     private PatientAlarmRepository patientAlarmRepository;
+
+    @Autowired
+    private PatientService patientService;
 
     @Autowired
     private KieSessionService kieSessionService;
@@ -63,8 +77,15 @@ public class PatientStatusService {
         return patientStatus;
     }
 
-    public List<PatientStatus> findAll() {
-        return patientStatusRepository.findAll();
+    public Page<PatientStatusDto> findAll(Pageable pageable) throws JsonProcessingException, NonExistentIdException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
+        Page<PatientStatus> page = patientStatusRepository.findAllByOrderByTimestampDesc(pageable);
+        List<PatientStatusDto> patientStatusDtos = new ArrayList<>();
+        for(PatientStatus patientStatus : page.toList()) {
+            Patient patient = patientService.findById(patientStatus.getPatientId());
+            patientStatusDtos.add(new PatientStatusDto(patient.getName(), patientStatus.getHeartRate(), patientStatus.getLowerBloodPressure() + "/" +
+                    patientStatus.getUpperBloodPressure(), patientStatus.getBodyTemperature(), patientStatus.getRespiratoryRate(), patientStatus.getTimestamp()));
+        }
+        return new PageImpl<>(patientStatusDtos, page.getPageable(), page.getTotalElements());
     }
 
     public List<PatientStatus> findAllByPatientId(String patientId) throws NonExistentIdException {

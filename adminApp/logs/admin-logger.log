@@ -1,28 +1,37 @@
-2021-05-31 09:54:02,253 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.1.7.Final
-2021-05-31 09:54:02,340 INFO org.springframework.boot.StartupInfoLogger [main] Starting AdminAppApplication using Java 1.8.0_191 on DESKTOP-H71VBGP with PID 4216 (C:\Users\Ksenija\Desktop\BSEP_T4\adminApp\target\classes started by Ksenija in C:\Users\Ksenija\Desktop\BSEP_T4\adminApp)
-2021-05-31 09:54:02,362 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2021-05-31 09:54:04,132 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-05-31 09:54:04,280 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 127 ms. Found 4 JPA repository interfaces.
-2021-05-31 09:54:05,822 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8082 (https)
-2021-05-31 09:54:05,841 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["https-jsse-nio-8082"]
-2021-05-31 09:54:05,843 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2021-05-31 09:54:05,844 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.44]
-2021-05-31 09:54:06,061 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2021-05-31 09:54:06,064 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 3507 ms
-2021-05-31 09:54:06,218 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2021-05-31 09:54:06,434 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2021-05-31 09:54:06,550 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.29.Final
-2021-05-31 09:54:06,854 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2021-05-31 09:54:07,068 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2021-05-31 09:54:07,269 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2021-05-31 09:54:07,339 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2021-05-31 09:54:09,228 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2021-05-31 09:54:09,241 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2021-05-31 09:54:11,045 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@351ede23, org.springframework.security.web.context.SecurityContextPersistenceFilter@69c33ea2, org.springframework.security.web.header.HeaderWriterFilter@1be3f8f8, org.springframework.web.filter.CorsFilter@5604b85, org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter@44864536, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter@45d7495e, org.springframework.security.web.authentication.logout.LogoutFilter@40863800, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2e3900dc, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@241d1052, org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter@7996d0d4, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticatedActionsFilter@fcf9525, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5df7a065, org.springframework.security.web.session.SessionManagementFilter@2ceb68a1, org.springframework.security.web.access.ExceptionTranslationFilter@60a6840c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1f5d7fd5]
-2021-05-31 09:54:11,243 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
-2021-05-31 09:54:11,609 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["https-jsse-nio-8082"]
-2021-05-31 09:54:12,294 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8082 (https) with context path ''
-2021-05-31 09:54:12,308 INFO org.springframework.boot.StartupInfoLogger [main] Started AdminAppApplication in 11.735 seconds (JVM running for 12.944)
-2021-05-31 09:55:53,107 INFO org.apache.juli.logging.DirectJDKLog [https-jsse-nio-8082-exec-6] Initializing Spring DispatcherServlet 'dispatcherServlet'
-2021-05-31 09:55:53,108 INFO org.springframework.web.servlet.FrameworkServlet [https-jsse-nio-8082-exec-6] Initializing Servlet 'dispatcherServlet'
-2021-05-31 09:55:53,111 INFO org.springframework.web.servlet.FrameworkServlet [https-jsse-nio-8082-exec-6] Completed initialization in 2 ms
+2021-06-02 12:07:33,155 INFO org.springframework.boot.StartupInfoLogger [main] Starting AdminAppApplication using Java 1.8.0_191 on DESKTOP-H71VBGP with PID 2960 (C:\Users\Ksenija\Desktop\BSEP_T4\adminApp\target\classes started by Ksenija in C:\Users\Ksenija\Desktop\BSEP_T4\adminApp)
+2021-06-02 12:07:33,186 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.1.7.Final
+2021-06-02 12:07:33,251 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-06-02 12:07:38,146 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-06-02 12:07:38,828 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 654 ms. Found 4 JPA repository interfaces.
+2021-06-02 12:07:47,541 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8082 (https)
+2021-06-02 12:07:47,596 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["https-jsse-nio-8082"]
+2021-06-02 12:07:47,597 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2021-06-02 12:07:47,598 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.44]
+2021-06-02 12:07:48,465 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2021-06-02 12:07:48,467 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 14867 ms
+2021-06-02 12:07:49,400 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-06-02 12:07:50,059 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-06-02 12:07:50,343 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.29.Final
+2021-06-02 12:07:51,043 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-06-02 12:07:51,560 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2021-06-02 12:07:51,985 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2021-06-02 12:07:52,214 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2021-06-02 12:07:57,572 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-06-02 12:07:57,605 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-06-02 12:08:11,672 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3b2db389, org.springframework.security.web.context.SecurityContextPersistenceFilter@6ae42248, org.springframework.security.web.header.HeaderWriterFilter@50672905, org.springframework.web.filter.CorsFilter@45f1413c, org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter@38c10190, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter@3212d853, org.springframework.security.web.authentication.logout.LogoutFilter@3e4f2300, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@cf984d9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@341ccfd1, org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter@6e93b0e7, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticatedActionsFilter@5eeee124, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1a139347, org.springframework.security.web.session.SessionManagementFilter@58f290bc, org.springframework.security.web.access.ExceptionTranslationFilter@11015ca0, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@50785f86]
+2021-06-02 12:08:12,038 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2021-06-02 12:08:12,880 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["https-jsse-nio-8082"]
+2021-06-02 12:08:13,968 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8082 (https) with context path ''
+2021-06-02 12:08:13,987 INFO org.springframework.boot.StartupInfoLogger [main] Started AdminAppApplication in 43.53 seconds (JVM running for 46.014)
+2021-06-02 12:15:14,863 INFO org.apache.juli.logging.DirectJDKLog [https-jsse-nio-8082-exec-5] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-06-02 12:15:14,865 INFO org.springframework.web.servlet.FrameworkServlet [https-jsse-nio-8082-exec-5] Initializing Servlet 'dispatcherServlet'
+2021-06-02 12:15:14,868 INFO org.springframework.web.servlet.FrameworkServlet [https-jsse-nio-8082-exec-5] Completed initialization in 2 ms
+2021-06-02 12:15:15,437 INFO bsep.tim4.adminApp.pki.controller.CertificateController [https-jsse-nio-8082-exec-5] Hospital called method validateCertificate with status code 200 OK: valid certificate
+2021-06-02 12:15:16,878 INFO bsep.tim4.adminApp.pki.controller.CertificateController [https-jsse-nio-8082-exec-6] Hospital called method validateCertificate with status code 200 OK: valid certificate
+2021-06-02 12:16:41,618 INFO bsep.tim4.adminApp.pki.controller.CertificateController [https-jsse-nio-8082-exec-3] Hospital called method validateCertificate with status code 200 OK: valid certificate
+2021-06-02 12:16:44,787 INFO bsep.tim4.adminApp.pki.controller.CertificateController [https-jsse-nio-8082-exec-4] Hospital called method validateCertificate with status code 200 OK: valid certificate
+2021-06-02 12:22:34,196 INFO bsep.tim4.adminApp.pki.controller.CertificateController [https-jsse-nio-8082-exec-2] Hospital called method validateCertificate with status code 200 OK: valid certificate
+2021-06-02 12:22:36,693 INFO bsep.tim4.adminApp.pki.controller.CertificateController [https-jsse-nio-8082-exec-3] Hospital called method validateCertificate with status code 200 OK: valid certificate
+2021-06-02 12:22:38,072 INFO bsep.tim4.adminApp.pki.controller.CertificateController [https-jsse-nio-8082-exec-4] Hospital called method validateCertificate with status code 200 OK: valid certificate
+2021-06-02 16:17:39,461 WARN com.zaxxer.hikari.pool.HikariPool$HouseKeeper [HikariPool-1 housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h41m15s783ms215µs300ns).
+2021-06-02 17:50:28,324 INFO org.keycloak.adapters.KeycloakDeployment [https-jsse-nio-8082-exec-10] Loaded URLs from https://localhost:8443/auth/realms/BSEPT4/.well-known/openid-configuration

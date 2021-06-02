@@ -47,24 +47,20 @@ public class CsrService {
         return csr;
     }
 
-    public void saveCsr(String csr) {
+    public void saveCsr(String csr) throws NoSuchAlgorithmException, InvalidKeyException, MessagingException, IOException {
         JcaPKCS10CertificationRequest certificationRequest = readCsr(csr);
 
-        try {
-            PublicKey publicKey = certificationRequest.getPublicKey();
-            X500Name x500Name = certificationRequest.getSubject();
 
-            CSR csrEntity = new CSR(publicKey, x500Name);
+        PublicKey publicKey = certificationRequest.getPublicKey();
+        X500Name x500Name = certificationRequest.getSubject();
 
-            //sacuva csr u bazu
-            CSR certificateRequest = csrRepository.save(csrEntity);
+        CSR csrEntity = new CSR(publicKey, x500Name);
 
-            //slanje konfirmacionog linka na tu email adresu
-            csrSenderService.sendVerificationLink(certificateRequest);
+        //sacuva csr u bazu
+        CSR certificateRequest = csrRepository.save(csrEntity);
 
-        } catch (NoSuchAlgorithmException | InvalidKeyException | MessagingException e) {
-            e.printStackTrace();
-        }
+        //slanje konfirmacionog linka na tu email adresu
+        csrSenderService.sendVerificationLink(certificateRequest);
     }
 
     public void acceptCsr(Long id) throws NonExistentIdException {
@@ -91,18 +87,15 @@ public class CsrService {
         csrSenderService.sendCsrDeclined(csr);
     }
 
-    public JcaPKCS10CertificationRequest readCsr(String csrString) {
+    public JcaPKCS10CertificationRequest readCsr(String csrString) throws IOException {
 
         PEMParser pemParser = null;
-        try {
-            pemParser = new PEMParser(new StringReader(csrString));
-            Object parsedObj = pemParser.readObject();
-            JcaPKCS10CertificationRequest jcaPKCS10CertificationRequest = new JcaPKCS10CertificationRequest((PKCS10CertificationRequest)parsedObj);
-            return jcaPKCS10CertificationRequest;
-        } catch (IOException | ClassCastException e) {
-            e.printStackTrace();
-            return null;
-        }
+
+        pemParser = new PEMParser(new StringReader(csrString));
+        Object parsedObj = pemParser.readObject();
+        JcaPKCS10CertificationRequest jcaPKCS10CertificationRequest = new JcaPKCS10CertificationRequest((PKCS10CertificationRequest)parsedObj);
+        return jcaPKCS10CertificationRequest;
+
     }
 
     public void verifyCsr(String token) {
@@ -113,11 +106,6 @@ public class CsrService {
         }
 
         CSR certificateRequest = verificationLink.getCertificateRequest();
-
-        //TODO uvesti expiration date za verification links
-        /*if (verificationToken.isExpired()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Verification token has expired! Please register again");
-        }*/
 
         certificateRequest.setVerified(true);
         certificateRequest.setStatus(CsrStatus.PENDING);
