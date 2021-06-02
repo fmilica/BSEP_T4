@@ -27,6 +27,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { LogsComponent } from './components/logs/logs.component';
 import { PatientComponent } from './components/patient/patient.component';
@@ -66,6 +67,7 @@ import { PatientStatusComponent } from './components/patient-status/patient-stat
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressBarModule,
+    MatPaginatorModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
       timeOut: 2500,

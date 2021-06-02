@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -10,6 +11,9 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class HomepageComponent implements OnInit {
 
+  role = '';
+  subscription!: Subscription;
+
   constructor(
     private authenticationService: AuthenticationService,
     private toastr: ToastrService,
@@ -17,6 +21,8 @@ export class HomepageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.role = this.authenticationService.getLoggedInUserRole()
+    console.log(this.role)
   }
 
   logout(): void {

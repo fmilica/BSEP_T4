@@ -12,6 +12,9 @@ import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.drools.template.ObjectDataCompiler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.BadPaddingException;
@@ -56,13 +59,13 @@ public class PatientService {
         return decryptPatient(patientEncrypted);
     }
 
-    public List<Patient> findAll() throws JsonProcessingException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException {
+    public Page<Patient> findAll(Pageable pageable) throws JsonProcessingException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException {
         List<Patient> patients = new ArrayList<>();
-        List<PatientEncrypted> encryptedPatients = patientRepository.findAll();
-        for (PatientEncrypted pe: encryptedPatients) {
+        Page<PatientEncrypted> page = patientRepository.findAll(pageable);
+        for (PatientEncrypted pe: page.toList()) {
             patients.add(decryptPatient(pe));
         }
-        return patients;
+        return new PageImpl<>(patients, page.getPageable(), page.getTotalElements());
     }
 
     public PatientEncrypted save(Patient patient) throws JsonProcessingException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
@@ -99,7 +102,7 @@ public class PatientService {
         kieSessionService.updateRulesJar();
     }
 
-    private Patient decryptPatient(PatientEncrypted patientEncrypted) throws JsonProcessingException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
+     Patient decryptPatient(PatientEncrypted patientEncrypted) throws JsonProcessingException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
         SecretKey symKey = (SecretKey) keyStoreService.getSymKey();
         String patientJson = SignatureUtil.decryptMessage(patientEncrypted.getPersonalInfo(), symKey);
 

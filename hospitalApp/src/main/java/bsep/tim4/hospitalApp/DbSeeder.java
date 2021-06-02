@@ -26,14 +26,14 @@ public class DbSeeder implements CommandLineRunner {
     public void run(String... strings) throws Exception {
 
         //drop all patient statuses
-        this.patientStatusRepository.deleteAll();
-        this.patientRepository.deleteAll();
+        //this.patientStatusRepository.deleteAll();
+        //this.patientRepository.deleteAll();
 
-        Date dateOfBirth = new Date();
+        //Date dateOfBirth = new Date();
 
-        Patient patient = new Patient("Petar Petrovic", dateOfBirth, "Novi Sad", "Bulimican");
+        //Patient patient = new Patient("Petar Petrovic", dateOfBirth, "Novi Sad", "Bulimican");
 
-        patientService.save(patient);
+        //patientService.save(patient);
 
     }
 }

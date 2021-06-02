@@ -2,6 +2,7 @@ package bsep.tim4.medicalDevice.model;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class PatientStatus {
 
@@ -17,10 +18,10 @@ public class PatientStatus {
 
     private String patientId;
 
-    private Timestamp timestamp;
+    private Date timestamp;
 
     public PatientStatus(int heartRate, int lowerBloodPressure, int upperBloodPressure, double bodyTemperature,
-                         int respiratoryRate, String patientId, Timestamp timestamp) {
+                         int respiratoryRate, String patientId, Date timestamp) {
         this.heartRate = heartRate;
         this.lowerBloodPressure = lowerBloodPressure;
         this.upperBloodPressure = upperBloodPressure;
@@ -78,11 +79,11 @@ public class PatientStatus {
         this.patientId = patientId;
     }
 
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 }

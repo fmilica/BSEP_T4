@@ -1,9 +1,9 @@
  <mat-progress-bar class="progress-bar" mode="indeterminate" 
-    *ngIf="dataSource.length===0">
+    *ngIf="dataSource.content.length===0">
 </mat-progress-bar>
 <div class="ng-container row justify-content-md-center">
     <div class="col-md-11">
-        <table mat-table [dataSource]="dataSource" id="admin-table">
+        <table mat-table [dataSource]="dataSource.content" id="patient-table">
             <!-- No data row -->
             <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell" colspan="4">No existing patients.</td>
@@ -33,5 +33,14 @@
             </ng-container>
 
         </table>
+
+        <mat-paginator showFirstLastButtons
+            id="patients-paginator"
+            [length]="dataSource.totalElements" 
+            [pageSize]="dataSource.size" 
+            [pageSizeOptions]="[2,5,10]"
+            (page)="pageEvent = $event; onPaginateChange($event)"
+        >
+        </mat-paginator>
     </div>
 </div>

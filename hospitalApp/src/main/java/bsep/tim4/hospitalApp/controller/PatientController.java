@@ -1,6 +1,5 @@
 package bsep.tim4.hospitalApp.controller;
 
-import bsep.tim4.hospitalApp.dto.PatientDTO;
 import bsep.tim4.hospitalApp.dto.RuleDto;
 import bsep.tim4.hospitalApp.exceptions.NonExistentIdException;
 import bsep.tim4.hospitalApp.model.Patient;
@@ -19,6 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,6 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.security.cert.CertificateException;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value="api/patients")
@@ -139,11 +138,11 @@ public class PatientController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<List<PatientDTO>> findAllPatients(Principal principal) {
-        List<Patient> patients = null;
+    @GetMapping(value = "/by-page")
+    public ResponseEntity<Page<Patient>> findAllPatients(Principal principal, Pageable pageable) {
+        Page<Patient> patients = null;
         try {
-            patients = patientService.findAll();
+            patients = patientService.findAll(pageable);
         } catch (JsonProcessingException e) {
             logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "findById", HttpStatus.BAD_REQUEST, "json parse exception"));
@@ -154,38 +153,9 @@ public class PatientController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        List<PatientDTO> patientDTOS = new ArrayList<>();
-        for(Patient patient : patients) {
-            patientDTOS.add(new PatientDTO(patient.getId(), patient.getName()));
-        }
-
         logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "findAllPatients", HttpStatus.OK, "authorized"));
-        return new ResponseEntity<>(patientDTOS, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/patientsStatuses")
-    public ResponseEntity<List<PatientStatus>> findAllPatientStatuses(Principal principal){
-        List<PatientStatus> patientStatuses = patientStatusService.findAll();
-
-        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
-                principal.getName(), "findAllPatientStatuses", HttpStatus.OK, "authorized"));
-        return new ResponseEntity<>(patientStatuses, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/patientsStatuses/{patientId}")
-    public ResponseEntity<List<PatientStatus>> findAllPatientStatusesForPatient(Principal principal,
-                                                                                @PathVariable("patientId") String patientId){
-        try {
-            List<PatientStatus> patientStatuses = patientStatusService.findAllByPatientId(patientId);
-            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
-                    principal.getName(), "findAllPatientStatuses", HttpStatus.OK, "authorized"));
-            return new ResponseEntity<>(patientStatuses, HttpStatus.OK);
-        } catch (NonExistentIdException e) {
-            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
-                    principal.getName(), "findAllPatientStatusesForPatient", HttpStatus.NOT_FOUND, "non existent patient id"));
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(patients, HttpStatus.OK);
     }
 
     @PostMapping(value = "/create-rule")
