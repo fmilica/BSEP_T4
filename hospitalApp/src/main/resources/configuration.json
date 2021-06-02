@@ -7,11 +7,11 @@
       "hospital-logger-json.log" : 898308
     }
   }, {
-    "path" : "C:\\Users\\evaje\\Downloads\\Keycloak\\keycloak-12.0.4\\standalone\\log",
+    "path" : "C:\\\\Users\\\\evaje\\\\Downloads\\\\Keycloak\\\\keycloak-12.0.4\\\\standalone\\\\log",
     "readInterval" : 0,
     "filter" : null,
     "lastRead" : {
-      "server.log" : 76009
+      "server.log" : 78088
     }
   } ]
 }

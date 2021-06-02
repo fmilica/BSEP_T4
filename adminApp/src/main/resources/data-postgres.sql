@@ -8,3 +8,8 @@ insert into certificate_data (alias, common_name, email, parent_alias, revocatio
     values ('keycloak', 'localhost', 'micika4ever@gmail.com', 'adminroot', null, null, false, '2021-04-28 03:49:17', '2023-04-28 03:49:17');
 insert into certificate_data (alias, common_name, email, parent_alias, revocation_date, revocation_reason, revoked, valid_from, valid_to)
     values ('5-medicaldevice1-rootca', 'MedicalDevice1', 'evaj.evadesign@gmail.com', 'adminroot', null, null, false, '2021-05-03 11:19:04', '2022-05-03 11:19:04');
+-- bolnice
+insert into hospital (email, med_dev_num) values ('novosadska@bolnica.com', 1);
+insert into hospital (email, med_dev_num) values ('beogradska@bolnica.com', 0);
+-- simulatori
+insert into simulator (path) values ('C:\\Users\\evaje\\Downloads\\Keycloak\\keycloak-12.0.4\\standalone\\log');

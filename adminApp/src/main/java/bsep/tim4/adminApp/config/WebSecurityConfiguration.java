@@ -65,6 +65,8 @@ public class WebSecurityConfiguration extends KeycloakWebSecurityConfigurerAdapt
                 .antMatchers("/api/certificate/validate/*").permitAll()
                 .antMatchers("/api/certificate/download").permitAll()
                 .antMatchers("/api/certificate/download/*").permitAll()
+                .antMatchers("/api/hospital").permitAll()
+                .antMatchers("/api/hospital/add-simulator/*").permitAll()
                 .antMatchers("/api/csr/receive").hasAnyRole("ADMIN")
                 .antMatchers("/api/csr/receive/*").hasAnyRole("ADMIN")
                 .antMatchers("/api/certificates").hasAnyRole("SUPER_ADMIN")

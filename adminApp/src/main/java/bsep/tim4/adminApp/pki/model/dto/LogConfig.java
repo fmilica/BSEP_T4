@@ -1,11 +1,14 @@
 package bsep.tim4.adminApp.pki.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 @Getter
@@ -14,11 +17,12 @@ import java.util.Map;
 @AllArgsConstructor
 public class LogConfig {
 
-    @NotBlank(message = "Log folder path cannot be empty.")
-    String path;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotNull(message = "Simulator id cannot be empty.")
+    Long simulatorId;
 
     long readInterval;
     String filter;
-    Map<String, Long> lastRead;
 
+    String path;
 }

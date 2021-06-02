@@ -26,7 +26,7 @@ public class LogController {
 
     Logger logger = LoggerFactory.getLogger(LogController.class);
 
-    @PostMapping(value="/add-log-folder")
+    @PostMapping(value="/add-log-folder", consumes = "application/json")
     // SUPER_ADMIN
     public ResponseEntity<Void> configureLogFolders(/*Principal principal*/@RequestBody @Valid List<LogConfig> logConfigList) {
         try {
