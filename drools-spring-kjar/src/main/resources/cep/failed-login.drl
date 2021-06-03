@@ -8,6 +8,7 @@ import bsep.tim4.hospitalApp.model.LogAlarmType;
 import java.util.Date;
 
 rule "More than 5 login attempts in 1 minute from one username"
+    salience -1
     when
         $log1: Log(type == "LOGIN_ERROR", $source: source, processed == false)
         accumulate(
@@ -21,12 +22,11 @@ rule "More than 5 login attempts in 1 minute from one username"
         )
         eval($logs.size() >= 5)
     then
+        System.out.println("**************** LOGIN FAILED RULE ****************************");
         insert(new LogAlarm(new Date(), $source, LogAlarmType.FAILED_LOGIN, "Many login attempts"));
         modify($log1){setProcessed(true);};
-        for (Log log: $logs) {
+        for (Object obj: $logs) {
+            Log log = (Log) obj;
             modify(log){setProcessed(true);};
         }
 end
-
-
-

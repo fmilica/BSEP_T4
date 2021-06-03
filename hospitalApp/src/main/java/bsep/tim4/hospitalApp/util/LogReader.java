@@ -87,7 +87,7 @@ public class LogReader implements Runnable {
         raf.close();
 
         // OVDE
-        //logRepository.saveAll(logs);
+        logRepository.saveAll(logs);
     }
 
     private Log parseLog(String logLine) throws JsonProcessingException {

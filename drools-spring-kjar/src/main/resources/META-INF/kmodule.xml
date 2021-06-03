@@ -2,8 +2,12 @@
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule" 
 			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 			
-	<kbase  name="rules" packages="rules">
+	<kbase  name="rules" eventProcessingMode="stream" packages="rules">
 	     <ksession name="rulesSession"/>
+	</kbase>
+
+	<kbase name="cepKbase" eventProcessingMode="stream" packages="cep">
+		<ksession name="cepSession"/>
 	</kbase>
 
 </kmodule>
