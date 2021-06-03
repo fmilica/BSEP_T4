@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class PatientStatusService {
 
-    private List<String> patientIds = Arrays.asList("60b758455babfb672608e6b8");
+    private List<String> patientIds = Arrays.asList("60b6325af92d7b35a69ab4f2");
     private final DecimalFormat df = new DecimalFormat("#.##");
 
     public PatientStatus generatePatientStatus() {

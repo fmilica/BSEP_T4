@@ -5,8 +5,10 @@ import bsep.tim4.hospitalApp.model.PatientAlarm;
 import java.util.Date;
 
 rule "High blood pressure alarm"
+    salience 1
 	when
-		$ps: PatientStatus(lowerBloodPressure > 80, upperBloodPressure > 130)
+		$ps: PatientStatus(lowerBloodPressure > 80, upperBloodPressure > 130, $patientStatusId: id)
+		not (PatientAlarm(patientStatusId == $patientStatusId))
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Date(),
 		"High blood pressure alarm: " + $ps.getLowerBloodPressure() + "/" + $ps.getUpperBloodPressure()));
@@ -14,8 +16,10 @@ rule "High blood pressure alarm"
 end
 
 rule "Low blood pressure alarm"
+    salience 1
 	when
-		$ps: PatientStatus(lowerBloodPressure < 60, upperBloodPressure < 100)
+		$ps: PatientStatus(lowerBloodPressure < 60, upperBloodPressure < 100, $patientStatusId: id)
+		not (PatientAlarm(patientStatusId == $patientStatusId))
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Date(),
 		"Low blood pressure alarm: " + $ps.getLowerBloodPressure() + "/" + $ps.getUpperBloodPressure()));
@@ -23,8 +27,10 @@ rule "Low blood pressure alarm"
 end
 
 rule "High heart rate alarm"
+    salience 1
 	when
-		$ps: PatientStatus(heartRate > 80)
+		$ps: PatientStatus(heartRate > 80, $patientStatusId: id)
+        not (PatientAlarm(patientStatusId == $patientStatusId))
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Date(),
 		"High heart rate alarm: " + $ps.getHeartRate()));
@@ -32,8 +38,10 @@ rule "High heart rate alarm"
 end
 
 rule "Low heart rate alarm"
+    salience 1
 	when
-		$ps: PatientStatus(heartRate < 60)
+		$ps: PatientStatus(heartRate < 60, $patientStatusId: id)
+        not (PatientAlarm(patientStatusId == $patientStatusId))
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Date(),
 		"Low heart rate alarm: " + $ps.getHeartRate()));
@@ -41,8 +49,10 @@ rule "Low heart rate alarm"
 end
 
 rule "High body temperature alarm"
+    salience 1
 	when
-		$ps: PatientStatus (bodyTemperature > 37.0)
+		$ps: PatientStatus (bodyTemperature > 37.0, $patientStatusId: id)
+        not (PatientAlarm(patientStatusId == $patientStatusId))
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Date(),
 		"High body temperature alarm: " + $ps.getBodyTemperature()));
@@ -50,8 +60,10 @@ rule "High body temperature alarm"
 end
 
 rule "Low body temperature alarm"
+    salience 1
 	when
-		$ps: PatientStatus(bodyTemperature < 36.0)
+		$ps: PatientStatus(bodyTemperature < 36.0, $patientStatusId: id)
+        not (PatientAlarm(patientStatusId == $patientStatusId))
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Date(),
 		"Low body temperature alarm: " + $ps.getBodyTemperature()));
@@ -59,8 +71,10 @@ rule "Low body temperature alarm"
 end
 
 rule "High respiratory rate alarm"
+    salience 1
 	when
-		$ps: PatientStatus(respiratoryRate > 18)
+		$ps: PatientStatus(respiratoryRate > 18, $patientStatusId: id)
+        not (PatientAlarm(patientStatusId == $patientStatusId))
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Date(),
 		"High respiratory rate alarm: " + $ps.getRespiratoryRate()));
@@ -68,8 +82,10 @@ rule "High respiratory rate alarm"
 end
 
 rule "Low respiratory rate alarm"
+    salience 1
 	when
-		$ps: PatientStatus(respiratoryRate < 12)
+		$ps: PatientStatus(respiratoryRate < 12, $patientStatusId: id)
+        not (PatientAlarm(patientStatusId == $patientStatusId))
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Date(),
 		"Low respiratory rate alarm: " + $ps.getRespiratoryRate()));
@@ -78,8 +94,10 @@ end
 
 /*Combinations*/
 rule "Code blue alarm"
+    salience 2
 	when
-		$ps: PatientStatus(heartRate < 10, respiratoryRate < 5)
+		$ps: PatientStatus(heartRate < 10, respiratoryRate < 5, $patientStatusId: id)
+        not (PatientAlarm(patientStatusId == $patientStatusId))
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Date(),
 		"Code blue alarm, heart rate: " + $ps.getHeartRate() + " respiratory rate: " + $ps.getRespiratoryRate()));
@@ -88,8 +106,10 @@ rule "Code blue alarm"
 end
 
 rule "Panic attack alarm"
+    salience 2
 	when
-		$ps: PatientStatus(heartRate > 90, respiratoryRate > 20)
+		$ps: PatientStatus(heartRate > 90, respiratoryRate > 20, $patientStatusId: id)
+        not (PatientAlarm(patientStatusId == $patientStatusId))
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Date(),
 		"Panic attack alarm, heart rate: " + $ps.getHeartRate() + " respiratory rate: " + $ps.getRespiratoryRate()));
@@ -98,9 +118,11 @@ rule "Panic attack alarm"
 end
 
 rule "Cardiac arrest alarm"
+    salience 2
 	when
 		$ps: PatientStatus(heartRate > 140, lowerBloodPressure > 100, upperBloodPressure > 150,
-		respiratoryRate < 5)
+		respiratoryRate < 5, $patientStatusId: id)
+        not (PatientAlarm(patientStatusId == $patientStatusId))
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Date(),
 		"Cardiac arrest alarm, heart rate: " + $ps.getHeartRate() + 
