@@ -4,6 +4,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Document(collection = "PatientAlarms")
 public class PatientAlarm {
@@ -12,10 +13,10 @@ public class PatientAlarm {
     private String id;
     private String patientId;
     private String patientStatusId;
-    private Timestamp timestamp;
+    private Date timestamp;
     private String message;
 
-    public PatientAlarm(String patientId, String patientStatusId, Timestamp timestamp, String message) {
+    public PatientAlarm(String patientId, String patientStatusId, Date timestamp, String message) {
         this.patientId = patientId;
         this.patientStatusId = patientStatusId;
         this.timestamp = timestamp;
@@ -46,11 +47,11 @@ public class PatientAlarm {
         this.patientStatusId = patientStatusId;
     }
 
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 

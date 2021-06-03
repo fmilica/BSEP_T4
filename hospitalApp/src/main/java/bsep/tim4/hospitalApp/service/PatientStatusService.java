@@ -70,10 +70,7 @@ public class PatientStatusService {
             alarms.add(alarm);
         }
 
-        alarms = patientAlarmRepository.saveAll(alarms);
-
-        this.simpMessagingTemplate.convertAndSend("/topic/patients", alarms);
-
+        saveAndSendNewAlarms(alarms);
         return patientStatus;
     }
 
@@ -95,5 +92,22 @@ public class PatientStatusService {
             throw new NonExistentIdException("Patient");
         }
         return patientStatusRepository.findAllByPatientId(patientId);
+    }
+
+    private void saveAndSendNewAlarms(List<PatientAlarm> alarms) {
+        PatientAlarm lastSaved = this.patientAlarmRepository.findFirstByOrderByTimestampDesc();
+        List<PatientAlarm> newAlarms = new ArrayList<>();
+        if (lastSaved != null) {
+            for (PatientAlarm alarm : alarms) {
+                if (alarm.getTimestamp().after(lastSaved.getTimestamp())) {
+                    newAlarms.add(patientAlarmRepository.save(alarm));
+                }
+            }
+        } else {
+            for (PatientAlarm alarm : alarms) {
+                newAlarms.add(patientAlarmRepository.save(alarm));
+            }
+        }
+        this.simpMessagingTemplate.convertAndSend("/topic/patients", newAlarms);
     }
 }

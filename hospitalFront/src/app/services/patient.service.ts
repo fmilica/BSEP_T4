@@ -14,7 +14,9 @@ import { RuleDto } from "../dto/rule-dto";
 export class PatientService {
     private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.initializeWebSocketConnection()
+    }
 
     public patientStompClient;
 
@@ -46,6 +48,7 @@ export class PatientService {
 
         this.patientStompClient.activate();
     }
+
     findAllByPage(page: number, size: number): Observable<PatientPage> {
         let params = new HttpParams();
     

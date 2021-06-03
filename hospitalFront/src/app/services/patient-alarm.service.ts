@@ -1,28 +1,29 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpHeaders, HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Observable, throwError } from "rxjs";
+import { map, catchError } from "rxjs/operators";
 import { environment } from "src/environments/environment";
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { PatientAlarmPage } from "../model/patient-alarm-page.model";
 import { PatientStatusPage } from "../model/patient-status-page.model";
 
 @Injectable({
     providedIn: 'root',
 })
-export class PatientStatusService {
+export class PatientAlarmService {
     private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     constructor(private http: HttpClient) {}
 
-    findAllByPage(page: number, size: number): Observable<PatientStatusPage> {
+    findAllByPage(page: number, size: number): Observable<PatientAlarmPage> {
         let params = new HttpParams();
     
         params = params.append('page', String(page));
         params = params.append('size', String(size));
     
         return this.http
-          .get<PatientStatusPage>(environment.apiEndpoint + 'patientStatuses/by-page', { params })
+          .get<PatientAlarmPage>(environment.apiEndpoint + 'patient-alarms/by-page', { params })
           .pipe(
-            map((patientStatusPage: PatientStatusPage) => patientStatusPage),
+            map((patientAlarmPage: PatientAlarmPage) => patientAlarmPage),
             catchError((err) => throwError(err))
         );
       }
