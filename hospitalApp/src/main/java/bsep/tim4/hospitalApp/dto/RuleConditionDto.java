@@ -17,17 +17,16 @@ public class RuleConditionDto {
 
     @NotBlank(message = "Rule condition type cannot be empty.")
     @Size(min=9, max=18, message = "Inadequate rule condition type length.")
-    @Pattern(regexp = "heartRate|lowerBloodPressure|upperBloodPressure|bodyTemperature|respiratoryRate",
+    @Pattern(regexp = "(heartRate|lowerBloodPressure|upperBloodPressure|bodyTemperature|respiratoryRate)",
             message = "Rule condition type is not valid.")
     private String conditionType;
 
     @NotBlank(message = "Rule condition operator cannot be empty.")
     @Size(min=1, max=2, message = "Inadequate rule condition operator length.")
-    @Pattern(regexp = "==|<=|>=|>|<",
+    @Pattern(regexp = "(==|<=|>=|>|<)",
             message = "Rule condition operator is not valid.")
     private String conditionOperator;
 
-    @NotBlank(message = "Rule condition value cannot be empty.")
     private double value;
 
     @Override

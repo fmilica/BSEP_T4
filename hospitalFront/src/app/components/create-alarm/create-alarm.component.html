@@ -1,0 +1,109 @@
+<div class="table-title">Create custom alarm for patient</div>
+<div class="col">
+    <form id="custom-alarm-form" [formGroup]="customAlarmForm" #createCustomAlarmDirective="ngForm" (ngSubmit)="onSubmit(createCustomAlarmDirective)">
+        <div class="form-group">
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Patient</mat-label>
+                <mat-select formControlName="patient">
+                    <mat-option *ngFor="let patient of patients" [value]="patient">
+                        {{patient.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <mat-checkbox formControlName="heartRate">
+                Heart rate
+            </mat-checkbox>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Operator</mat-label>
+                <mat-select formControlName="operatorHeartRate">
+                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
+                        {{oper}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Heart rate value</mat-label>
+                <input matInput formControlName="valueHeartRate" type="number" min=0>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <mat-checkbox formControlName="lowerBloodPressure">
+                Lower blood pressure
+            </mat-checkbox>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Operator</mat-label>
+                <mat-select formControlName="operatorLowerPressure">
+                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
+                        {{oper}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Lower blood pressure value</mat-label>
+                <input matInput formControlName="valueLowerPressure" type="number" min=0>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <mat-checkbox formControlName="upperBloodPressure">
+                Upper blood pressure
+            </mat-checkbox>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Operator</mat-label>
+                <mat-select formControlName="operatorUpperPressure">
+                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
+                        {{oper}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Upper blood pressure value</mat-label>
+                <input matInput formControlName="valueUpperPressure" type="number" min=0>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <mat-checkbox formControlName="bodyTemperature">
+                Body temperature
+            </mat-checkbox>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Operator</mat-label>
+                <mat-select formControlName="operatorTemperature">
+                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
+                        {{oper}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Body temperature value</mat-label>
+                <input matInput formControlName="valueTemperature" type="number" min=0>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <mat-checkbox formControlName="respiratoryRate">
+                Respiratory rate
+            </mat-checkbox>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Operator</mat-label>
+                <mat-select formControlName="operatorRespiratoryRate">
+                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
+                        {{oper}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Respiratory rate value</mat-label>
+                <input matInput formControlName="valueRespiratoryRate" type="number" min=0>
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-md-center">
+            <button
+                id="create-alarm"
+                class="btn btn-color"
+                [disabled] = "customAlarmForm.invalid"
+            >
+                Create alarm
+            </button>
+        </div>
+    </form>
+</div>

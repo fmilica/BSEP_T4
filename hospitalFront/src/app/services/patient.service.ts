@@ -6,6 +6,7 @@ import { Patient } from "../model/patient.model";
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { PatientPage } from "../model/patient-page.model";
+import { RuleDto } from "../dto/rule-dto";
 
 @Injectable({
     providedIn: 'root',
@@ -57,5 +58,9 @@ export class PatientService {
             map((patientStatusPage: PatientPage) => patientStatusPage),
             catchError((err) => throwError(err))
         );
+    }
+
+    createRule(ruleDto: RuleDto): Observable<void> {
+        return this.http.post<void>(environment.apiEndpoint + 'patients/create-rule', ruleDto)
     }
 }

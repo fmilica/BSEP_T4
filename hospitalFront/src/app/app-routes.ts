@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { CreateAlarmComponent } from "./components/create-alarm/create-alarm.component";
 import { CreateCsrComponent } from "./components/create-csr/create-csr.component";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -49,6 +50,12 @@ export const routes: Routes = [
       {
         path: 'patient-statuses',
         component: PatientStatusComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: 'DOCTOR' },
+      },
+      {
+        path: 'create-alarm',
+        component: CreateAlarmComponent,
         canActivate: [RoleGuard],
         data: { expectedRoles: 'DOCTOR' },
       },
