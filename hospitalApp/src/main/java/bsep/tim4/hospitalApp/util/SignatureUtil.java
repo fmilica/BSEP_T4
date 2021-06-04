@@ -5,18 +5,18 @@ import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.cms.ContentInfo;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
-import org.bouncycastle.cms.CMSException;
-import org.bouncycastle.cms.CMSSignedData;
-import org.bouncycastle.cms.SignerInformation;
-import org.bouncycastle.cms.SignerInformationStore;
+import org.bouncycastle.cms.*;
 import org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoVerifierBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.util.Store;
 
+import javax.crypto.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.Security;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -24,6 +24,21 @@ import java.util.Collection;
 
 public class SignatureUtil {
     // CMS = Cryptographic Message Syntax
+
+    public static byte[] encryptMessage(String message, SecretKey symKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.ENCRYPT_MODE, symKey);
+        byte[] encryptedMessage = aesCipher.doFinal(message.getBytes());
+        return encryptedMessage;
+    }
+
+    public static String decryptMessage(byte[] encryptedMessage, SecretKey symKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.DECRYPT_MODE, symKey);
+        byte[] bytePlainText = aesCipher.doFinal(encryptedMessage);
+        String message = new String(bytePlainText);
+        return message;
+    }
 
     public static int checkTrustedCertificate(byte[] signedMessage, String trustStore, String trustStorePass)
             throws CertificateException, CMSException, IOException {
@@ -55,6 +70,14 @@ public class SignatureUtil {
         boolean verified = signer.verify(new JcaSimpleSignerInfoVerifierBuilder()
                         .build(signerCertificate.getPublicKey()));
         return verified;
+    }
+
+    public static String readSignedData(byte[] signedMessage) throws IOException, CMSException {
+        CMSSignedData cmsSignedData = extractCMSData(signedMessage);
+        CMSTypedData cmsTypedData = cmsSignedData.getSignedContent();
+        String message  = new String((byte[]) cmsTypedData.getContent());
+
+        return message;
     }
 
     private static X509Certificate extractCertificate(byte[] signedMessage) throws IOException, CMSException, CertificateException {
@@ -93,4 +116,5 @@ public class SignatureUtil {
                 ContentInfo.getInstance(asnInputStream.readObject()));
         return cmsSignedData;
     }
+
 }

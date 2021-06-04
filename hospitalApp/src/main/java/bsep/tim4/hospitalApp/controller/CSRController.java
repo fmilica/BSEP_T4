@@ -2,6 +2,9 @@ package bsep.tim4.hospitalApp.controller;
 
 import bsep.tim4.hospitalApp.dto.CSRDto;
 import bsep.tim4.hospitalApp.service.CSRService;
+import org.bouncycastle.operator.OperatorCreationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -13,10 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
+import java.security.Principal;
 
 @RestController
 @RequestMapping(value="api/csr")
@@ -33,11 +33,19 @@ public class CSRController {
 
     private final String sendCsrUri = "/csr/receive";
 
+    Logger logger = LoggerFactory.getLogger(CSRController.class);
+
     @PostMapping(value="/create")
     // ADMIN
-    public ResponseEntity<Void> createCsr(@RequestHeader("Authorization") String token, @Valid @RequestBody CSRDto csrDto)
-            throws KeyStoreException, NoSuchAlgorithmException, IOException, KeyManagementException, CertificateException {
-        String csr = csrService.createCSR(csrDto);
+    public ResponseEntity<Void> createCsr(Principal principal, @RequestHeader("Authorization") String token, @Valid @RequestBody CSRDto csrDto) {
+        String csr = null;
+        try {
+            csr = csrService.createCSR(csrDto);
+        } catch (OperatorCreationException | IOException e) {
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "createCsr", HttpStatus.BAD_REQUEST, "CSR builder failed"));
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         final String sendCsrFullUri = adminApplicationUri +  sendCsrUri;
 
@@ -49,9 +57,8 @@ public class CSRController {
         ResponseEntity<String> responseEntityStr = restTemplate.
                 postForEntity(sendCsrFullUri, request, String.class);
 
-        String csrReturn = responseEntityStr.getBody();
-        System.out.println(csrReturn);
-        //csrService.storeCertificate(certificate);
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                principal.getName(), "createCsr", HttpStatus.OK, "CSR created and sent"));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

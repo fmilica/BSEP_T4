@@ -6,7 +6,11 @@ import bsep.tim4.hospitalApp.keystores.KeyStoreWriter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import java.io.File;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 
@@ -21,6 +25,12 @@ public class KeyStoreService {
 
     @Value("${pki.keystore-password}")
     private String keyStorePass;
+
+    @Value("${pki.keystore-symetric-name}")
+    private String symKeyKeystore;
+
+    @Value("${pki.keystore-symetric-key-alias}")
+    private String symKeyAlias;
 
     private final KeyStoreReader keyStoreReader;
     private final KeyStoreWriter keyStoreWriter;
@@ -37,42 +47,28 @@ public class KeyStoreService {
         this.keyStoreWriter.saveKeyStore(keyStorePath + keyStoreName, keyStorePass.toCharArray());
     }
 
-    public void loadKeyStore() {
-        String keyStoreFullName = keyStorePath + keyStoreName;
+    public void loadSymKeyStore() {
+        String keyStoreFullName = keyStorePath + symKeyKeystore;
         File keyStoreFile = new File(keyStoreFullName);
         if (!keyStoreFile.exists()) {
             this.keyStoreWriter.createKeyStore(keyStoreFullName, keyStorePass.toCharArray());
         } else {
-            this.keyStoreWriter.loadKeyStore(keyStoreFullName, keyStorePass.toCharArray());
+            this.keyStoreWriter.loadSymKeyStore(keyStoreFullName, keyStorePass.toCharArray());
         }
     }
 
-    public void saveKeyStore() {
-        this.keyStoreWriter.saveKeyStore(keyStorePath + keyStoreName, keyStorePass.toCharArray());
+    public Key getSymKey() {
+        return this.keyStoreReader.getSymKey(symKeyAlias, keyStorePass.toCharArray(),
+                keyStorePath + symKeyKeystore, keyStorePass);
     }
 
-    public void savePrivateKey(String alias, PrivateKey privateKey, String keyPassword, Certificate certificate) {
-        this.keyStoreWriter.writePrivateKey(alias, privateKey, keyPassword.toCharArray(), certificate);
-    }
+    public void createSymetricKey() throws NoSuchAlgorithmException {
+        KeyGenerator generator = KeyGenerator.getInstance("AES");
+        // minimum 128, 256 idealno
+        generator.init(256);
+        SecretKey secKey = generator.generateKey();
+        this.keyStoreWriter.writeSecretKey(symKeyAlias, secKey,
+                keyStorePass.toCharArray(), keyStorePath + symKeyKeystore);
 
-    public PrivateKey loadPrivateKey(String alias, String keyPassword) {
-        return this.keyStoreReader.readPrivateKey(
-                keyStorePath + keyStoreName, keyStorePass, alias, keyPassword);
-    }
-
-    public void saveCertificate(String alias, Certificate certificate) {
-        this.keyStoreWriter.writeCertificate(alias, certificate);
-    }
-
-    public Certificate loadCertificate(String alias) {
-        return this.keyStoreReader.readCertificate(
-                keyStorePath + keyStoreName, keyStorePass, alias);
-    }
-
-    // dobavljanje privatnog kljuca (i podataka o vlasniku) vezanog za sertifikat sa datim aliasom
-    public IssuerData loadIssuerData(String alias, String keyPassword) {
-        return this.keyStoreReader.readIssuerFromStore(
-                keyStorePath + keyStoreName, alias,
-                        keyStorePass.toCharArray(), keyPassword.toCharArray());
     }
 }

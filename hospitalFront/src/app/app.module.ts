@@ -26,8 +26,14 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { LogsComponent } from './components/logs/logs.component';
+import { PatientComponent } from './components/patient/patient.component';
+import { PatientStatusComponent } from './components/patient-status/patient-status.component';
+import { CreateAlarmComponent } from './components/create-alarm/create-alarm.component';
+import { PatientAlarmComponent } from './components/patient-alarm/patient-alarm.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +43,10 @@ import { LogsComponent } from './components/logs/logs.component';
     CreateCsrComponent,
     UnauthorizedComponent,
     LogsComponent,
+    PatientComponent,
+    PatientStatusComponent,
+    CreateAlarmComponent,
+    PatientAlarmComponent,
   ],
   imports: [
     RouterModule,
@@ -60,6 +70,8 @@ import { LogsComponent } from './components/logs/logs.component';
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatProgressBarModule,
+    MatPaginatorModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
       timeOut: 2500,

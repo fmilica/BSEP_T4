@@ -1,0 +1,11 @@
+package rules;
+
+import bsep.tim4.hospitalApp.model.PatientAlarm;
+
+query "getAllAlarmsByPatientStatusId"(String id)
+	$alarm: PatientAlarm(patientStatusId == id)
+end;
+
+query "getAllAlarms"
+	$alarm: PatientAlarm()
+end;
