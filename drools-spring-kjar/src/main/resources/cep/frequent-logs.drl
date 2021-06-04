@@ -13,8 +13,10 @@ rule "More than 50 other logs in 1 minute"
         accumulate(
             $log2: Log(
                 this != $log1,
-                processed == false
-            ) over window:time( 1m ),
+                processed == false,
+                this not after [1m] $log1
+            ),
+            //over window:time( 1m )
             $logs: collectList($log2)
         )
         eval($logs.size() >= 50)
@@ -35,14 +37,17 @@ rule "More than 10 login logs in 1 minute"
         accumulate(
             $log2: Log(
                 this != $log1,
-                processed == false
-            ) over window:time( 1m ),
+                processed == false,
+                this not after [30s] $log1,
+                this not before [30s] $log1
+            ),
+            //over window:time( 1m )
             $logs: collectList($log2)
         )
         eval($logs.size() >= 10)
     then
-        System.out.println("**************** FREQUENT ****************************");
-        insert(new LogAlarm(new Date(), "", LogAlarmType.BRUTE_FORCE, "Many logs in one minute"));
+        System.out.println("**************** FREQUENT LOGIN ****************************");
+        insert(new LogAlarm(new Date(), "", LogAlarmType.BRUTE_FORCE, "Many login logs in one minute"));
         modify($log1){setProcessed(true);};
         for (Object obj: $logs) {
             Log log = (Log) obj;

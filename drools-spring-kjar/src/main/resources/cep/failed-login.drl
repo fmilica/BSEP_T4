@@ -8,7 +8,6 @@ import bsep.tim4.hospitalApp.model.LogAlarmType;
 import java.util.Date;
 
 rule "More than 5 login attempts in 1 minute from one username"
-    salience -1
     when
         $log1: Log(type == "LOGIN_ERROR", $source: source, processed == false)
         accumulate(
@@ -16,8 +15,11 @@ rule "More than 5 login attempts in 1 minute from one username"
                 this != $log1,
                 type == "LOGIN_ERROR",
                 source == $source,
-                processed == false
-            ) over window:time( 1m ),
+                processed == false,
+                this not after [30s] $log1,
+                this not before [30s] $log1
+            ),
+            // over window:time( 10m )
             $logs: collectList($log2)
         )
         eval($logs.size() >= 5)
