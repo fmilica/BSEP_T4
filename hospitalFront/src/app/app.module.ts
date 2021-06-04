@@ -32,6 +32,8 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { LogsComponent } from './components/logs/logs.component';
 import { PatientComponent } from './components/patient/patient.component';
 import { PatientStatusComponent } from './components/patient-status/patient-status.component';
+import { CreateAlarmComponent } from './components/create-alarm/create-alarm.component';
+import { PatientAlarmComponent } from './components/patient-alarm/patient-alarm.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { PatientStatusComponent } from './components/patient-status/patient-stat
     LogsComponent,
     PatientComponent,
     PatientStatusComponent,
+    CreateAlarmComponent,
+    PatientAlarmComponent,
   ],
   imports: [
     RouterModule,

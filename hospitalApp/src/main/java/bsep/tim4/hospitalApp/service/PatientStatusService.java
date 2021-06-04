@@ -70,10 +70,7 @@ public class PatientStatusService {
             alarms.add(alarm);
         }
 
-        alarms = patientAlarmRepository.saveAll(alarms);
-
-        this.simpMessagingTemplate.convertAndSend("/topic/patients", alarms);
-
+        saveAndSendNewAlarms(alarms);
         return patientStatus;
     }
 
@@ -88,12 +85,32 @@ public class PatientStatusService {
         return new PageImpl<>(patientStatusDtos, page.getPageable(), page.getTotalElements());
     }
 
-    public List<PatientStatus> findAllByPatientId(String patientId) throws NonExistentIdException {
-        PatientEncrypted patient = patientRepository.findById(patientId).orElse(null);
-
-        if(patient == null) {
-            throw new NonExistentIdException("Patient");
+    public Page<PatientStatusDto> findAllByPatientId(String patientId, Pageable pageable) throws NonExistentIdException, JsonProcessingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
+        Page<PatientStatus> page = patientStatusRepository.findAllByPatientIdOrderByTimestampDesc(patientId, pageable);
+        List<PatientStatusDto> patientStatusDtos = new ArrayList<>();
+        for(PatientStatus patientStatus : page.toList()) {
+            Patient patient = patientService.findById(patientStatus.getPatientId());
+            patientStatusDtos.add(new PatientStatusDto(patient.getName(), patientStatus.getHeartRate(), patientStatus.getLowerBloodPressure() + "/" +
+                    patientStatus.getUpperBloodPressure(), patientStatus.getBodyTemperature(), patientStatus.getRespiratoryRate(), patientStatus.getTimestamp()));
         }
-        return patientStatusRepository.findAllByPatientId(patientId);
+        return new PageImpl<>(patientStatusDtos, page.getPageable(), page.getTotalElements());
+    }
+
+    private void saveAndSendNewAlarms(List<PatientAlarm> alarms) {
+        PatientAlarm lastSaved = this.patientAlarmRepository.findFirstByOrderByTimestampDesc();
+        List<PatientAlarm> newAlarms = new ArrayList<>();
+        if (lastSaved != null) {
+            for (PatientAlarm alarm : alarms) {
+                if (alarm.getTimestamp().after(lastSaved.getTimestamp())) {
+                    alarm = patientAlarmRepository.save(alarm);
+                    this.simpMessagingTemplate.convertAndSend("/topic/patients", alarm);
+                }
+            }
+        } else {
+            for (PatientAlarm alarm : alarms) {
+                alarm = patientAlarmRepository.save(alarm);
+                this.simpMessagingTemplate.convertAndSend("/topic/patients", alarm);
+            }
+        }
     }
 }

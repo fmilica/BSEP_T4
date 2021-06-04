@@ -1,5 +1,6 @@
 package bsep.tim4.hospitalApp.controller;
 
+import bsep.tim4.hospitalApp.dto.PatientNameDto;
 import bsep.tim4.hospitalApp.dto.RuleDto;
 import bsep.tim4.hospitalApp.exceptions.NonExistentIdException;
 import bsep.tim4.hospitalApp.model.Patient;
@@ -35,6 +36,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.security.cert.CertificateException;
+import java.util.List;
 
 @RestController
 @RequestMapping(value="api/patients")
@@ -138,23 +140,42 @@ public class PatientController {
         }
     }
 
+    @GetMapping()
+    public ResponseEntity<List<PatientNameDto>> findAllPatients(Principal principal) {
+        List<PatientNameDto> patientNameDtos = null;
+        try {
+            patientNameDtos = patientService.findAll();
+        } catch (JsonProcessingException e) {
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "findAllPatients", HttpStatus.BAD_REQUEST, "json parse exception"));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | NoSuchPaddingException | InvalidKeyException e) {
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "findAllPatients", HttpStatus.INTERNAL_SERVER_ERROR, "decryption exception"));
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                principal.getName(), "findAllPatients", HttpStatus.OK, "authorized"));
+        return new ResponseEntity<>(patientNameDtos, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/by-page")
-    public ResponseEntity<Page<Patient>> findAllPatients(Principal principal, Pageable pageable) {
+    public ResponseEntity<Page<Patient>> findAllPatientsByPage(Principal principal, Pageable pageable) {
         Page<Patient> patients = null;
         try {
             patients = patientService.findAll(pageable);
         } catch (JsonProcessingException e) {
             logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
-                    principal.getName(), "findById", HttpStatus.BAD_REQUEST, "json parse exception"));
+                    principal.getName(), "findAllPatientsByPage", HttpStatus.BAD_REQUEST, "json parse exception"));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } catch (NoSuchPaddingException | NoSuchAlgorithmException |  InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
             logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
-                    principal.getName(), "findAllPatients", HttpStatus.INTERNAL_SERVER_ERROR, "decryption exception"));
+                    principal.getName(), "findAllPatientsByPage", HttpStatus.INTERNAL_SERVER_ERROR, "decryption exception"));
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
-                principal.getName(), "findAllPatients", HttpStatus.OK, "authorized"));
+                principal.getName(), "findAllPatientsByPage", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(patients, HttpStatus.OK);
     }
 

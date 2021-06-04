@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface PatientStatusRepository extends MongoRepository<PatientStatus, String> {
 
-    List<PatientStatus> findAllByPatientId(String patientId);
+    Page<PatientStatus> findAllByPatientIdOrderByTimestampDesc(String patientId, Pageable pageable);
 
     Page<PatientStatus> findAllByOrderByTimestampDesc(Pageable pageable);
 }

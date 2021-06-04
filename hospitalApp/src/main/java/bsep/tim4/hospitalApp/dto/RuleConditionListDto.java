@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class RuleConditionListDto {
 
+    @Valid
     @Size(min=1, max=5, message = "Inadequate number of rule conditions.")
     private List<RuleConditionDto> ruleConditions;
 

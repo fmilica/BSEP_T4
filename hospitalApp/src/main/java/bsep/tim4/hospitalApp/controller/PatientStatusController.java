@@ -68,17 +68,30 @@ public class PatientStatusController {
     }
 
     @GetMapping(value = "/{patientId}")
-    public ResponseEntity<List<PatientStatus>> findAllPatientStatusesForPatient(Principal principal,
-                                                                                @PathVariable("patientId") String patientId){
+    public ResponseEntity<Page<PatientStatusDto>> findAllPatientStatusesForPatient(Principal principal,
+                                                                                @PathVariable("patientId") String patientId, Pageable pageable){
+        Page<PatientStatusDto> patientStatuses = null;
         try {
-            List<PatientStatus> patientStatuses = patientStatusService.findAllByPatientId(patientId);
-            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
-                    principal.getName(), "findAllPatientStatuses", HttpStatus.OK, "authorized"));
-            return new ResponseEntity<>(patientStatuses, HttpStatus.OK);
+            patientStatuses = patientStatusService.findAllByPatientId(patientId, pageable);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "findAllPatientStatusesForPatient", HttpStatus.BAD_REQUEST, "json parse exception"));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        catch (NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | NoSuchPaddingException | InvalidKeyException e) {
+            e.printStackTrace();
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "findAllPatientStatusesForPatient", HttpStatus.INTERNAL_SERVER_ERROR, "decryption exception"));
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NonExistentIdException e) {
+            e.printStackTrace();
             logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "findAllPatientStatusesForPatient", HttpStatus.NOT_FOUND, "non existent patient id"));
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                principal.getName(), "findAllPatientStatusesForPatient", HttpStatus.OK, "authorized"));
+        return new ResponseEntity<>(patientStatuses, HttpStatus.OK);
     }
 }

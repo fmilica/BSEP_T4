@@ -1,7 +1,7 @@
 <mat-progress-bar class="progress-bar" mode="indeterminate" 
     *ngIf="dataSource.content.length===0">
 </mat-progress-bar>
-<form id="filter-patient-status-form" [formGroup]="filterForm" #filterPatientStatuses="ngForm" (ngSubmit)="onFilter(filterPatientStatuses)">
+<form id="filter-patient-alarm-form" [formGroup]="filterForm" #filterPatientAlarms="ngForm" (ngSubmit)="onFilter(filterPatientAlarms)">
     <div class="form-group">
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Patient</mat-label>
@@ -14,19 +14,19 @@
             </mat-form-field>
             <!-- Filter -->
             <button
-                id="filter-patient-status"
+                id="filter-patient-alarm"
                 class="btn btn-color"
             >
-                Filter patient statuses
+                Filter patient alarms
             </button>
     </div>
 </form>
 <div class="ng-container row justify-content-md-center">
     <div class="col-md-11">
-        <table mat-table [dataSource]="dataSource.content" id="patient-status-table">
+        <table mat-table [dataSource]="dataSource.content" id="patient-alarm-table">
             <!-- No data row -->
             <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="5">No existing patient statuses.</td>
+                <td class="mat-cell" colspan="3">No existing patient alarms.</td>
             </tr>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -37,24 +37,9 @@
                 <td mat-cell *matCellDef="let row"> {{row.name}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="heartRate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Heart rate </th>
-                <td mat-cell *matCellDef="let row"> {{row.heartRate}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="bloodPressure">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Blood pressure </th>
-                <td mat-cell *matCellDef="let row"> {{row.bloodPressure}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="bodyTemperature">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Body temperature </th>
-                <td mat-cell *matCellDef="let row"> {{row.bodyTemperature}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="respiratoryRate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Respiratory rate </th>
-                <td mat-cell *matCellDef="let row"> {{row.respiratoryRate}} </td>
+            <ng-container matColumnDef="message">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Message </th>
+                <td mat-cell *matCellDef="let row"> {{row.message}} </td>
             </ng-container>
 
             <ng-container matColumnDef="timestamp">
@@ -64,7 +49,7 @@
         </table>
 
         <mat-paginator showFirstLastButtons
-            id="patient-statuses-paginator"
+            id="patient-alarm-paginator"
             [length]="dataSource.totalElements" 
             [pageSize]="dataSource.size" 
             [pageSizeOptions]="[2,5,10]"
