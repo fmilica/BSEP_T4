@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 template "patient-template"
 
 rule "Patient template rule @{row.rowNumber}"
+    salience 3
 	when
 		$ps: PatientStatus(patientId == "@{patientId}", @{ruleConditions})
 	then

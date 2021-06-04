@@ -102,14 +102,15 @@ public class PatientStatusService {
         if (lastSaved != null) {
             for (PatientAlarm alarm : alarms) {
                 if (alarm.getTimestamp().after(lastSaved.getTimestamp())) {
-                    newAlarms.add(patientAlarmRepository.save(alarm));
+                    alarm = patientAlarmRepository.save(alarm);
+                    this.simpMessagingTemplate.convertAndSend("/topic/patients", alarm);
                 }
             }
         } else {
             for (PatientAlarm alarm : alarms) {
-                newAlarms.add(patientAlarmRepository.save(alarm));
+                alarm = patientAlarmRepository.save(alarm);
+                this.simpMessagingTemplate.convertAndSend("/topic/patients", alarm);
             }
         }
-        this.simpMessagingTemplate.convertAndSend("/topic/patients", newAlarms);
     }
 }
