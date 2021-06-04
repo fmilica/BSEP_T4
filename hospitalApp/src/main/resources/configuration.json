@@ -1,11 +1,17 @@
 {
   "logConfigList" : [ {
-    "path" : "C:\\Users\\admin\\Desktop\\bsep\\BSEP_T4\\hospitalApp\\logs",
+    "path" : "C:/Users/evaje/OneDrive/Desktop/Skola/8_Semestar/Bezbednost u sistemima elektronskog poslovanja/projekat/BSEP_T4/adminApp/logs",
+    "type" : "DEFAULT",
     "readInterval" : 3,
-    "filter" : null
+    "filter" : null,
+    "lastRead" : {
+      "admin-logger.log" : 0
+    }
   }, {
-    "path" : "C:\\\\Users\\\\admin\\\\Documents\\\\eva\\\\keycloak-12.0.4 (1)\\\\keycloak-12.0.4\\\\standalone\\\\log",
+    "path" : "C:/Users/evaje/Downloads/Keycloak/keycloak-12.0.4/standalone/log",
+    "type" : "SIMULATED",
     "readInterval" : 0,
-    "filter" : null
+    "filter" : null,
+    "lastRead" : null
   } ]
 }

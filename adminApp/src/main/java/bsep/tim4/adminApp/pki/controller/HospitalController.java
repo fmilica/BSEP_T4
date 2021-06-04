@@ -69,15 +69,12 @@ public class HospitalController {
 
             ObjectMapper om = new ObjectMapper();
             String contentJson = om.writeValueAsString(logConfigList);
-            System.out.println(contentJson);
 
             HttpEntity<String> request =
                     new HttpEntity<>(contentJson, headers);
 
             ResponseEntity<Void> responseEntity = restTemplate.
                     postForEntity(fullUri, request, void.class);
-
-            System.out.println(responseEntity.getStatusCode());
 
             //logger.info(String.format("%s called method %s with status code %s: %s",
             //        principal.getName(), "createCsr", HttpStatus.OK, "CSR created and sent"));

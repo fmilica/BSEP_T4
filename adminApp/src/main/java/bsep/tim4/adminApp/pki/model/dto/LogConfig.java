@@ -9,11 +9,12 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Map;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 public class LogConfig {
 
@@ -21,8 +22,14 @@ public class LogConfig {
     @NotNull(message = "Simulator id cannot be empty.")
     Long simulatorId;
 
+    String type;
+
     long readInterval;
     String filter;
 
     String path;
+
+    public LogConfig() {
+        this.type = "SIMULATED";
+    }
 }

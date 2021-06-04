@@ -36,18 +36,22 @@ public class LogReaderService {
     private LogConfigList logConfigList;
     private List<LogReader> readers;
 
-    public void readConfiguration() throws IOException, InterruptedException {
-        ObjectMapper om = new ObjectMapper();
-        logConfigList = om.readValue(Paths.get(configurationPath).toFile(), LogConfigList.class);
-        this.readers = new ArrayList<>();
-        for (LogConfig logConfig: logConfigList.getLogConfigList()) {
-            // check if folder exists
-            checkFolderPath(logConfig.getPath());
-            LogReader reader = new LogReader(logRepository, logConfig);
-            taskExecutor.execute(reader);
-            readers.add(reader);
-            //LogReader logReader = new LogReader(logRepository, logConfig);
-            //logReader.run();
+    public void readConfiguration() {
+        try {
+            ObjectMapper om = new ObjectMapper();
+            logConfigList = om.readValue(Paths.get(configurationPath).toFile(), LogConfigList.class);
+            this.readers = new ArrayList<>();
+            for (LogConfig logConfig : logConfigList.getLogConfigList()) {
+                // check if folder exists
+                checkFolderPath(logConfig.getPath());
+                LogReader reader = new LogReader(logRepository, logConfig);
+                taskExecutor.execute(reader);
+                readers.add(reader);
+                //LogReader logReader = new LogReader(logRepository, logConfig);
+                //logReader.run();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
