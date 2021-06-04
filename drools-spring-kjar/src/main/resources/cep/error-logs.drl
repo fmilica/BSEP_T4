@@ -11,6 +11,7 @@ rule "Error log"
     when
         $log1: Log(level == LogLevel.ERROR, processed == false, $source : source)
     then
+        System.out.println("**************** ERROR LOG ****************************");
         insert(new LogAlarm(new Date(), $source, LogAlarmType.ERROR_LOG, "Error log"));
         modify($log1){setProcessed(true);};
 end

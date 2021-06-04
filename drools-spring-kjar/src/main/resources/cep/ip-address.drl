@@ -15,6 +15,7 @@ rule "Login or failed login form malicious ip address"
         $log1: Log(type == "LOGIN_ERROR" || type == "LOGIN", $source: source, processed == false, $ipAddress : ipAddress)
         eval(maliciousIpAdresses.contains($ipAddress))
     then
+        System.out.println("**************** LOGIN FAILED MALICIOUS ****************************");
         insert(new LogAlarm(new Date(), $source, LogAlarmType.BLACKLIST_IP, "Login from malicious ip address: " + $ipAddress));
         modify($log1){setProcessed(true);};
 end
@@ -25,6 +26,7 @@ rule "Log with malicious ip address"
         $log1: Log(type != "LOGIN_ERROR" && type != "LOGIN", processed == false, $ipAddress : ipAddress, $source : source)
         eval(maliciousIpAdresses.contains($ipAddress))
     then
+        System.out.println("**************** MALICIOUS ****************************");
         insert(new LogAlarm(new Date(), $source, LogAlarmType.BLACKLIST_IP, "Log with malicious ip address: "+$ipAddress));
         modify($log1){setProcessed(true);};
 end
@@ -37,12 +39,13 @@ rule "More than 30 login attempts in 24 hours from one ip address"
                 this != $log1,
                 type == "LOGIN_ERROR",
                 processed == false,
-                ipAddress == $ipAddress
-            ) over window:time( 24h ),
+                ipAddress == $ipAddress,
+                this not after [24h] $log1
+            ),
+            //over window:time( 24h )
             $logs: collectList($log2)
         )
-        //izmeni na 30
-        eval($logs.size() >= 7)
+        eval($logs.size() >= 30)
     then
         System.out.println("**************** IP ADDRESS RULE ****************************");
         insert(new LogAlarm(new Date(), "Unknown source", LogAlarmType.BLACKLIST_IP, "Many login attempts from ip address: " + $ipAddress));

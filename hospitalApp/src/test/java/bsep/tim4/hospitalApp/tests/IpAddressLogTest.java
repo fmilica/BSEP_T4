@@ -31,10 +31,10 @@ public class IpAddressLogTest {
         kieSession.setGlobal("maliciousIpAdresses", malicious);
     }
 
-    /*@Test
+    @Test
     public void MaliciousLoginTest() {
-        Log log = new Log(1L, new Date(), LogLevel.INFO, "Message for log.", "640d99cc-3299-4a3a-a170-dc3ebabf6775",
-                "LOGIN", "122.1.1.1", "", 200, false);
+        Log log = new Log("1L", new Date(), LogLevel.INFO, "Message for log.", "640d99cc-3299-4a3a-a170-dc3ebabf6775",
+                "LOGIN", "122.1.1.1", "", "200", false);
 
         kieSession.insert(log);
 
@@ -44,8 +44,8 @@ public class IpAddressLogTest {
 
     @Test
     public void MaliciousLogTest() {
-        Log log = new Log(1L, new Date(), LogLevel.INFO, "Message for log.", "640d99cc-3299-4a3a-a170-dc3ebabf6775",
-                "CSR", "122.1.1.1", "", 200, false);
+        Log log = new Log("1L", new Date(), LogLevel.INFO, "Message for log.", "640d99cc-3299-4a3a-a170-dc3ebabf6775",
+                "CSR", "122.1.1.1", "", "200", false);
 
         kieSession.insert(log);
 
@@ -57,40 +57,40 @@ public class IpAddressLogTest {
     public void MaliciousIpAddressTest() {
         //kieSession.getAgenda().getAgendaGroup("ip").setFocus();
         int firedRules = 0;
-        Log log1 = new Log(1L, new Date(), LogLevel.INFO, "Message for log.", "user1",
-                "LOGIN_ERROR", "127.0.0.1", "", 404, false);
+        Log log1 = new Log("1L", new Date(), LogLevel.INFO, "Message for log.", "user1",
+                "LOGIN_ERROR", "127.0.0.1", "", "404", false);
         kieSession.insert(log1);
         kieSession.fireAllRules();
-        Log log2 = new Log(2L, new Date(), LogLevel.INFO, "Message for log.", "user1",
-                "LOGIN_ERROR", "127.0.0.1", "", 404, false);
+        Log log2 = new Log("2L", new Date(), LogLevel.INFO, "Message for log.", "user1",
+                "LOGIN_ERROR", "127.0.0.1", "", "404", false);
         kieSession.insert(log2);
         kieSession.fireAllRules();
-        Log log3 = new Log(3L, new Date(), LogLevel.INFO, "Message for log.", "user1",
-                "LOGIN_ERROR", "127.0.0.1", "", 404, false);
+        Log log3 = new Log("3L", new Date(), LogLevel.INFO, "Message for log.", "user1",
+                "LOGIN_ERROR", "127.0.0.1", "", "404", false);
         kieSession.insert(log3);
         kieSession.fireAllRules();
-        Log log4 = new Log(4L, new Date(), LogLevel.INFO, "Message for log.", "user1",
-                "LOGIN_ERROR", "127.0.0.1", "", 404, false);
+        Log log4 = new Log("4L", new Date(), LogLevel.INFO, "Message for log.", "user1",
+                "LOGIN_ERROR", "127.0.0.1", "", "404", false);
         kieSession.insert(log4);
         kieSession.fireAllRules();
-        Log log5 = new Log(5L, new Date(), LogLevel.INFO, "Message for log.", "user1",
-                "LOGIN_ERROR", "127.0.0.1", "", 404, false);
+        Log log5 = new Log("5L", new Date(), LogLevel.INFO, "Message for log.", "user1",
+                "LOGIN_ERROR", "127.0.0.1", "", "404", false);
         kieSession.insert(log5);
         kieSession.fireAllRules();
-        Log log6 = new Log(6L, new Date(), LogLevel.INFO, "Message for log.", "user1",
-                "LOGIN_ERROR", "127.0.0.1", "", 404, false);
+        Log log6 = new Log("6L", new Date(), LogLevel.INFO, "Message for log.", "user1",
+                "LOGIN_ERROR", "127.0.0.1", "", "404", false);
         kieSession.insert(log6);
         kieSession.fireAllRules();
-        Log log7 = new Log(7L, new Date(), LogLevel.INFO, "Message for log.", "user1",
-                "LOGIN_ERROR", "127.0.0.1", "", 404, false);
+        Log log7 = new Log("7L", new Date(), LogLevel.INFO, "Message for log.", "user1",
+                "LOGIN_ERROR", "127.0.0.1", "", "404", false);
         kieSession.insert(log7);
         kieSession.fireAllRules();
-        Log log8 = new Log(8L, new Date(), LogLevel.INFO, "Message for log.", "user1",
-                "LOGIN_ERROR", "127.0.0.1", "", 404, false);
+        Log log8 = new Log("8L", new Date(), LogLevel.INFO, "Message for log.", "user1",
+                "LOGIN_ERROR", "127.0.0.1", "", "404", false);
         kieSession.insert(log8);
         firedRules = kieSession.fireAllRules();
         malicious = (List<String>) kieSession.getGlobal("maliciousIpAdresses");
         System.out.println(firedRules);
         assertEquals(2, malicious.size());
-    }*/
+    }
 }

@@ -2,12 +2,14 @@ package bsep.tim4.hospitalApp.service;
 
 import bsep.tim4.hospitalApp.dto.LogConfig;
 import bsep.tim4.hospitalApp.dto.LogConfigList;
+import bsep.tim4.hospitalApp.repository.LogAlarmRepository;
 import bsep.tim4.hospitalApp.repository.LogRepository;
 import bsep.tim4.hospitalApp.util.LogReader;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PreDestroy;
@@ -32,6 +34,15 @@ public class LogReaderService {
 
     @Autowired
     private LogRepository logRepository;
+	
+	@Autowired
+    private KieSessionService kieSessionService;
+
+    @Autowired
+    private LogAlarmRepository logAlarmRepository;
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     private LogConfigList logConfigList;
     private List<LogReader> readers;
@@ -64,7 +75,8 @@ public class LogReaderService {
                 newLogConfigs.remove(logConfig);
             };
             // create new thread for processing new folders
-            LogReader reader = new LogReader(logRepository, logConfig);
+            LogReader reader = new LogReader(logRepository, logConfig, kieSessionService, logAlarmRepository,
+                    simpMessagingTemplate);
             taskExecutor.execute(reader);
             readers.add(reader);
         }
