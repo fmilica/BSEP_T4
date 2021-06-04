@@ -41,4 +41,14 @@ public class PatientAlarmService {
         }
         return new PageImpl<>(patientAlarmDtos, page.getPageable(), page.getTotalElements());
     }
+
+    public Page<PatientAlarmDto> findAllByPatient(String patientId, Pageable pageable) throws JsonProcessingException, NonExistentIdException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
+        List<PatientAlarmDto> patientAlarmDtos = new ArrayList<>();
+        Page<PatientAlarm> page = patientAlarmRepository.findAllByPatientIdOrderByTimestampDesc(patientId, pageable);
+        for(PatientAlarm patientAlarm : page.toList()) {
+            Patient patient = patientService.findById(patientAlarm.getPatientId());
+            patientAlarmDtos.add(new PatientAlarmDto(patient.getName(), patientAlarm.getMessage(), patientAlarm.getTimestamp()));
+        }
+        return new PageImpl<>(patientAlarmDtos, page.getPageable(), page.getTotalElements());
+    }
 }

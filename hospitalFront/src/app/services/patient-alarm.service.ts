@@ -14,6 +14,20 @@ export class PatientAlarmService {
 
     constructor(private http: HttpClient) {}
 
+    findAllByPageByPatient(page: number, size: number, patientId: string): Observable<PatientAlarmPage> {
+      let params = new HttpParams();
+  
+      params = params.append('page', String(page));
+      params = params.append('size', String(size));
+  
+      return this.http
+        .get<PatientAlarmPage>(environment.apiEndpoint + 'patient-alarms/' + patientId, { params })
+        .pipe(
+          map((patientAlarmPage: PatientAlarmPage) => patientAlarmPage),
+          catchError((err) => throwError(err))
+      );
+  }
+
     findAllByPage(page: number, size: number): Observable<PatientAlarmPage> {
         let params = new HttpParams();
     
@@ -26,5 +40,5 @@ export class PatientAlarmService {
             map((patientAlarmPage: PatientAlarmPage) => patientAlarmPage),
             catchError((err) => throwError(err))
         );
-      }
+    }
 }

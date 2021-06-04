@@ -13,17 +13,31 @@ export class PatientStatusService {
 
     constructor(private http: HttpClient) {}
 
-    findAllByPage(page: number, size: number): Observable<PatientStatusPage> {
-        let params = new HttpParams();
-    
-        params = params.append('page', String(page));
-        params = params.append('size', String(size));
-    
-        return this.http
-          .get<PatientStatusPage>(environment.apiEndpoint + 'patientStatuses/by-page', { params })
-          .pipe(
-            map((patientStatusPage: PatientStatusPage) => patientStatusPage),
-            catchError((err) => throwError(err))
-        );
-      }
+    findAllByPageByPatient(page: number, size: number, patientId: string): Observable<PatientStatusPage> {
+      let params = new HttpParams();
+  
+      params = params.append('page', String(page));
+      params = params.append('size', String(size));
+  
+      return this.http
+        .get<PatientStatusPage>(environment.apiEndpoint + 'patientStatuses/' + patientId, { params })
+        .pipe(
+          map((patientStatusPage: PatientStatusPage) => patientStatusPage),
+          catchError((err) => throwError(err))
+      );
+  }
+
+  findAllByPage(page: number, size: number): Observable<PatientStatusPage> {
+      let params = new HttpParams();
+  
+      params = params.append('page', String(page));
+      params = params.append('size', String(size));
+  
+      return this.http
+        .get<PatientStatusPage>(environment.apiEndpoint + 'patientStatuses/by-page', { params })
+        .pipe(
+          map((patientStatusPage: PatientStatusPage) => patientStatusPage),
+          catchError((err) => throwError(err))
+      );
+    }
 }

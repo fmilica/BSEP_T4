@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -54,6 +55,31 @@ public class PatientAlarmController {
 
         logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "findAllPatientAlarms", HttpStatus.OK, "authorized"));
+        return new ResponseEntity<>(patientAlarms, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{patientId}")
+    public ResponseEntity<Page<PatientAlarmDto>> findAllPatientAlarmsByPatient(Principal principal,
+                                                                               @PathVariable("patientId") String patientId, Pageable pageable) {
+        Page<PatientAlarmDto> patientAlarms = null;
+        try {
+            patientAlarms = patientAlarmService.findAllByPatient(patientId, pageable);
+        } catch (JsonProcessingException e) {
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "findAllPatientAlarmsByPatient", HttpStatus.BAD_REQUEST, "json parse exception"));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "findAllPatientAlarmsByPatient", HttpStatus.INTERNAL_SERVER_ERROR, "decryption exception"));
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (NonExistentIdException e) {
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "findAllPatientAlarmsByPatient", HttpStatus.BAD_REQUEST, "decryption exception"));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                principal.getName(), "findAllPatientAlarmsByPatient", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(patientAlarms, HttpStatus.OK);
     }
 }

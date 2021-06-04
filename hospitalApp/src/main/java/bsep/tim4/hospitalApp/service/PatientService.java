@@ -1,5 +1,6 @@
 package bsep.tim4.hospitalApp.service;
 
+import bsep.tim4.hospitalApp.dto.PatientNameDto;
 import bsep.tim4.hospitalApp.dto.RuleDto;
 import bsep.tim4.hospitalApp.exceptions.NonExistentIdException;
 import bsep.tim4.hospitalApp.model.Patient;
@@ -59,6 +60,17 @@ public class PatientService {
         }
 
         return decryptPatient(patientEncrypted);
+    }
+
+    public List<PatientNameDto> findAll() throws JsonProcessingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
+        List<PatientNameDto> patients = new ArrayList<>();
+        List<PatientEncrypted> encrypteds = patientRepository.findAll();
+        for (PatientEncrypted pe: encrypteds) {
+            Patient patient = decryptPatient(pe);
+            patients.add(new PatientNameDto(patient.getId(), patient.getName()));
+        }
+
+        return patients;
     }
 
     public Page<Patient> findAll(Pageable pageable) throws JsonProcessingException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException {

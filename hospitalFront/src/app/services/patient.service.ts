@@ -2,11 +2,11 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Client } from "@stomp/stompjs";
 import { environment } from "src/environments/environment";
-import { Patient } from "../model/patient.model";
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { PatientPage } from "../model/patient-page.model";
 import { RuleDto } from "../dto/rule-dto";
+import { PatientName } from "../model/patient-name.model";
 
 @Injectable({
     providedIn: 'root',
@@ -47,6 +47,15 @@ export class PatientService {
         };
 
         this.patientStompClient.activate();
+    }
+
+    findAll() {
+        return this.http
+            .get<PatientName[]>(environment.apiEndpoint + 'patients')
+            .pipe(
+                map((patients: PatientName[]) => patients),
+                catchError((err) => throwError(err))
+            );
     }
 
     findAllByPage(page: number, size: number): Observable<PatientPage> {

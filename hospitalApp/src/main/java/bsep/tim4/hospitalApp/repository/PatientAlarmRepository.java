@@ -10,4 +10,7 @@ public interface PatientAlarmRepository extends MongoRepository<PatientAlarm, St
     PatientAlarm findFirstByOrderByTimestampDesc();
 
     Page<PatientAlarm> findAllByOrderByTimestampDesc(Pageable pageable);
+
+    Page<PatientAlarm> findAllByPatientIdOrderByTimestampDesc(String patientId, Pageable pageable);
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs/operators';
 import { RuleConditionDto } from 'src/app/dto/rule-condition-dto.dto';
 import { RuleConditionListDto } from 'src/app/dto/rule-condition-list-dto.dto';
 import { RuleDto } from 'src/app/dto/rule-dto';
@@ -14,13 +15,11 @@ import { PatientService } from 'src/app/services/patient.service';
 })
 export class CreateAlarmComponent implements OnInit {
 
-  patients: PatientName[] = [
-    {id: '60b758455babfb672608e6b8', name: 'Petar Petrovic'},
-  ];
-
   opers: string = "<=|<|==|>|>=";
 
   customAlarmForm: FormGroup;
+
+  patients: PatientName[] = []
 
   constructor(
     private toastr: ToastrService,
@@ -47,6 +46,10 @@ export class CreateAlarmComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.patientService
+      .findAll()
+      .pipe(map((patients: PatientName[]) => (this.patients = patients)))
+      .subscribe();
   }
 
   onSubmit(createCustomAlarmDirective: FormGroupDirective) {

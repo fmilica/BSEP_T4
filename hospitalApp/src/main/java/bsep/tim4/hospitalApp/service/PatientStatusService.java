@@ -85,13 +85,15 @@ public class PatientStatusService {
         return new PageImpl<>(patientStatusDtos, page.getPageable(), page.getTotalElements());
     }
 
-    public List<PatientStatus> findAllByPatientId(String patientId) throws NonExistentIdException {
-        PatientEncrypted patient = patientRepository.findById(patientId).orElse(null);
-
-        if(patient == null) {
-            throw new NonExistentIdException("Patient");
+    public Page<PatientStatusDto> findAllByPatientId(String patientId, Pageable pageable) throws NonExistentIdException, JsonProcessingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
+        Page<PatientStatus> page = patientStatusRepository.findAllByPatientIdOrderByTimestampDesc(patientId, pageable);
+        List<PatientStatusDto> patientStatusDtos = new ArrayList<>();
+        for(PatientStatus patientStatus : page.toList()) {
+            Patient patient = patientService.findById(patientStatus.getPatientId());
+            patientStatusDtos.add(new PatientStatusDto(patient.getName(), patientStatus.getHeartRate(), patientStatus.getLowerBloodPressure() + "/" +
+                    patientStatus.getUpperBloodPressure(), patientStatus.getBodyTemperature(), patientStatus.getRespiratoryRate(), patientStatus.getTimestamp()));
         }
-        return patientStatusRepository.findAllByPatientId(patientId);
+        return new PageImpl<>(patientStatusDtos, page.getPageable(), page.getTotalElements());
     }
 
     private void saveAndSendNewAlarms(List<PatientAlarm> alarms) {
