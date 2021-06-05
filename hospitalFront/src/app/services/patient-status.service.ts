@@ -40,4 +40,5 @@ export class PatientStatusService {
           catchError((err) => throwError(err))
       );
     }
+ 
 }

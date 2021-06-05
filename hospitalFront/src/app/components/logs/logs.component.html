@@ -1,6 +1,93 @@
 <mat-progress-bar class="progress-bar" mode="indeterminate" 
     *ngIf="dataSource.content.length===0">
 </mat-progress-bar>
+<form id="filter-log-form" [formGroup]="filterForm" #filterLogs="ngForm" (ngSubmit)="onFilter(filterLogs)">
+    <div class="row">
+        <div class="col-md-1.5">
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>Level</mat-label>
+                    <mat-select formControlName="level">
+                        <mat-option [value]="''">All</mat-option>
+                        <mat-option *ngFor="let level of levels" [value]="level">
+                            {{level}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-1.5">
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>From</mat-label>
+                    <input
+                        formControlName="fromDate"
+                        matInput
+                        type="date"
+                    >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-1.5">
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>To</mat-label>
+                    <input
+                        formControlName="toDate"
+                        matInput
+                        type="date"
+                    >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-1.5">
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>Message</mat-label>
+                    <input
+                        formControlName="message"
+                        matInput
+                        type="text"
+                    >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-1.5">
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>Source</mat-label>
+                    <input
+                        formControlName="source"
+                        matInput
+                        type="text"
+                    >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-1.5">
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>Ip address</mat-label>
+                    <input
+                        formControlName="ip"
+                        matInput
+                        type="text"
+                    >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-1.5">
+            <div class="form-group">
+             <button
+                id="filter-patient-alarm"
+                class="btn btn-color"
+            >
+                Filter logs
+            </button>
+            </div>
+        </div>
+    </div>
+</form>
 <div class="ng-container row justify-content-md-center">
     <div class="col-md-11">
         <table mat-table [dataSource]="dataSource.content" id="log-table">
