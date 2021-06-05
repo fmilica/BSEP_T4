@@ -20,7 +20,7 @@ public class LogService {
 
     public Page<LogDto> findAll(Pageable pageable) {
         List<LogDto> logDtoList = new ArrayList<>();
-        Page<Log> page = logRepository.findAll(pageable);
+        Page<Log> page = logRepository.findAllByOrderByTimestampDesc(pageable);
         for(Log log : page.toList()) {
             logDtoList.add(new LogDto(log.getLevel(), log.getMessage(), log.getTimestamp()));
         }

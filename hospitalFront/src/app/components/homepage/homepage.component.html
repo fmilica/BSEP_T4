@@ -17,6 +17,11 @@
                 Log alarms
             </a>
         </mat-nav-list>
+        <mat-nav-list *ngIf="role==='SUPER_ADMIN'">
+            <a mat-list-item (click)="toSuperAdmin()">
+                Vitals Security
+            </a>
+        </mat-nav-list>
         <mat-nav-list *ngIf="role==='DOCTOR'">
             <a mat-list-item [routerLink]="'patients'" routerLinkActive="active-link">
                 Patients

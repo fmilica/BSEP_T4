@@ -20,7 +20,7 @@ public class LogAlarmService {
 
     public Page<LogAlarmDto> findAll(Pageable pageable) {
         List<LogAlarmDto> logAlarmDtoList = new ArrayList<>();
-        Page<LogAlarm> page = logAlarmRepository.findAll(pageable);
+        Page<LogAlarm> page = logAlarmRepository.findAllByOrderByTimestampDesc(pageable);
         for( LogAlarm logAlarm : page.toList()) {
             logAlarmDtoList.add(new LogAlarmDto(logAlarm.getType(), logAlarm.getMessage(), logAlarm.getTimestamp()));
         }

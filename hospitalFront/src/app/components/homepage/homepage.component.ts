@@ -30,4 +30,8 @@ export class HomepageComponent implements OnInit {
     this.toastr.info('Logged out successfully!');
   }
 
+  toSuperAdmin(): void {
+    window.location.href = "https://localhost:4200/homepage/csr";
+  }
+
 }
