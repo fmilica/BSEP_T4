@@ -8,8 +8,13 @@
             <a mat-list-item [routerLink]="'csr'" routerLinkActive="active-link">
                 Certificate Signing Request
             </a>
+        </mat-nav-list>
+        <mat-nav-list *ngIf="role==='ADMIN'||role==='SUPER_ADMIN'">
             <a mat-list-item [routerLink]="'log'" routerLinkActive="active-link">
                 Logs
+            </a>
+            <a mat-list-item [routerLink]="'log-alarms'" routerLinkActive="active-link">
+                Log alarms
             </a>
         </mat-nav-list>
         <mat-nav-list *ngIf="role==='DOCTOR'">

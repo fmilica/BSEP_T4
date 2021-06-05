@@ -55,7 +55,7 @@ public class LogReaderService {
             for (LogConfig logConfig : logConfigList.getLogConfigList()) {
                 // check if folder exists
                 checkFolderPath(logConfig.getPath());
-                LogReader reader = new LogReader(logRepository, logConfig);
+                LogReader reader = new LogReader(logRepository, logConfig, kieSessionService, logAlarmRepository, simpMessagingTemplate);
                 taskExecutor.execute(reader);
                 readers.add(reader);
                 //LogReader logReader = new LogReader(logRepository, logConfig);

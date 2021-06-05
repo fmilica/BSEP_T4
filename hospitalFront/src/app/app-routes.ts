@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { CreateAlarmComponent } from "./components/create-alarm/create-alarm.component";
 import { CreateCsrComponent } from "./components/create-csr/create-csr.component";
 import { HomepageComponent } from "./components/homepage/homepage.component";
+import { LogAlarmsComponent } from "./components/log-alarms/log-alarms.component";
 import { LoginComponent } from "./components/login/login.component";
 import { LogsComponent } from "./components/logs/logs.component";
 import { PatientAlarmComponent } from "./components/patient-alarm/patient-alarm.component";
@@ -39,6 +40,12 @@ export const routes: Routes = [
       {
         path: 'log',
         component: LogsComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: 'ADMIN|SUPER_ADMIN' },
+      },
+      {
+        path: 'log-alarms',
+        component: LogAlarmsComponent,
         canActivate: [RoleGuard],
         data: { expectedRoles: 'ADMIN|SUPER_ADMIN' },
       },

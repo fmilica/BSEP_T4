@@ -62,7 +62,7 @@ public class DbSeeder implements CommandLineRunner {
 
         patientService.save(klara);*/
 
-        List<MaliciousIp> maliciousIps = Arrays.asList(new MaliciousIp("151.106.3.179"),
+        /*List<MaliciousIp> maliciousIps = Arrays.asList(new MaliciousIp("151.106.3.179"),
         new MaliciousIp("134.119.192.123"), new MaliciousIp("111.223.219.131"),
         new MaliciousIp("160.20.45.194"), new MaliciousIp("111.223.219.71"),
                 new MaliciousIp("160.20.45.162"), new MaliciousIp("103.48.37.62"),
@@ -76,7 +76,7 @@ public class DbSeeder implements CommandLineRunner {
                 new MaliciousIp("160.20.45.7"), new MaliciousIp("160.20.45.174"),
                 new MaliciousIp("103.20.9.55"), new MaliciousIp("122.14.137.73"));
 
-        maliciousIpRepository.saveAll(maliciousIps);
+        maliciousIpRepository.saveAll(maliciousIps);*/
 
     }
 }
