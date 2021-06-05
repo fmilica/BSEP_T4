@@ -49,7 +49,7 @@ export class LogsComponent implements OnInit {
 
   onPaginateChange(event: PageEvent): void {
     this.pageEvent = event;
-    this.getNewPage(this.pageEvent.pageIndex, this.pageEvent.pageSize);
+    this.onFilter(null);
   }
 
   getNewPage(index: number, size: number): void {

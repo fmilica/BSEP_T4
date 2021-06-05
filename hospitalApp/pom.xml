@@ -96,7 +96,7 @@
 			<version>1.68</version>
 		</dependency>
 
-		<!--Dependecy for http-->
+		<!--Dependency for http-->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
@@ -169,6 +169,18 @@
 			<artifactId>maven-invoker</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+
+		<!-- QueryDSL -->
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-mongodb</artifactId>
+			<version>4.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+			<version>4.3.1</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -196,6 +208,24 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.mysema.maven</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<version>1.1.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/generated-sources/java</outputDirectory>
+							<processor>
+								org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor
+							</processor>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -2,6 +2,7 @@ package bsep.tim4.hospitalApp.controller;
 
 import bsep.tim4.hospitalApp.dto.LogConfig;
 import bsep.tim4.hospitalApp.dto.LogDto;
+import bsep.tim4.hospitalApp.dto.LogFilterDTO;
 import bsep.tim4.hospitalApp.service.LogReaderService;
 import bsep.tim4.hospitalApp.service.LogService;
 import org.slf4j.Logger;
@@ -52,6 +53,15 @@ public class LogController {
 
         logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "findAllLogs", HttpStatus.OK, "authorized"));
+        return new ResponseEntity<>(logs, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Page<LogDto>> filterAllLogs(Principal principal, Pageable pageable, @RequestBody @Valid LogFilterDTO logFilterDTO) {
+        Page<LogDto> logs = logService.filterAllLogs(pageable, logFilterDTO);
+
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                principal.getName(), "filterAllLogs", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(logs, HttpStatus.OK);
     }
 }
