@@ -8,6 +8,7 @@ import { LogsComponent } from "./components/logs/logs.component";
 import { PatientAlarmComponent } from "./components/patient-alarm/patient-alarm.component";
 import { PatientStatusComponent } from "./components/patient-status/patient-status.component";
 import { PatientComponent } from "./components/patient/patient.component";
+import { ReportsComponent } from "./components/reports/reports.component";
 import { UnauthorizedComponent } from "./components/unauthorized/unauthorized.component";
 import { LoginGuard } from "./guards/login-guard.service";
 import { RoleGuard } from "./guards/role-guard.service";
@@ -34,6 +35,12 @@ export const routes: Routes = [
       {
         path: 'csr',
         component: CreateCsrComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: 'ADMIN' },
+      },
+      {
+        path: 'reports',
+        component: ReportsComponent,
         canActivate: [RoleGuard],
         data: { expectedRoles: 'ADMIN' },
       },

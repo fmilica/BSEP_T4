@@ -17,6 +17,11 @@
                 Log alarms
             </a>
         </mat-nav-list>
+        <mat-nav-list *ngIf="role==='ADMIN'">
+            <a mat-list-item [routerLink]="'reports'" routerLinkActive="active-link">
+                Reports
+            </a>
+        </mat-nav-list>
         <mat-nav-list *ngIf="role==='SUPER_ADMIN'">
             <a mat-list-item (click)="toSuperAdmin()">
                 Vitals Security

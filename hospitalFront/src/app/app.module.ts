@@ -35,6 +35,7 @@ import { PatientStatusComponent } from './components/patient-status/patient-stat
 import { CreateAlarmComponent } from './components/create-alarm/create-alarm.component';
 import { PatientAlarmComponent } from './components/patient-alarm/patient-alarm.component';
 import { LogAlarmsComponent } from './components/log-alarms/log-alarms.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { LogAlarmsComponent } from './components/log-alarms/log-alarms.component
     CreateAlarmComponent,
     PatientAlarmComponent,
     LogAlarmsComponent,
+    ReportsComponent,
   ],
   imports: [
     RouterModule,
