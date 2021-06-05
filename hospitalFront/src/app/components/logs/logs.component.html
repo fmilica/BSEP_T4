@@ -1,5 +1,5 @@
-<mat-progress-bar class="progress-bar" mode="indeterminate" 
-    *ngIf="dataSource.content.length===0">
+<div class="table-title">Logs</div>
+<mat-progress-bar class="progress-bar" mode="indeterminate" *ngIf="dataSource.content.length===0">
 </mat-progress-bar>
 <form id="filter-log-form" [formGroup]="filterForm" #filterLogs="ngForm" (ngSubmit)="onFilter(filterLogs)">
     <div class="row">
@@ -19,36 +19,8 @@
         <div class="col-md-1.5">
             <div class="form-group">
                 <mat-form-field appearance="fill" class="form-field">
-                    <mat-label>From</mat-label>
-                    <input
-                        formControlName="fromDate"
-                        matInput
-                        type="date"
-                    >
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="col-md-1.5">
-            <div class="form-group">
-                <mat-form-field appearance="fill" class="form-field">
-                    <mat-label>To</mat-label>
-                    <input
-                        formControlName="toDate"
-                        matInput
-                        type="date"
-                    >
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="col-md-1.5">
-            <div class="form-group">
-                <mat-form-field appearance="fill" class="form-field">
                     <mat-label>Message</mat-label>
-                    <input
-                        formControlName="message"
-                        matInput
-                        type="text"
-                    >
+                    <input formControlName="message" matInput type="text">
                 </mat-form-field>
             </div>
         </div>
@@ -56,11 +28,7 @@
             <div class="form-group">
                 <mat-form-field appearance="fill" class="form-field">
                     <mat-label>Source</mat-label>
-                    <input
-                        formControlName="source"
-                        matInput
-                        type="text"
-                    >
+                    <input formControlName="source" matInput type="text">
                 </mat-form-field>
             </div>
         </div>
@@ -68,22 +36,32 @@
             <div class="form-group">
                 <mat-form-field appearance="fill" class="form-field">
                     <mat-label>Ip address</mat-label>
-                    <input
-                        formControlName="ip"
-                        matInput
-                        type="text"
-                    >
+                    <input formControlName="ip" matInput type="text">
                 </mat-form-field>
             </div>
         </div>
-        <div class="col-md-1.5">
+
+        <div class="col-md-4">
             <div class="form-group">
-             <button
-                id="filter-patient-alarm"
-                class="btn btn-color"
-            >
-                Filter logs
-            </button>
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>From</mat-label>
+                    <input formControlName="fromDate" matInput type="date">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>To</mat-label>
+                    <input formControlName="toDate" matInput type="date">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <button id="filter-patient-alarm" class="btn btn-color">
+                    Filter logs
+                </button>
             </div>
         </div>
     </div>
@@ -115,13 +93,9 @@
             </ng-container>
         </table>
 
-        <mat-paginator showFirstLastButtons
-            id="log-paginator"
-            [length]="dataSource.totalElements" 
-            [pageSize]="dataSource.size" 
-            [pageSizeOptions]="[2,5,10]"
-            (page)="pageEvent = $event; onPaginateChange($event)"
-        >
+        <mat-paginator showFirstLastButtons id="log-paginator" [length]="dataSource.totalElements"
+            [pageSize]="dataSource.size" [pageSizeOptions]="[2,5,10]"
+            (page)="pageEvent = $event; onPaginateChange($event)">
         </mat-paginator>
     </div>
 </div>

@@ -1,24 +1,22 @@
-<mat-progress-bar class="progress-bar" mode="indeterminate" 
-    *ngIf="dataSource.content.length===0">
+<div class="table-title">Patient statuses</div>
+<mat-progress-bar class="progress-bar" mode="indeterminate" *ngIf="dataSource.content.length===0">
 </mat-progress-bar>
-<form id="filter-patient-status-form" [formGroup]="filterForm" #filterPatientStatuses="ngForm" (ngSubmit)="onFilter(filterPatientStatuses)">
+<form id="filter-patient-status-form" [formGroup]="filterForm" #filterPatientStatuses="ngForm"
+    (ngSubmit)="onFilter(filterPatientStatuses)">
     <div class="form-group">
-            <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Patient</mat-label>
-                <mat-select formControlName="patientFilter">
-                    <mat-option [value]="''">All</mat-option>
-                    <mat-option *ngFor="let patient of patients" [value]="patient.id">
-                        {{patient.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <!-- Filter -->
-            <button
-                id="filter-patient-status"
-                class="btn btn-color"
-            >
-                Filter patient statuses
-            </button>
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Patient</mat-label>
+            <mat-select formControlName="patientFilter">
+                <mat-option [value]="''">All</mat-option>
+                <mat-option *ngFor="let patient of patients" [value]="patient.id">
+                    {{patient.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- Filter -->
+        <button id="filter-patient-status" class="btn btn-color">
+            Filter patient statuses
+        </button>
     </div>
 </form>
 <div class="ng-container row justify-content-md-center">
@@ -63,13 +61,9 @@
             </ng-container>
         </table>
 
-        <mat-paginator showFirstLastButtons
-            id="patient-statuses-paginator"
-            [length]="dataSource.totalElements" 
-            [pageSize]="dataSource.size" 
-            [pageSizeOptions]="[2,5,10]"
-            (page)="pageEvent = $event; onPaginateChange($event)"
-        >
+        <mat-paginator showFirstLastButtons id="patient-statuses-paginator" [length]="dataSource.totalElements"
+            [pageSize]="dataSource.size" [pageSizeOptions]="[2,5,10]"
+            (page)="pageEvent = $event; onPaginateChange($event)">
         </mat-paginator>
     </div>
 </div>

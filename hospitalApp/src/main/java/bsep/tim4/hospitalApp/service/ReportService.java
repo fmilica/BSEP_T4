@@ -21,7 +21,7 @@ public class ReportService {
     @Autowired
     private LogAlarmRepository logAlarmRepository;
 
-    public void generateReport(ReportDto reportDto) {
+    public ReportDto generateReport(ReportDto reportDto) {
         Date startDate = reportDto.getStartDate();
         Date endDate = reportDto.getEndDate();
 
@@ -29,25 +29,18 @@ public class ReportService {
         reportDto.setTotalLogs(totalLogs);
         for (LogLevel level : LogLevel.values()) {
             long totalLevelLogs = logRepository.countByLevelAndTimestampBetween(level, startDate, endDate);
-            reportDto.getLogsByLevel().put(level, totalLevelLogs);
+            reportDto.getLogsByLevel().add(totalLevelLogs);
         }
         long totalAlarms = logAlarmRepository.countByTimestampBetween(startDate, endDate);
         reportDto.setTotalLogAlarms(totalAlarms);
         for (LogAlarmType type : LogAlarmType.values()) {
             long totalTypeAlarms = logAlarmRepository.countByTypeAndTimestampBetween(type, startDate, endDate);
-            reportDto.getLogAlarmsByType().put(type, totalTypeAlarms);
+            reportDto.getLogAlarmsByType().add(totalTypeAlarms);
         }
 
         List<FrequentSources> sources = logAlarmRepository.findMostFrequentSources(startDate.toInstant(), endDate.toInstant());
+        reportDto.setFrequentSource(sources);
 
-        for (FrequentSources fs : sources) {
-            System.out.println(fs.getId());
-            System.out.println(fs.getTotal());
-            System.out.println();
-        }
-
-
-        System.out.println(reportDto.getLogsByLevel());
-        System.out.println(reportDto.getLogAlarmsByType());
+        return reportDto;
     }
 }

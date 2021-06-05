@@ -33,15 +33,15 @@ public class LogController {
 
     @PostMapping(value="/add-log-folder", consumes = "application/json")
     // SUPER_ADMIN
-    public ResponseEntity<Void> configureLogFolders(/*Principal principal*/@RequestBody @Valid List<LogConfig> logConfigList) {
+    public ResponseEntity<Void> configureLogFolders(Principal principal, @RequestBody @Valid List<LogConfig> logConfigList) {
         try {
             logReaderService.handleConfiguration(logConfigList);
-            //logger.info(String.format("%s called method %s with status code %s: %s",
-            //        principal.getName(), "addLogFolder", HttpStatus.OK, "authorized"));
+            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "addLogFolder", HttpStatus.OK, "authorized"));
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {
-            //logger.info(String.format("%s called method %s with status code %s: %s",
-            //        principal.getName(), "addLogFolder", HttpStatus.BAD_REQUEST, "invalid folder path"));
+            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "addLogFolder", HttpStatus.BAD_REQUEST, "invalid folder path"));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }

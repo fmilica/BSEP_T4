@@ -1,15 +1,13 @@
 package bsep.tim4.hospitalApp.dto;
 
-import bsep.tim4.hospitalApp.model.LogAlarmType;
-import bsep.tim4.hospitalApp.model.LogLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,13 +22,13 @@ public class ReportDto {
 
     private Long totalLogs;
     private Long totalLogAlarms;
-    private String mostFrequentSource;
-    private Map<LogLevel, Long> logsByLevel;
-    private Map<LogAlarmType, Long> logAlarmsByType;
+    private List<FrequentSources> frequentSource;
+    private List<Long> logsByLevel;
+    private List<Long> logAlarmsByType;
 
     public ReportDto() {
-        this.logsByLevel = new HashMap<>();
-        this.logAlarmsByType = new HashMap<>();
+        this.logsByLevel = new ArrayList<>();
+        this.logAlarmsByType = new ArrayList<>();
     }
 
 }
