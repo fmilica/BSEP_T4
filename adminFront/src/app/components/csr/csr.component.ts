@@ -12,23 +12,10 @@ import { Router } from '@angular/router';
 })
 export class CsrComponent implements OnInit {
 
-  displayedColumns: string[] = ['commonName', 'name', 'surname', 'organizationName', 
-                                'organizationUnit', 'country', 'email', 'actions'];
+  displayedColumns: string[] = ['commonName', 'name', 'surname', 'organizationName',
+    'organizationUnit', 'country', 'email', 'actions'];
 
   dataSource: CSR[] = []
-  // dataSource: CSR[] =  [{commonName: 'common', givenName: 'ksenija', surname: 'prcic',
-  //                           organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
-  //                           country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 'PENDING', id: 1},
-  //                           {commonName: 'common', givenName: 'ksenija', surname: 'prcic',
-  //                           organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
-  //                           country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 'APPROVED'},
-  //                           {commonName: 'common', givenName: 'ksenija', surname: 'prcic',
-  //                           organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
-  //                           country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 'APPROVED'},
-  //                           {commonName: 'common', givenName: 'ksenija', surname: 'prcic',
-  //                           organizationName: 'kseno kompo', organizationUnit: 'sefovsko',
-  //                           country: 'RS', email: 'ksenija.prcic1998@gmail.com', status: 'DECLINED'}
-  //                         ]
 
   constructor(
     private csrService: CsrService,
@@ -52,19 +39,19 @@ export class CsrComponent implements OnInit {
   // decline csr
   declineCsr(csr: CSR) {
     this.csrService.declineCertificateSigningRequest(csr.id)
-    .subscribe(
-      response => {
-        this.toastr.success('Successfully declined CSR!');
-        // reload tabele
-        this.initDataSource();
-      },
-      error => {
-        if (error.error.message){
-          this.toastr.error(error.error.message);
-        } else {
-          this.toastr.error('503 Server Unavailable');
-        }
-      });
+      .subscribe(
+        response => {
+          this.toastr.success('Successfully declined CSR!');
+          // reload tabele
+          this.initDataSource();
+        },
+        error => {
+          if (error.error.message) {
+            this.toastr.error(error.error.message);
+          } else {
+            this.toastr.error('503 Server Unavailable');
+          }
+        });
   }
 
   // accept csr

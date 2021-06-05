@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class HospitalService {
@@ -23,8 +24,30 @@ public class HospitalService {
     @Autowired
     private SimulatorRepository simulatorRepository;
 
-    public List<Hospital> getAll() {
+    public List<Hospital> findAll() {
         return hospitalRepository.findAll();
+    }
+
+    public Set<Simulator> findAllForHospital(Long hospitalId) throws NonExistentIdException {
+        Hospital hospital = hospitalRepository.findById(hospitalId).orElse(null);
+        if (hospital == null) {
+            throw new NonExistentIdException("Hospital");
+        }
+        return hospital.getSimulators();
+    }
+
+    public List<Simulator> findAllNotInHospital(Long hospitalId) throws NonExistentIdException {
+        Hospital hospital = hospitalRepository.findById(hospitalId).orElse(null);
+        if (hospital == null) {
+            throw new NonExistentIdException("Hospital");
+        }
+        List<Long> simulatorIds = hospital.getSimulators().stream()
+            .map(Simulator::getId)
+            .collect(Collectors.toList());
+        if (simulatorIds.isEmpty()) {
+            return simulatorRepository.findAll();
+        }
+        return simulatorRepository.findByIdNotIn(simulatorIds);
     }
 
     public List<LogConfig> addSimulator(Long hospitalId, List<LogConfig> logConfigList) throws NonExistentIdException {
@@ -41,7 +64,7 @@ public class HospitalService {
             addedSimulators.add(simulator);
             logConfig.setPath(simulator.getPath());
         }
-        hospital.setSimulators(addedSimulators);
+        hospital.getSimulators().addAll(addedSimulators);
         hospitalRepository.save(hospital);
         return logConfigList;
     }
