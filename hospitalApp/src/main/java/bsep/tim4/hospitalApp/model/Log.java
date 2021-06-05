@@ -1,5 +1,6 @@
 package bsep.tim4.hospitalApp.model;
 
+import com.querydsl.core.annotations.QueryEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.Date;
 @Document(collection = "Log")
 @Role(Role.Type.EVENT)
 @Timestamp("timestamp")
+@QueryEntity
 public class Log {
 
     @Id
