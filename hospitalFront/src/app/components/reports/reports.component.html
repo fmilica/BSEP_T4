@@ -1,0 +1,38 @@
+<form id="report-form" [formGroup]="reportForm" #createReportForm="ngForm" (ngSubmit)="createReport(createReportForm)">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>From date</mat-label>
+                    <input
+                        formControlName="fromDate"
+                        matInput
+                        type="date"
+                    >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>To date</mat-label>
+                    <input
+                        formControlName="toDate"
+                        matInput
+                        type="date"
+                    >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+             <button
+                id="create-report"
+                class="btn btn-color"
+            >
+                Create report
+            </button>
+            </div>
+        </div>
+    </div>
+</form>
