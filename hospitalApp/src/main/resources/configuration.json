@@ -1,9 +1,3 @@
 {
-  "logConfigList" : [ {
-    "path" : "C:/Users/Ksenija/Desktop/BSEP_T4/hospitalApp/logs",
-    "type" : "DEFAULT",
-    "readInterval" : 0,
-    "filter" : null,
-    "lastRead" : null
-  } ]
+  "logConfigList" : [ ]
 }
