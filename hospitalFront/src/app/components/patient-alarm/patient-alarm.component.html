@@ -1,6 +1,6 @@
-<div class="table-title">Patient alarms</div>
 <mat-progress-bar class="progress-bar" mode="indeterminate" *ngIf="dataSource.content.length===0">
 </mat-progress-bar>
+<div class="table-title">Patient alarms</div>
 <form id="filter-patient-alarm-form" [formGroup]="filterForm" #filterPatientAlarms="ngForm"
     (ngSubmit)="onFilter(filterPatientAlarms)">
     <div class="form-group">

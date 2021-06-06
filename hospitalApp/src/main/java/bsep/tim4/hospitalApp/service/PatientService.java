@@ -17,13 +17,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import javax.validation.Valid;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -101,6 +99,7 @@ public class PatientService {
             throw new NonExistentIdException("Patient");
         }
 
+        rule.setId(UUID.randomUUID());
         InputStream template = new FileInputStream(patientTemplate);
         // Compile template to generate new rules
         List<RuleDto> arguments = new ArrayList<>();
@@ -109,7 +108,7 @@ public class PatientService {
         String drl = compiler.compile(arguments, template);
         // Save rule to drl file
         FileOutputStream drlFile = new FileOutputStream(
-                rulesPath + UUID.randomUUID() + ".drl");
+                rulesPath + rule.getId() + ".drl");
         drlFile.write(drl.getBytes());
         drlFile.close();
 

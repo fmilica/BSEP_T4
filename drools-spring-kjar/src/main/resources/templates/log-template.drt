@@ -2,6 +2,7 @@ template header
 ruleConditions
 logAlarmType
 logAlarmMessage
+id
 
 package cep;
 
@@ -14,7 +15,7 @@ import java.util.Date;
 
 template "log-template"
 
-rule "Log template rule @{row.rowNumber}"
+rule "Log template rule @{id}.@{row.rowNumber}"
     when
         $log1: Log(processed == false, $source : source, @{ruleConditions})
     then

@@ -49,15 +49,15 @@ public class KieSessionService {
 
     public KieSession getCepSession() {
         if (this.cepSession == null) {
-            List<String> malicious = new ArrayList<>();
-            List<MaliciousIp> maliciousIps = maliciousIpRepository.findAll();
-            for (MaliciousIp ip : maliciousIps) {
-                malicious.add(ip.getAddress());
-            }
             log.info("Initialized session.");
             cepSession = kieContainer.newKieSession("cepSession");
-            cepSession.setGlobal("maliciousIpAdresses", malicious);
         }
+        List<String> malicious = new ArrayList<>();
+        List<MaliciousIp> maliciousIps = maliciousIpRepository.findAll();
+        for (MaliciousIp ip : maliciousIps) {
+            malicious.add(ip.getAddress());
+        }
+        cepSession.setGlobal("maliciousIpAdresses", malicious);
         return cepSession;
     }
 

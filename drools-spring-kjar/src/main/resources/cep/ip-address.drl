@@ -42,7 +42,6 @@ rule "More than 30 login attempts in 24 hours from one ip address"
                 ipAddress == $ipAddress,
                 this not after [24h] $log1
             ),
-            //over window:time( 24h )
             $logs: collectList($log2)
         )
         eval($logs.size() >= 30)

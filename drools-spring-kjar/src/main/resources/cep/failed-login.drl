@@ -19,7 +19,6 @@ rule "More than 5 login attempts in 1 minute from one username"
                 this not after [30s] $log1,
                 this not before [30s] $log1
             ),
-            // over window:time( 10m )
             $logs: collectList($log2)
         )
         eval($logs.size() >= 5)

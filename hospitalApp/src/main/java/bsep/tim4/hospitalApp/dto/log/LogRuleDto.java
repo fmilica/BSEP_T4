@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -24,4 +25,6 @@ public class LogRuleDto {
 
     @NotNull(message = "Rule alarm message cannot be empty.")
     private String logAlarmMessage;
+
+    private UUID id;
 }

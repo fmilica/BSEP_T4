@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -25,4 +26,6 @@ public class RuleDto {
     @Valid
     @NotNull(message = "Rule conditions cannot be empty.")
     private RuleConditionListDto ruleConditions;
+
+    private UUID id;
 }

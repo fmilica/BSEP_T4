@@ -93,13 +93,14 @@ public class LogService {
     public void createRule(LogRuleDto rule) throws MavenInvocationException, IOException {
         InputStream template = new FileInputStream(logTemplate);
         // Compile template to generate new rules
+        rule.setId(UUID.randomUUID());
         List<LogRuleDto> arguments = new ArrayList<>();
         arguments.add(rule);
         ObjectDataCompiler compiler = new ObjectDataCompiler();
         String drl = compiler.compile(arguments, template);
         // Save rule to drl file
         FileOutputStream drlFile = new FileOutputStream(
-                cepPath + UUID.randomUUID() + ".drl");
+                cepPath + rule.getId() + ".drl");
         drlFile.write(drl.getBytes());
         drlFile.close();
 

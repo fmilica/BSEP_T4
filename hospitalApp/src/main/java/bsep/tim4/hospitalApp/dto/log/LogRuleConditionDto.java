@@ -34,7 +34,9 @@ public class LogRuleConditionDto {
         String enumValue = value;
         if (conditionType.equals("level")) {
             enumValue = "LogLevel." + value;
+        } else {
+            enumValue = '"' + value + '"';
         }
-        return conditionType + " " + conditionOperator + " " + '"' + enumValue + '"';
+        return conditionType + " " + conditionOperator + " " + enumValue;
     }
 }

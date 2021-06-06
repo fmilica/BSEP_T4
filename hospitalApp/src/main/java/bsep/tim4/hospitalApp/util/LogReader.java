@@ -208,25 +208,25 @@ public class LogReader implements Runnable {
     private void saveAndSendNewAlarms(List<LogAlarm> alarms) {
         LogAlarm lastSaved = this.logAlarmRepository.findFirstByOrderByTimestampDesc();
         List<MaliciousIp> newMaliciousIps = new ArrayList<>();
-        List<LogAlarm> newAlarms = new ArrayList<>();
         if (lastSaved != null) {
             for (LogAlarm alarm : alarms) {
                 if (alarm.getTimestamp().after(lastSaved.getTimestamp())) {
-                    newAlarms.add(logAlarmRepository.save(alarm));
+                    alarm = logAlarmRepository.save(alarm);
                     if (alarm.getType() == LogAlarmType.NEW_BLACKLIST_IP) {
                         newMaliciousIps.add(new MaliciousIp(alarm.getSource()));
                     }
+                    this.simpMessagingTemplate.convertAndSend("/topic/logs", alarm);
                 }
             }
         } else {
             for (LogAlarm alarm : alarms) {
-                newAlarms.add(logAlarmRepository.save(alarm));
+                alarm = logAlarmRepository.save(alarm);
                 if (alarm.getType() == LogAlarmType.NEW_BLACKLIST_IP) {
                     newMaliciousIps.add(new MaliciousIp(alarm.getSource()));
                 }
+                this.simpMessagingTemplate.convertAndSend("/topic/logs", alarm);
             }
         }
         maliciousIpRepository.saveAll(newMaliciousIps);
-        this.simpMessagingTemplate.convertAndSend("/topic/logs", newAlarms);
     }
 }

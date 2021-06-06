@@ -1,6 +1,6 @@
- <mat-progress-bar class="progress-bar" mode="indeterminate" 
-    *ngIf="dataSource.content.length===0">
+<mat-progress-bar class="progress-bar" mode="indeterminate" *ngIf="dataSource.content.length===0">
 </mat-progress-bar>
+<div class="table-title">Patients</div>
 <div class="ng-container row justify-content-md-center">
     <div class="col-md-11">
         <table mat-table [dataSource]="dataSource.content" id="patient-table">
@@ -34,13 +34,9 @@
 
         </table>
 
-        <mat-paginator showFirstLastButtons
-            id="patients-paginator"
-            [length]="dataSource.totalElements" 
-            [pageSize]="dataSource.size" 
-            [pageSizeOptions]="[2,5,10]"
-            (page)="pageEvent = $event; onPaginateChange($event)"
-        >
+        <mat-paginator showFirstLastButtons id="patients-paginator" [length]="dataSource.totalElements"
+            [pageSize]="dataSource.size" [pageSizeOptions]="[2,5,10]"
+            (page)="pageEvent = $event; onPaginateChange($event)">
         </mat-paginator>
     </div>
 </div>

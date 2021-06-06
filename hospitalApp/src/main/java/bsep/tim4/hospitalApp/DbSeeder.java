@@ -1,7 +1,5 @@
 package bsep.tim4.hospitalApp;
 
-import bsep.tim4.hospitalApp.model.MaliciousIp;
-import bsep.tim4.hospitalApp.model.Patient;
 import bsep.tim4.hospitalApp.repository.MaliciousIpRepository;
 import bsep.tim4.hospitalApp.repository.PatientRepository;
 import bsep.tim4.hospitalApp.repository.PatientStatusRepository;
@@ -9,12 +7,6 @@ import bsep.tim4.hospitalApp.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 @Component
 public class DbSeeder implements CommandLineRunner {
