@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { CreateAlarmComponent } from "./components/create-alarm/create-alarm.component";
 import { CreateCsrComponent } from "./components/create-csr/create-csr.component";
+import { CreateLogRuleComponent } from "./components/create-log-rule/create-log-rule.component";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { LogAlarmsComponent } from "./components/log-alarms/log-alarms.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -79,6 +80,12 @@ export const routes: Routes = [
         component: CreateAlarmComponent,
         canActivate: [RoleGuard],
         data: { expectedRoles: 'DOCTOR' },
+      },
+      {
+        path: 'create-log-alarm',
+        component: CreateLogRuleComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: 'ADMIN' },
       },
     ],
   },

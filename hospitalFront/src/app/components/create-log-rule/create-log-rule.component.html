@@ -1,0 +1,158 @@
+<div class="table-title">Create custom alarm for logs</div>
+<div class="col">
+    <form [formGroup]="customAlarmForm" #createCustomAlarmDirective="ngForm" (ngSubmit)="onSubmit(createCustomAlarmDirective)">
+        <div class="form-group">
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Log alarm type</mat-label>
+                <mat-select formControlName="logAlarmType">
+                    <mat-option *ngFor="let type of logAlarmTypes" [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Log alarm message</mat-label>
+                <input matInput formControlName="logAlarmMessage" type="text">
+            </mat-form-field>
+        </div>
+        <!--Level-->
+        <div class="form-group">
+            <mat-checkbox formControlName="level">
+                Level
+            </mat-checkbox>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Operator</mat-label>
+                <mat-select formControlName="operatorLevel">
+                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
+                        {{oper}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Value for level</mat-label>
+                <mat-select formControlName="valueLevel">
+                    <mat-option *ngFor="let level of levels.split('|')" [value]="level">
+                        {{level}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <!--Message-->
+        <div class="form-group">
+            <mat-checkbox formControlName="message">
+                Message
+            </mat-checkbox>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Operator</mat-label>
+                <mat-select formControlName="operatorMessage">
+                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
+                        {{oper}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Value for message</mat-label>
+                <input matInput formControlName="valueMessage" type="text">
+            </mat-form-field>
+        </div>
+        <!--Source-->
+        <div class="form-group">
+            <mat-checkbox formControlName="source">
+                Source
+            </mat-checkbox>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Operator</mat-label>
+                <mat-select formControlName="operatorSource">
+                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
+                        {{oper}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Value for source</mat-label>
+                <input matInput formControlName="valueSource" type="text">
+            </mat-form-field>
+        </div>
+        <!--Type-->
+        <div class="form-group">
+            <mat-checkbox formControlName="type">
+                Type
+            </mat-checkbox>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Operator</mat-label>
+                <mat-select formControlName="operatorType">
+                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
+                        {{oper}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Value for type</mat-label>
+                <input matInput formControlName="valueType" type="text">
+            </mat-form-field>
+        </div>
+        <!--Ip address-->
+        <div class="form-group">
+            <mat-checkbox formControlName="ipAddress">
+                Ip address
+            </mat-checkbox>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Operator</mat-label>
+                <mat-select formControlName="operatorIpAddress">
+                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
+                        {{oper}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Value for ip address</mat-label>
+                <input matInput formControlName="valueIpAddress" type="text">
+            </mat-form-field>
+        </div>
+         <!--Error-->
+         <div class="form-group">
+            <mat-checkbox formControlName="error">
+                Error
+            </mat-checkbox>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Error</mat-label>
+                <mat-select formControlName="operatorError">
+                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
+                        {{oper}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Value for error</mat-label>
+                <input matInput formControlName="valueError" type="text">
+            </mat-form-field>
+        </div>
+         <!--Status code-->
+         <div class="form-group">
+            <mat-checkbox formControlName="statusCode">
+                Status code
+            </mat-checkbox>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Operator</mat-label>
+                <mat-select formControlName="operatorStatusCode">
+                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
+                        {{oper}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Value for status code</mat-label>
+                <input matInput formControlName="valueStatusCode" type="text">
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-md-center">
+            <button
+                id="create-alarm"
+                class="btn btn-color"
+                [disabled] = "customAlarmForm.invalid"
+            >
+                Create alarm
+            </button>
+        </div>
+    </form>
+</div>

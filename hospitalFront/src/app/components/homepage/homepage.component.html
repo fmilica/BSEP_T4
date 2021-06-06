@@ -18,6 +18,9 @@
             </a>
         </mat-nav-list>
         <mat-nav-list *ngIf="role==='ADMIN'">
+            <a mat-list-item [routerLink]="'create-log-alarm'" routerLinkActive="active-link">
+                Create log alarm
+            </a>
             <a mat-list-item [routerLink]="'reports'" routerLinkActive="active-link">
                 Reports
             </a>

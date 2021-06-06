@@ -23,7 +23,7 @@ public class LogRuleConditionDto {
 
     @NotBlank(message = "Rule condition operator cannot be empty.")
     @Size(min=1, max=2, message = "Inadequate rule condition operator length.")
-    @Pattern(regexp = "(==|<=|>=|>|<|!=)",
+    @Pattern(regexp = "(==|!=)",
             message = "Rule condition operator is not valid.")
     private String conditionOperator;
 

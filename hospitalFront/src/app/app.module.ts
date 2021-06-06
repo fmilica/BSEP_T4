@@ -37,6 +37,7 @@ import { PatientAlarmComponent } from './components/patient-alarm/patient-alarm.
 import { LogAlarmsComponent } from './components/log-alarms/log-alarms.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { CreateLogRuleComponent } from './components/create-log-rule/create-log-rule.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     PatientAlarmComponent,
     LogAlarmsComponent,
     ReportsComponent,
+    CreateLogRuleComponent,
   ],
   imports: [
     RouterModule,

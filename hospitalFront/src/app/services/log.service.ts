@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { environment } from "src/environments/environment";
+import { LogRuleDto } from "../dto/log-rule-dto.dto";
 import { LogsFilterDto } from "../dto/logs-filter-dto.dto";
 import { LogPage } from "../model/log-page.model";
 
@@ -40,5 +41,9 @@ export class LogService {
             map((logPage: LogPage) => logPage),
             catchError((err) => throwError(err))
         );
+    }
+
+    createRule(logRuleDto: LogRuleDto): Observable<void> {
+        return this.http.post<void>(environment.apiEndpoint + 'log/create-rule', logRuleDto)
     }
 }

@@ -1,7 +1,3 @@
 {
-  "logConfigList" : [ {
-    "path" : "C:/Users/admin/Desktop",
-    "type" : "SIMULATED",
-    "readInterval" : 3
-  } ]
+  "logConfigList" : [ ]
 }
