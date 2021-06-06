@@ -52,8 +52,10 @@ public class HospitalController {
 
     @GetMapping
     // SUPER ADMIN
-    public ResponseEntity<List<HospitalDTO>> findAll() {
+    public ResponseEntity<List<HospitalDTO>> findAll(Principal principal) {
         List<Hospital> hospitals = hospitalService.findAll();
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                principal.getName(), "findAll", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(hospitalMapper.toHospitalDtoList(hospitals), HttpStatus.OK);
     }
 
@@ -68,7 +70,7 @@ public class HospitalController {
                     principal.getName(), "findAllForHospitals", HttpStatus.OK, "authorized"));
             return new ResponseEntity<>(simulators, HttpStatus.OK);
         } catch (NonExistentIdException e) {
-            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "findAllForHospitals", HttpStatus.BAD_REQUEST, "nonexistent id"));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -85,8 +87,8 @@ public class HospitalController {
                     principal.getName(), "findAllNotInHospital", HttpStatus.OK, "authorized"));
             return new ResponseEntity<>(simulators, HttpStatus.OK);
         } catch (NonExistentIdException e) {
-            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
-                    principal.getName(), "receiveCsr", HttpStatus.BAD_REQUEST, "nonexistent id"));
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "findAllNotInHospital", HttpStatus.BAD_REQUEST, "nonexistent id"));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
@@ -122,7 +124,7 @@ public class HospitalController {
                     principal.getName(), "addSimulator", HttpStatus.OK, "authorized"));
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NonExistentIdException | JsonProcessingException e) {
-            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "addSimulator", HttpStatus.BAD_REQUEST, "nonexistent id"));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

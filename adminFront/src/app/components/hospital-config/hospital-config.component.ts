@@ -24,7 +24,9 @@ export class HospitalConfigComponent implements OnInit {
   ) {
     this.addSimulatorForm = new FormGroup({
       hospital: new FormControl(''),
-      simulator: new FormControl('')
+      simulator: new FormControl(''),
+      readInterval: new FormControl(0),
+      filter: new FormControl('')
     })
   }
 
@@ -53,7 +55,9 @@ export class HospitalConfigComponent implements OnInit {
   onSubmit() {
     let hospitalId = this.addSimulatorForm.get('hospital').value;
     let simulatorId = this.addSimulatorForm.get('simulator').value;
-    let simulator = [{ "simulatorId": simulatorId }]
+    let readInterval = this.addSimulatorForm.get('readInterval').value;
+    let filter = this.addSimulatorForm.get('filter').value;
+    let simulator = [{ "simulatorId": simulatorId, "readInterval": readInterval, "filter": filter }]
     this.hospitalService.addSimulator(hospitalId, simulator)
       .subscribe(
         response => {

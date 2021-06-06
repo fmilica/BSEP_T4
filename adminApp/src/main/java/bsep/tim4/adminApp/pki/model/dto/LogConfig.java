@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Map;
 
 @Getter
@@ -22,12 +19,14 @@ public class LogConfig {
     @NotNull(message = "Simulator id cannot be empty.")
     Long simulatorId;
 
-    String type;
-
+    @PositiveOrZero(message = "Read interval must be positive or zero.")
     long readInterval;
+
     String filter;
 
+    // sta god da su ove dve vrednosti, ne posmatramo ih, niti ih citamo
     String path;
+    String type;
 
     public LogConfig() {
         this.type = "SIMULATED";

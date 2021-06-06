@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,9 @@ public class LogConfig {
     @Pattern(regexp = "DEFAULT|SIMULATED", message = "Log folder type is not valid.")
     String type;
 
+    @PositiveOrZero(message = "Read interval must be positive or zero.")
     long readInterval;
+
     String filter;
     Map<String, Long> lastRead;
 

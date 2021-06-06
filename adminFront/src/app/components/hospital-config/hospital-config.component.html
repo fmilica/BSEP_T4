@@ -44,6 +44,18 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
+    </div>
+    <div class="form-group">
+        <mat-form-field appearance="fill" class="form-field spacer">
+            <mat-label>Read interval</mat-label>
+            <input matInput formControlName="readInterval" type="number" min=0>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field spacer">
+            <mat-label>Filter regex</mat-label>
+            <input matInput formControlName="filter" type="text">
+        </mat-form-field>
+    </div>
+    <div class="form-group">
         <button id="add-simulator" class="btn btn-color spacer-btn">
             Add Simulator
         </button>
