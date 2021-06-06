@@ -1,3 +1,11 @@
 {
-  "logConfigList" : [ ]
+  "logConfigList" : [ {
+    "path" : "C:/Users/evaje/OneDrive/Desktop/Skola/8_Semestar/Bezbednost u sistemima elektronskog poslovanja/projekat/BSEP_T4/logSimulator",
+    "type" : "SIMULATED",
+    "readInterval" : 3,
+    "filter" : "",
+    "lastRead" : {
+      "logs.txt" : 16157
+    }
+  } ]
 }

@@ -3,8 +3,10 @@ package bsep.tim4.hospitalApp.controller;
 import bsep.tim4.hospitalApp.dto.LogConfig;
 import bsep.tim4.hospitalApp.dto.LogDto;
 import bsep.tim4.hospitalApp.dto.LogFilterDTO;
+import bsep.tim4.hospitalApp.dto.log.LogRuleDto;
 import bsep.tim4.hospitalApp.service.LogReaderService;
 import bsep.tim4.hospitalApp.service.LogService;
+import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +65,20 @@ public class LogController {
         logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "filterAllLogs", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(logs, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/create-rule")
+    public ResponseEntity<Void> createRule(Principal principal, @Valid @RequestBody LogRuleDto ruleDto) {
+        try {
+            logService.createRule(ruleDto);
+            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "createRule", HttpStatus.OK, "authorized"));
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IOException | MavenInvocationException e) {
+            e.printStackTrace();
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "createRule", HttpStatus.INTERNAL_SERVER_ERROR, "new drl file error"));
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

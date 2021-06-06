@@ -1,12 +1,10 @@
 package bsep.tim4.hospitalApp.util;
 
 import bsep.tim4.hospitalApp.dto.LogConfig;
-import bsep.tim4.hospitalApp.model.Log;
-import bsep.tim4.hospitalApp.model.LogAlarm;
-import bsep.tim4.hospitalApp.model.LogLevel;
-import bsep.tim4.hospitalApp.model.PatientAlarm;
+import bsep.tim4.hospitalApp.model.*;
 import bsep.tim4.hospitalApp.repository.LogAlarmRepository;
 import bsep.tim4.hospitalApp.repository.LogRepository;
+import bsep.tim4.hospitalApp.repository.MaliciousIpRepository;
 import bsep.tim4.hospitalApp.service.KieSessionService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -14,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.QueryResults;
 import org.kie.api.runtime.rule.QueryResultsRow;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.io.File;
@@ -40,14 +37,18 @@ public class LogReader implements Runnable {
 
     private LogAlarmRepository logAlarmRepository;
 
+    private MaliciousIpRepository maliciousIpRepository;
+
     private SimpMessagingTemplate simpMessagingTemplate;
 
     public LogReader(LogRepository logRepository, LogConfig logConfig, KieSessionService kieSessionService,
-                     LogAlarmRepository logAlarmRepository, SimpMessagingTemplate simpMessagingTemplate) {
+                     LogAlarmRepository logAlarmRepository, MaliciousIpRepository maliciousIpRepository,
+                     SimpMessagingTemplate simpMessagingTemplate) {
         this.logRepository = logRepository;
         this.logConfig = logConfig;
         this.kieSessionService = kieSessionService;
         this.logAlarmRepository = logAlarmRepository;
+        this.maliciousIpRepository = maliciousIpRepository;
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
@@ -96,16 +97,17 @@ public class LogReader implements Runnable {
 
         String line;
         while ((line = raf.readLine()) != null) {
-            Log log = parseLog(line);
-            if (log != null) {
-                logs.add(log);
+            if (!line.equals("")) {
+                Log log = parseLog(line);
+                if (log != null) {
+                    logs.add(log);
+                }
             }
         }
         Long endPos = raf.getFilePointer();
         logConfig.setLogFilePointer(fileName, endPos);
         raf.close();
 
-        // OVDE
         logRepository.saveAll(logs);
         KieSession kieSession = kieSessionService.getCepSession();
 
@@ -205,18 +207,26 @@ public class LogReader implements Runnable {
 
     private void saveAndSendNewAlarms(List<LogAlarm> alarms) {
         LogAlarm lastSaved = this.logAlarmRepository.findFirstByOrderByTimestampDesc();
+        List<MaliciousIp> newMaliciousIps = new ArrayList<>();
         List<LogAlarm> newAlarms = new ArrayList<>();
         if (lastSaved != null) {
             for (LogAlarm alarm : alarms) {
                 if (alarm.getTimestamp().after(lastSaved.getTimestamp())) {
                     newAlarms.add(logAlarmRepository.save(alarm));
+                    if (alarm.getType() == LogAlarmType.NEW_BLACKLIST_IP) {
+                        newMaliciousIps.add(new MaliciousIp(alarm.getSource()));
+                    }
                 }
             }
         } else {
             for (LogAlarm alarm : alarms) {
                 newAlarms.add(logAlarmRepository.save(alarm));
+                if (alarm.getType() == LogAlarmType.NEW_BLACKLIST_IP) {
+                    newMaliciousIps.add(new MaliciousIp(alarm.getSource()));
+                }
             }
         }
+        maliciousIpRepository.saveAll(newMaliciousIps);
         this.simpMessagingTemplate.convertAndSend("/topic/logs", newAlarms);
     }
 }

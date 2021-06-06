@@ -48,7 +48,7 @@ rule "More than 30 login attempts in 24 hours from one ip address"
         eval($logs.size() >= 30)
     then
         System.out.println("**************** IP ADDRESS RULE ****************************");
-        insert(new LogAlarm(new Date(), $ipAddress, LogAlarmType.BLACKLIST_IP, "Many login attempts from ip address: " + $ipAddress));
+        insert(new LogAlarm(new Date(), $ipAddress, LogAlarmType.NEW_BLACKLIST_IP, "Many login attempts from ip address: " + $ipAddress));
         modify($log1){setProcessed(true);};
         for (Object obj: $logs) {
             Log log = (Log) obj;

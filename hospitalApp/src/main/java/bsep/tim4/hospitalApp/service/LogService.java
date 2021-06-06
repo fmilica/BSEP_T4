@@ -2,26 +2,47 @@ package bsep.tim4.hospitalApp.service;
 
 import bsep.tim4.hospitalApp.dto.LogDto;
 import bsep.tim4.hospitalApp.dto.LogFilterDTO;
+import bsep.tim4.hospitalApp.dto.log.LogRuleDto;
 import bsep.tim4.hospitalApp.model.Log;
 import bsep.tim4.hospitalApp.model.LogLevel;
 import bsep.tim4.hospitalApp.model.QLog;
 import bsep.tim4.hospitalApp.repository.LogRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import org.apache.maven.shared.invoker.MavenInvocationException;
+import org.drools.template.ObjectDataCompiler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class LogService {
 
+    @Value("${template.log}")
+    private String logTemplate;
+
+    @Value("${template.log-multiple}")
+    private String multipleLogTemplate;
+
+    @Value("${cep.path}")
+    private String cepPath;
+
     @Autowired
     private LogRepository logRepository;
+
+    @Autowired
+    private KieSessionService kieSessionService;
 
     public Page<LogDto> findAll(Pageable pageable) {
         List<LogDto> logDtoList = new ArrayList<>();
@@ -67,5 +88,21 @@ public class LogService {
         }
 
         return new PageImpl<>(logDtoList, logs.getPageable(), logs.getTotalElements());
+    }
+
+    public void createRule(LogRuleDto rule) throws MavenInvocationException, IOException {
+        InputStream template = new FileInputStream(logTemplate);
+        // Compile template to generate new rules
+        List<LogRuleDto> arguments = new ArrayList<>();
+        arguments.add(rule);
+        ObjectDataCompiler compiler = new ObjectDataCompiler();
+        String drl = compiler.compile(arguments, template);
+        // Save rule to drl file
+        FileOutputStream drlFile = new FileOutputStream(
+                cepPath + UUID.randomUUID() + ".drl");
+        drlFile.write(drl.getBytes());
+        drlFile.close();
+
+        kieSessionService.updateRulesJar();
     }
 }

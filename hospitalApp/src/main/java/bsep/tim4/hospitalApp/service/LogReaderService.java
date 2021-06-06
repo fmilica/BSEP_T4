@@ -4,6 +4,7 @@ import bsep.tim4.hospitalApp.dto.LogConfig;
 import bsep.tim4.hospitalApp.dto.LogConfigList;
 import bsep.tim4.hospitalApp.repository.LogAlarmRepository;
 import bsep.tim4.hospitalApp.repository.LogRepository;
+import bsep.tim4.hospitalApp.repository.MaliciousIpRepository;
 import bsep.tim4.hospitalApp.util.LogReader;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,6 +43,9 @@ public class LogReaderService {
     private LogAlarmRepository logAlarmRepository;
 
     @Autowired
+    private MaliciousIpRepository maliciousIpRepository;
+
+    @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
     private LogConfigList logConfigList;
@@ -55,7 +59,8 @@ public class LogReaderService {
             for (LogConfig logConfig : logConfigList.getLogConfigList()) {
                 // check if folder exists
                 checkFolderPath(logConfig.getPath());
-                LogReader reader = new LogReader(logRepository, logConfig, kieSessionService, logAlarmRepository, simpMessagingTemplate);
+                LogReader reader = new LogReader(logRepository, logConfig,
+                        kieSessionService, logAlarmRepository, maliciousIpRepository, simpMessagingTemplate);
                 taskExecutor.execute(reader);
                 readers.add(reader);
                 //LogReader logReader = new LogReader(logRepository, logConfig);
@@ -75,8 +80,8 @@ public class LogReaderService {
                 newLogConfigs.remove(logConfig);
             };
             // create new thread for processing new folders
-            LogReader reader = new LogReader(logRepository, logConfig, kieSessionService, logAlarmRepository,
-                    simpMessagingTemplate);
+            LogReader reader = new LogReader(logRepository, logConfig,
+                    kieSessionService, logAlarmRepository, maliciousIpRepository, simpMessagingTemplate);
             taskExecutor.execute(reader);
             readers.add(reader);
         }
