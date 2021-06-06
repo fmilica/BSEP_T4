@@ -2,6 +2,8 @@
   "logConfigList" : [ {
     "path" : "C:/Users/admin/Desktop",
     "type" : "SIMULATED",
-    "readInterval" : 3
+    "readInterval" : 3,
+    "filter" : null,
+    "lastRead" : null
   } ]
 }
