@@ -15,13 +15,10 @@ import java.util.Date;
 @AllArgsConstructor
 public class LogFilterDTO {
 
-    //@Pattern(regexp = "[A-Z.]+", message = "Log level is not valid.")
     String level;
 
-    //@Pattern(regexp = "/(\\d{4}-\\d{2}-\\d{2})[A-Z]+(\\d{2}:\\d{2}:\\d{2}).([0-9+-:]+)/gm", message = "Date not in valid format.")
     Date fromDate;
 
-    //@Pattern(regexp = "/(\\d{4}-\\d{2}-\\d{2})[A-Z]+(\\d{2}:\\d{2}:\\d{2}).([0-9+-:]+)/gm", message = "Date not in valid format.")
     Date toDate;
 
     String message;

@@ -21,7 +21,7 @@ public class HospitalAppInit implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        //ACLUtil.setupACL();
+        ACLUtil.setupACL();
         // ako keystore ne postoji, kreiraj ga
         keyStoreService.loadSymKeyStore();
         // ako simetricni kljuc ne postoji, kreiraj ga
