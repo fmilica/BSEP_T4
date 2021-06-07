@@ -59,8 +59,11 @@ public class WebSecurityConfiguration extends KeycloakWebSecurityConfigurerAdapt
                 .authorizeRequests()
                 .antMatchers("/connect").permitAll()
                 .antMatchers("/topic/patients").permitAll()
-                .antMatchers("/api/patients/status").permitAll()
+                .antMatchers("/topic/log").permitAll()
+                .antMatchers("/api/patients/status").permitAll() //medical device
+                .antMatchers("/api/report").hasAnyRole("ADMIN")
                 .antMatchers("/api/patients/").hasAnyRole("DOCTOR")
+                .antMatchers("/api/log/add-log-folder").hasAnyRole("SUPER_ADMIN")
                 .antMatchers("/api/log").hasAnyRole("ADMIN", "SUPER_ADMIN")
                 .antMatchers("/api/log/*").hasAnyRole("ADMIN", "SUPER_ADMIN")
                 .antMatchers("/api/csr").hasAnyRole("ADMIN")

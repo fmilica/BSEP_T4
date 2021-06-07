@@ -7,6 +7,7 @@ import bsep.tim4.adminApp.pki.exceptions.NonExistentIdException;
 import bsep.tim4.adminApp.pki.model.CSR;
 import bsep.tim4.adminApp.pki.model.enums.CsrStatus;
 import bsep.tim4.adminApp.pki.repository.CsrRepository;
+import bsep.tim4.adminApp.pki.repository.HospitalRepository;
 import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequest;
@@ -25,6 +26,9 @@ import java.util.List;
 
 @Service
 public class CsrService {
+
+    @Autowired
+    private HospitalService hospitalService;
 
     @Autowired
     private CsrRepository csrRepository;
@@ -110,5 +114,9 @@ public class CsrService {
         certificateRequest.setVerified(true);
         certificateRequest.setStatus(CsrStatus.PENDING);
         csrRepository.save(certificateRequest);
+        // cuvanje emaila u bazu bolnica
+        // prvi put kada email stigne -> nova bolnica
+        // svaki sledeci kada sa isto email-a stigne -> novi uredjaj u okviru bolnice
+        hospitalService.handleCsr(certificateRequest.getEmail());
     }
 }

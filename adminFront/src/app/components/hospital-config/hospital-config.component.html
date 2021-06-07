@@ -1,0 +1,63 @@
+<div class="table-title">Configure hospital logs</div>
+<table id="hospital-simulator-table" mat-table [dataSource]="dataSource">
+    <!-- No data row -->
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="2">No existing Hospital-Simulator links.</td>
+    </tr>
+
+    <!-- Header -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let csr; columns: displayedColumns;">
+    </tr>
+
+    <!-- Hospital Name Column -->
+    <ng-container matColumnDef="hospitalName">
+        <th mat-header-cell *matHeaderCellDef> Hospital Name </th>
+        <td mat-cell *matCellDef="let hospital">
+            {{hospital.name}}
+        </td>
+    </ng-container>
+
+    <!-- Hospital Simulators Column -->
+    <ng-container matColumnDef="hospitalSimulators">
+        <th mat-header-cell *matHeaderCellDef> Hospital Simulators </th>
+        <td mat-cell *matCellDef="let hospital">
+            {{hospital.simulators}}
+        </td>
+    </ng-container>
+</table>
+<form id="add-simulator-form" [formGroup]="addSimulatorForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <mat-form-field appearance="fill" class="form-field spacer">
+            <mat-label>Hospital</mat-label>
+            <mat-select formControlName="hospital">
+                <mat-option *ngFor="let hospital of dataSource" [value]="hospital.id" (click)="onHospitalSelected()">
+                    {{hospital.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field spacer">
+            <mat-label>Simulator</mat-label>
+            <mat-select formControlName="simulator">
+                <mat-option *ngFor="let simulator of simulators" [value]="simulator.id">
+                    {{simulator.id}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="form-group">
+        <mat-form-field appearance="fill" class="form-field spacer">
+            <mat-label>Read interval</mat-label>
+            <input matInput formControlName="readInterval" type="number" min=0>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field spacer">
+            <mat-label>Filter regex</mat-label>
+            <input matInput formControlName="filter" type="text">
+        </mat-form-field>
+    </div>
+    <div class="form-group">
+        <button id="add-simulator" class="btn btn-color spacer-btn">
+            Add Simulator
+        </button>
+    </div>
+</form>

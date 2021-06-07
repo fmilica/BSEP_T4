@@ -29,12 +29,13 @@ export class AuthenticationService {
 
   getLoggedInUserRole(): string {
     const info = this.getLoggedInUser();
-    if (info) {
-      return info.realm_access.roles[2];
+    const userRoles = info.realm_access.roles;
+    for (let role in userRoles) {
+        if (['ADMIN', 'SUPER_ADMIN', 'DOCTOR'].indexOf(userRoles[role]) !== -1) {
+            return userRoles[role];
+        }
     }
-    else {
-      return '';
-    }
+    return ''
   }
 
 }

@@ -37,6 +37,7 @@ import { CertificateDetailsComponent } from './components/certificate-details/ce
 import { initializer } from './util/app-init';
 import { KeycloakService } from 'keycloak-angular';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { HospitalConfigComponent } from './components/hospital-config/hospital-config.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
     ViewCertificateComponent,
     RevocationDialogComponent,
     CertificateDetailsComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    HospitalConfigComponent
   ],
   imports: [
     RouterModule,

@@ -1,6 +1,8 @@
 package bsep.tim4.hospitalApp.startup;
 
 import bsep.tim4.hospitalApp.service.KeyStoreService;
+import bsep.tim4.hospitalApp.service.LogReaderService;
+import bsep.tim4.hospitalApp.util.ACLUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -12,10 +14,14 @@ import java.security.Key;
 public class HospitalAppInit implements ApplicationRunner {
 
     @Autowired
+    private LogReaderService logReaderService;
+
+    @Autowired
     private KeyStoreService keyStoreService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        //ACLUtil.setupACL();
         // ako keystore ne postoji, kreiraj ga
         keyStoreService.loadSymKeyStore();
         // ako simetricni kljuc ne postoji, kreiraj ga
@@ -23,5 +29,7 @@ public class HospitalAppInit implements ApplicationRunner {
         if (symKey == null) {
             keyStoreService.createSymetricKey();
         }
+        // citanje log konfiguracije
+        logReaderService.readConfiguration();
     }
 }

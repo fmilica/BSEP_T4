@@ -1,0 +1,7 @@
+package cep;
+
+import bsep.tim4.hospitalApp.model.LogAlarm;
+
+query "getAllLogAlarms"
+	$logAlarm: LogAlarm()
+end;

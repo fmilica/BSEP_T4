@@ -12,7 +12,7 @@
         </layout>
     </appender>
 
-    <appender name="RollingFile"
+    <!--<appender name="RollingFile"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOGS}/hospital-logger.log</file>
         <encoder
@@ -21,7 +21,6 @@
         </encoder>
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily and when the file reaches 10 MegaBytes -->
             <fileNamePattern>${LOGS}/archived/hospital-logger-%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
@@ -30,12 +29,13 @@
             </timeBasedFileNamingAndTriggeringPolicy>
             <maxHistory>90</maxHistory>
         </rollingPolicy>
-    </appender>
+    </appender>-->
 
     <appender name="ROLLING_JSON_FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOGS}/hospital-logger-json.log</file>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 10 MegaBytes -->
             <fileNamePattern>${LOGS}/hospital-logger-json.%d{yyyy-MM-dd}.%i.gz
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -47,7 +47,7 @@
 
     <!-- LOG everything at INFO level -->
     <root level="info">
-        <appender-ref ref="RollingFile" />
+        <!--<appender-ref ref="RollingFile" />-->
         <appender-ref ref="ROLLING_JSON_FILE_APPENDER" />
         <appender-ref ref="Console" />
     </root>

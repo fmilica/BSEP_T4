@@ -199,7 +199,7 @@ public class CertificateController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         HttpHeaders headers = createDownloadCertHeaders();
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "adminDownloadPkcs12", HttpStatus.OK, "existing certificate alias"));
         return new ResponseEntity<>(contents, headers, HttpStatus.OK);
     }
@@ -272,7 +272,7 @@ public class CertificateController {
     public ResponseEntity<List<CertificateViewDTO>> getAllCertificates(Principal principal) {
         List<CertificateViewDTO> certificateViewDTOS = certificateDataService.findCertificateView();
 
-        logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "getAllCertificates", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(certificateViewDTOS, HttpStatus.OK);
     }

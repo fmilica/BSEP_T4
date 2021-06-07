@@ -1,0 +1,27 @@
+template header
+ruleConditions
+logAlarmType
+logAlarmMessage
+id
+
+package cep;
+
+import bsep.tim4.hospitalApp.model.Log;
+import bsep.tim4.hospitalApp.model.LogLevel;
+import bsep.tim4.hospitalApp.model.LogAlarm;
+import bsep.tim4.hospitalApp.model.LogAlarmType;
+
+import java.util.Date;
+
+template "log-template"
+
+rule "Log template rule @{id}.@{row.rowNumber}"
+    when
+        $log1: Log(processed == false, $source : source, @{ruleConditions})
+    then
+        insert(new LogAlarm(new Date(), $source, LogAlarmType.@{logAlarmType}, "@{logAlarmMessage}"));
+        System.out.println("**************** @{logAlarmMessage} ****************************");
+        modify($log1){setProcessed(true);};
+end
+
+end template

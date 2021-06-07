@@ -1,0 +1,99 @@
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T16:28:44.917+02:00"}
+{"level": "WARN", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T16:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=admin_mika, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T02:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T22:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T12:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T17:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=admin_mika, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T01:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T09:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T08:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T02:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=admin_mika, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T05:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=admin_mika, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T23:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T20:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T23:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=admin_mika, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T04:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T14:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T10:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T22:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T16:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=admin_mika, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T16:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T08:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T07:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T16:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T06:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T12:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T14:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T15:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T01:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=admin_mika, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T09:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=admin_mika, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T06:28:44.918+02:00"}
+{"level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=100.1.100.1, error=invalid_user_credentials, statusCode=400", "timestamp": "2021-06-04T18:28:44.918+02:00"}
+{"timestamp": "2021-06-04T19:53:28.564+02:00", "level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=127.0.0.1, error=invalid_user_credentials, statusCode=400"}
+{"timestamp": "2021-06-04T19:53:28.564+02:00", "level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=127.0.0.1, error=invalid_user_credentials, statusCode=400"}
+{"timestamp": "2021-06-04T19:53:28.564+02:00", "level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=127.0.0.1, error=invalid_user_credentials, statusCode=400"}
+{"timestamp": "2021-06-04T19:53:28.564+02:00", "level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=127.0.0.1, error=invalid_user_credentials, statusCode=400"}
+{"timestamp": "2021-06-04T19:53:28.564+02:00", "level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=127.0.0.1, error=invalid_user_credentials, statusCode=400"}
+{"timestamp": "2021-06-04T19:53:28.564+02:00", "level": "WARN", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=127.0.0.1, error=invalid_user_credentials, statusCode=400"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=user1, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=user1, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=user1, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=user1, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=user1, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.458+02:00", "level": "INFO", "message": "userId=user1, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=user1, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=user1, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=user1, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=user1, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=user1, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=user1, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=admin_mika, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"timestamp": "2021-06-04T19:53:43.459+02:00", "level": "INFO", "message": "userId=doktor_pera, ipAddress=127.0.0.1, statusCode=200"}
+{"level": "INFO", "timestamp": "2021-06-04T19:53:54.484+02:00", "message": "userId=doktor_pera, type=LOGIN, ipAddress=127.0.0.1, statusCode=200"}
+{"level": "INFO", "timestamp": "2021-06-04T19:53:54.484+02:00", "message": "userId=admin_mika, type=LOGIN, ipAddress=127.0.0.1, statusCode=200"}
+{"level": "INFO", "timestamp": "2021-06-04T19:53:54.484+02:00", "message": "userId=doktor_pera, type=LOGIN, ipAddress=127.0.0.1, statusCode=200"}
+{"level": "WARN", "timestamp": "2021-06-04T19:53:54.484+02:00", "message": "userId=user1, type=LOGIN_ERROR, ipAddress=127.0.0.1, error=invalid_user_credentials, statusCode=400"}
+{"level": "INFO", "timestamp": "2021-06-04T19:53:54.485+02:00", "message": "userId=user1, type=LOGIN, ipAddress=127.0.0.1, statusCode=200"}
+{"level": "WARN", "timestamp": "2021-06-04T19:53:54.485+02:00", "message": "userId=admin_mika, type=LOGIN_ERROR, ipAddress=127.0.0.1, error=invalid_user_credentials, statusCode=400"}
+{"level": "INFO", "timestamp": "2021-06-04T19:53:54.485+02:00", "message": "userId=doktor_pera, type=LOGIN, ipAddress=127.0.0.1, statusCode=200"}
+{"level": "WARN", "timestamp": "2021-06-04T19:53:54.485+02:00", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=127.0.0.1, error=invalid_user_credentials, statusCode=400"}
+{"level": "WARN", "timestamp": "2021-06-04T19:53:54.485+02:00", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=127.0.0.1, error=invalid_user_credentials, statusCode=400"}
+{"level": "WARN", "timestamp": "2021-06-04T19:53:54.485+02:00", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=127.0.0.1, error=invalid_user_credentials, statusCode=400"}
+{"level": "WARN", "timestamp": "2021-06-04T19:53:54.485+02:00", "message": "userId=doktor_pera, type=LOGIN_ERROR, ipAddress=127.0.0.1, error=invalid_user_credentials, statusCode=400"}

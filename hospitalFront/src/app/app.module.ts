@@ -26,14 +26,18 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { LogsComponent } from './components/logs/logs.component';
 import { PatientComponent } from './components/patient/patient.component';
 import { PatientStatusComponent } from './components/patient-status/patient-status.component';
 import { CreateAlarmComponent } from './components/create-alarm/create-alarm.component';
 import { PatientAlarmComponent } from './components/patient-alarm/patient-alarm.component';
+import { LogAlarmsComponent } from './components/log-alarms/log-alarms.component';
+import { ReportsComponent } from './components/reports/reports.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { CreateLogRuleComponent } from './components/create-log-rule/create-log-rule.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +51,9 @@ import { PatientAlarmComponent } from './components/patient-alarm/patient-alarm.
     PatientStatusComponent,
     CreateAlarmComponent,
     PatientAlarmComponent,
+    LogAlarmsComponent,
+    ReportsComponent,
+    CreateLogRuleComponent,
   ],
   imports: [
     RouterModule,
@@ -72,6 +79,7 @@ import { PatientAlarmComponent } from './components/patient-alarm/patient-alarm.
     MatNativeDateModule,
     MatProgressBarModule,
     MatPaginatorModule,
+    MDBBootstrapModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
       timeOut: 2500,

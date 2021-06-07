@@ -1,5 +1,7 @@
 package bsep.tim4.hospitalApp.service;
 
+import bsep.tim4.hospitalApp.model.MaliciousIp;
+import bsep.tim4.hospitalApp.repository.MaliciousIpRepository;
 import org.apache.maven.shared.invoker.*;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -9,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class KieSessionService {
@@ -17,6 +21,10 @@ public class KieSessionService {
 
     private final KieContainer kieContainer;
     private KieSession rulesSession;
+    private KieSession cepSession;
+
+    @Autowired
+    private MaliciousIpRepository maliciousIpRepository;
 
     @Autowired
     public KieSessionService(KieContainer kieContainer) {
@@ -37,6 +45,24 @@ public class KieSessionService {
 
     public void setRulesSession(KieSession kieSession) {
         this.rulesSession = kieSession;
+    }
+
+    public KieSession getCepSession() {
+        if (this.cepSession == null) {
+            log.info("Initialized session.");
+            cepSession = kieContainer.newKieSession("cepSession");
+        }
+        List<String> malicious = new ArrayList<>();
+        List<MaliciousIp> maliciousIps = maliciousIpRepository.findAll();
+        for (MaliciousIp ip : maliciousIps) {
+            malicious.add(ip.getAddress());
+        }
+        cepSession.setGlobal("maliciousIpAdresses", malicious);
+        return cepSession;
+    }
+
+    public void setCepSession(KieSession kieSession) {
+        this.cepSession = kieSession;
     }
 
     public void updateRulesJar() throws MavenInvocationException {

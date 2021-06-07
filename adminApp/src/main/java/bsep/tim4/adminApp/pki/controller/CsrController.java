@@ -46,13 +46,13 @@ public class CsrController {
             csrService.saveCsr(csr);
         } catch (NoSuchAlgorithmException | InvalidKeyException | MessagingException e) {
             e.printStackTrace();
-            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "receiveCsr", HttpStatus.BAD_REQUEST, "invalid csr format"));
             return new ResponseEntity<>(csr, HttpStatus.BAD_REQUEST);
         }
         catch (IOException e) {
             e.printStackTrace();
-            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+            logger.error(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "receiveCsr", HttpStatus.INTERNAL_SERVER_ERROR, "io exception"));
             return new ResponseEntity<>(csr, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -75,7 +75,7 @@ public class CsrController {
         List<CSR> csrList = csrService.findAllByVerified(true);
         List<CsrDTO> csrDTOList = csrMapper.toCsrDtoList(csrList);
 
-        logger.info(String.format("%s called method %s with status code %s: %s",
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "findAllCsr", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(csrDTOList, HttpStatus.OK);
     }
