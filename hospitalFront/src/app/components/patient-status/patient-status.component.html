@@ -1,24 +1,26 @@
 <mat-progress-bar class="progress-bar" mode="indeterminate" *ngIf="dataSource.content.length===0">
 </mat-progress-bar>
 <div class="table-title">Patient statuses</div>
-<form id="filter-patient-status-form" [formGroup]="filterForm" #filterPatientStatuses="ngForm"
-    (ngSubmit)="onFilter(filterPatientStatuses)">
-    <div class="form-group">
-        <mat-form-field appearance="fill" class="form-field">
-            <mat-label>Patient</mat-label>
-            <mat-select formControlName="patientFilter">
-                <mat-option [value]="''">All</mat-option>
-                <mat-option *ngFor="let patient of patients" [value]="patient.id">
-                    {{patient.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <!-- Filter -->
-        <button id="filter-patient-status" class="btn btn-color">
-            Filter patient statuses
-        </button>
-    </div>
-</form>
+<div class="col-md-11">
+    <form id="filter-patient-status-form" [formGroup]="filterForm" #filterPatientStatuses="ngForm"
+        (ngSubmit)="onFilter(filterPatientStatuses)">
+        <div class="form-group">
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Patient</mat-label>
+                <mat-select formControlName="patientFilter">
+                    <mat-option [value]="''">All</mat-option>
+                    <mat-option *ngFor="let patient of patients" [value]="patient.id">
+                        {{patient.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <!-- Filter -->
+            <button id="filter-patient-status" class="btn btn-color">
+                Filter patient statuses
+            </button>
+        </div>
+    </form>
+</div>
 <div class="ng-container row justify-content-md-center">
     <div class="col-md-11">
         <table mat-table [dataSource]="dataSource.content" id="patient-status-table">

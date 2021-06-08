@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
 import { Report } from 'src/app/model/report.model';
+import { LogAlarmService } from 'src/app/services/log-alarm.service';
 import { ReportService } from 'src/app/services/report.service';
 
 @Component({
@@ -23,7 +24,7 @@ export class ReportsComponent implements OnInit {
   ];
 
   logLabels: Array<any> = ['INFO', 'WARN', 'ERROR'];
-  logAlarmsLabels: Array<any> = ['BRUTE_FORCE', 'DOS', 'ERROR_LOG', 'FAILED_LOGIN', 'BLACKLIST_IP', 'NEW_BLACKLIST_IP'];
+  logAlarmsLabels: Array<any> = [];
 
   logColors: Array<any> = [
     {
@@ -48,7 +49,12 @@ export class ReportsComponent implements OnInit {
         'rgba(255, 206, 86, 0.2)',
         'rgba(75, 192, 192, 0.2)',
         'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(143, 232, 95, 0.2)',
+        'rgba(120, 95, 232, 0.2)',
+        'rgba(232, 95, 218, 0.2)',
+        'rgba(95, 223, 232, 0.2)',
+        'rgba(95, 100, 232, 0.2)'
       ],
       borderColor: [
         'rgba(255,99,132,1)',
@@ -56,7 +62,12 @@ export class ReportsComponent implements OnInit {
         'rgba(255, 206, 86, 1)',
         'rgba(75, 192, 192, 1)',
         'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
+        'rgba(255, 159, 64, 1)',
+        'rgba(143, 232, 95, 1)',
+        'rgba(120, 95, 232, 1)',
+        'rgba(232, 95, 218, 1)',
+        'rgba(95, 223, 232, 1)',
+        'rgba(95, 100, 232, 1)'
       ],
       borderWidth: 2,
     }
@@ -73,7 +84,8 @@ export class ReportsComponent implements OnInit {
   totalLogAlarmNumber;
 
   constructor(
-    private reportService: ReportService
+    private reportService: ReportService,
+    private logAlarmService: LogAlarmService
   ) {
     this.reportForm = new FormGroup({
       fromDate: new FormControl(''),
@@ -83,6 +95,13 @@ export class ReportsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.logAlarmService.findAllLogAlarmTypes()
+      .subscribe(
+        response => {
+          this.logAlarmsLabels = response;
+        },
+        error => {
+        });
   }
 
   createReport(reportForm: FormGroupDirective): void {

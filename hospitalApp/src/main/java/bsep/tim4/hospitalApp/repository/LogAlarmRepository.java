@@ -2,7 +2,6 @@ package bsep.tim4.hospitalApp.repository;
 
 import bsep.tim4.hospitalApp.dto.FrequentSources;
 import bsep.tim4.hospitalApp.model.LogAlarm;
-import bsep.tim4.hospitalApp.model.LogAlarmType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Aggregation;
@@ -21,7 +20,7 @@ public interface LogAlarmRepository extends MongoRepository<LogAlarm, String> {
     Page<LogAlarm> findAllByOrderByTimestampDesc(Pageable pageable);
 
     long countByTimestampBetween(Date startDate, Date endDate);
-    long countByTypeAndTimestampBetween(LogAlarmType type, Date startDate, Date endDate);
+    long countByTypeAndTimestampBetween(String type, Date startDate, Date endDate);
 
     @Aggregation(pipeline = {
             "{$match: {" +
@@ -44,6 +43,7 @@ public interface LogAlarmRepository extends MongoRepository<LogAlarm, String> {
 
     @Aggregation(pipeline = {
             "{$group: { '_id': $type, total: { $sum: 1 } } }",
+            "{$sort: {total: -1} }",
             "{$project: {\n" +
                     "        id: 1\n" +
                     "}}"

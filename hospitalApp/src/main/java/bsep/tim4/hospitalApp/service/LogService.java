@@ -48,7 +48,7 @@ public class LogService {
         List<LogDto> logDtoList = new ArrayList<>();
         Page<Log> page = logRepository.findAllByOrderByTimestampDesc(pageable);
         for(Log log : page.toList()) {
-            logDtoList.add(new LogDto(log.getLevel(), log.getMessage(), log.getTimestamp()));
+            logDtoList.add(new LogDto(log.getLevel(), log.getSource(), log.getIpAddress(), log.getMessage(), log.getTimestamp()));
         }
 
         return new PageImpl<>(logDtoList, page.getPageable(), page.getTotalElements());
@@ -84,7 +84,7 @@ public class LogService {
         }
         Page<Log> logs = logRepository.findAll(builder, pageable);
         for(Log log : logs.toList()) {
-            logDtoList.add(new LogDto(log.getLevel(), log.getMessage(), log.getTimestamp()));
+            logDtoList.add(new LogDto(log.getLevel(), log.getSource(), log.getIpAddress(), log.getMessage(), log.getTimestamp()));
         }
 
         return new PageImpl<>(logDtoList, logs.getPageable(), logs.getTotalElements());

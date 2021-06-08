@@ -13,7 +13,8 @@
     "readInterval" : 3,
     "filter" : "",
     "lastRead" : {
-      "hospital-logger-json.log" : 450685
+      "hospital-logger-json.log~" : 0,
+      "hospital-logger-json.log" : 459136
     }
   } ]
 }

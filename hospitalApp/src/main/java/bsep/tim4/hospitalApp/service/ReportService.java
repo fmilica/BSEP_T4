@@ -2,7 +2,6 @@ package bsep.tim4.hospitalApp.service;
 
 import bsep.tim4.hospitalApp.dto.FrequentSources;
 import bsep.tim4.hospitalApp.dto.ReportDto;
-import bsep.tim4.hospitalApp.model.LogAlarmType;
 import bsep.tim4.hospitalApp.model.LogLevel;
 import bsep.tim4.hospitalApp.repository.LogAlarmRepository;
 import bsep.tim4.hospitalApp.repository.LogRepository;
@@ -34,7 +33,8 @@ public class ReportService {
         }
         long totalAlarms = logAlarmRepository.countByTimestampBetween(startDate, endDate);
         reportDto.setTotalLogAlarms(totalAlarms);
-        for (LogAlarmType type : LogAlarmType.values()) {
+        List<String> logAlarmTypes = logAlarmRepository.findLogAlarmTypes();
+        for (String type : logAlarmTypes) {
             long totalTypeAlarms = logAlarmRepository.countByTypeAndTimestampBetween(type, startDate, endDate);
             reportDto.getLogAlarmsByType().add(totalTypeAlarms);
         }

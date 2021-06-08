@@ -1,6 +1,5 @@
 package bsep.tim4.hospitalApp.dto.log;
 
-import bsep.tim4.hospitalApp.model.LogAlarmType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +20,7 @@ public class LogRuleDto {
     private LogRuleConditionListDto ruleConditions;
 
     @NotNull(message = "Rule alarm type cannot be empty.")
-    private LogAlarmType logAlarmType;
+    private String logAlarmType;
 
     @NotNull(message = "Rule alarm message cannot be empty.")
     private String logAlarmMessage;
