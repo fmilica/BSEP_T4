@@ -29,7 +29,7 @@ def regular_mode(file_path):
     # log = Log(dt1, "INFO", choice(messages), choice(users),
     #	  "", "127.0.0.1", "", 200, False)
     log = Log(dt1,
-              "userId={}, type={}, ipAddress={}, error={}, statusCode={}".format(choice(users), "", "127.0.0.1", "",
+              "userId={}, ipAddress={}, statusCode={}".format(choice(users), "127.0.0.1",
                                                                                  "200"), "INFO")
     f.write(json.dumps(log.__dict__) + '\n')
     f.close()
@@ -50,9 +50,10 @@ def attack_mode(file_path, attack_type):
         list_date = dt1.split('+')
         list_date[0] = list_date[0][:-3]
         dt1 = (list_date[0]) + '+' + (list_date[1])
-        log = Log(dt1, "userId={}, type={}, ipAddress={}, error={}, statusCode={}".format(choice(users), "",
-                                                                                          choice(malicious_ips), "", "200"),
+        log = Log(dt1, "userId={}, ipAddress={}, statusCode={}".format(choice(users), 
+                                                                                          choice(malicious_ips), "200"),
                   "INFO")
+        f.write(json.dumps(log.__dict__) + '\n')
     elif attack_type == "malicious_ip_login_logs":
         dt1 = datetime.now(timezone.utc).astimezone().isoformat()
         list_date = dt1.split('+')
@@ -61,8 +62,8 @@ def attack_mode(file_path, attack_type):
         # log = Log(dt1, "WARN", "Keycloak logging user.", choice(users),
         # choice(error), choice(malicious_ips), "invalid_user_credentials", 404, False)
         if (choice(ch)):
-            log = Log(dt1, "userId={}, type={}, ipAddress={}, error={}, statusCode={}".format(choice(users), "LOGIN",
-                                                                                              choice(malicious_ips), "",
+            log = Log(dt1, "userId={}, type={}, ipAddress={}, statusCode={}".format(choice(users), "LOGIN",
+                                                                                              choice(malicious_ips), 
                                                                                               "200"), "INFO")
             f.write(json.dumps(log.__dict__) + '\n')
         else:
@@ -89,49 +90,49 @@ def attack_mode(file_path, attack_type):
     elif attack_type == "failed_login":
         username = choice(users)
         for i in range(6):
-            dt1 = datetime.now(timezone.utc).astimezone().replace(hour=10, minute=i).isoformat()
-        list_date = dt1.split('+')
-        list_date[0] = list_date[0][:-3]
-        dt1 = (list_date[0]) + '+' + (list_date[1])
-        # log = Log(dt1, "WARN", "Keycloak logging user.", username,
-        #      "LOGIN_ERROR", "127.0.0.1", "invalid_user_credentials", 404, False)
-        log = Log(dt1, "userId={}, type={}, ipAddress={}, error={}, statusCode={}".format(username, "LOGIN_ERROR",
-                                                                                          "127.0.0.1",
-                                                                                          "invalid_user_credentials",
-                                                                                          "400"), "WARN")
-        f.write(json.dumps(log.__dict__) + '\n')
-    elif attack_type == "frequent_login_logs":
-        for i in range(11):
-            dt1 = datetime.now(timezone.utc).astimezone().replace(hour=11, minute=14, second=i).isoformat()
-        list_date = dt1.split('+')
-        list_date[0] = list_date[0][:-3]
-        dt1 = (list_date[0]) + '+' + (list_date[1])
-        # log = Log(dt1, "WARN", "Keycloak logging user.", choice(users),
-        #  choice(error), "127.0.0.1", "", 200, False)
-        if (choice(ch)):
-            log = Log(dt1, "userId={}, type={}, ipAddress={}, error={}, statusCode={}".format(choice(users), "LOGIN",
-                                                                                              "127.0.0.1", "", "200"),
-                                                                                              "INFO")
-            f.write(json.dumps(log.__dict__) + '\n')
-        else:
-            log = Log(dt1, "userId={}, type={}, ipAddress={}, error={}, statusCode={}".format(choice(users), "LOGIN_ERROR",
-                                                                                              "127.0.0.1",
-                                                                                              "invalid_user_credentials",
-                                                                                              "400"), "WARN")
-            f.write(json.dumps(log.__dict__) + '\n')
-    elif attack_type == "frequent_other_logs":
-            for i in range(51):
-                dt1 = datetime.now(timezone.utc).astimezone().replace(hour=10, minute=4, second=i).isoformat()
+            dt1 = datetime.now(timezone.utc).astimezone().replace(hour=10).isoformat()
             list_date = dt1.split('+')
             list_date[0] = list_date[0][:-3]
             dt1 = (list_date[0]) + '+' + (list_date[1])
-            # log = Log(dt1, "INFO", "Message for log.", choice(users),
-            #    "", "127.0.0.1", "", 200, False)
-            log = Log(dt1,
-                      "userId={}, type={}, ipAddress={}, error={}, statusCode={}".format(choice(users), "", "127.0.0.1", "",
-                                                                                         "200"), "INFO")
+            # log = Log(dt1, "WARN", "Keycloak logging user.", username,
+            #      "LOGIN_ERROR", "127.0.0.1", "invalid_user_credentials", 404, False)
+            log = Log(dt1, "userId={}, type={}, ipAddress={}, error={}, statusCode={}".format(username, "LOGIN_ERROR",
+                                                                                          "127.0.0.1",
+                                                                                          "invalid_user_credentials",
+                                                                                          "400"), "WARN")
             f.write(json.dumps(log.__dict__) + '\n')
-            f.close()
+    elif attack_type == "frequent_login_logs":
+        for i in range(11):
+            dt1 = datetime.now(timezone.utc).astimezone().replace(hour=11, minute=14, second=i).isoformat()
+            list_date = dt1.split('+')
+            list_date[0] = list_date[0][:-3]
+            dt1 = (list_date[0]) + '+' + (list_date[1])
+            # log = Log(dt1, "WARN", "Keycloak logging user.", choice(users),
+            #  choice(error), "127.0.0.1", "", 200, False)
+            if (choice(ch)):
+                log = Log(dt1, "userId={}, type={}, ipAddress={}, statusCode={}".format(choice(users), "LOGIN",
+                                                                                              "127.0.0.1", "200"),
+                                                                                              "INFO")
+                f.write(json.dumps(log.__dict__) + '\n')
+            else:
+                log = Log(dt1, "userId={}, type={}, ipAddress={}, error={}, statusCode={}".format(choice(users), "LOGIN_ERROR",
+                                                                                              "127.0.0.1",
+                                                                                              "invalid_user_credentials",
+                                                                                              "400"), "WARN")
+                f.write(json.dumps(log.__dict__) + '\n')
+    elif attack_type == "frequent_other_logs":
+            for i in range(51):
+                dt1 = datetime.now(timezone.utc).astimezone().replace(hour=10, minute=4, second=i).isoformat()
+                list_date = dt1.split('+')
+                list_date[0] = list_date[0][:-3]
+                dt1 = (list_date[0]) + '+' + (list_date[1])
+                # log = Log(dt1, "INFO", "Message for log.", choice(users),
+                #    "", "127.0.0.1", "", 200, False)
+                log = Log(dt1,
+                      "userId={}, ipAddress={}, statusCode={}".format(choice(users), "127.0.0.1",
+                                                                                         "200"), "INFO")
+                f.write(json.dumps(log.__dict__) + '\n')
+    f.close()
 
 
 def error_mode(file_path):
@@ -141,7 +142,7 @@ def error_mode(file_path):
     dt1 = (list_date[0]) + '+' + (list_date[1])
     # log = Log(dt1, "ERROR", "Error occured.", "640d99cc-3299-4a3a-a170-dc3ebabf6775",
     #     "", "127.0.0.1", "", 404, False)
-    log = Log(dt1, "userId={}, type={}, ipAddress={}, error={}, statusCode={}".format("640d99cc - 3299 - 4a3a - a170 - dc3ebabf6775", "", "127.0.0.1", "", "404"), "ERROR")
+    log = Log(dt1, "userId={}, ipAddress={}, statusCode={}".format("640d99cc-3299-4a3a-a170-dc3ebabf6775", "127.0.0.1", "404"), "ERROR")
     f = open(file_path, "a")
     f.write(json.dumps(log.__dict__) + '\n')
     f.close()

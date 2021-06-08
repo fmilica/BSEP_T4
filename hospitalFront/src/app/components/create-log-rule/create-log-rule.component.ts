@@ -43,18 +43,9 @@ export class CreateLogRuleComponent implements OnInit {
       source: new FormControl(''),
       operatorSource: new FormControl('', Validators.pattern(this.opers)),
       valueSource: new FormControl(''),
-      type: new FormControl(''),
-      operatorType: new FormControl('', Validators.pattern(this.opers)),
-      valueType: new FormControl(''),
       ipAddress: new FormControl(''),
       operatorIpAddress: new FormControl('', Validators.pattern(this.opers)),
       valueIpAddress: new FormControl(''),
-      error: new FormControl(''),
-      operatorError: new FormControl('', Validators.pattern(this.opers)),
-      valueError: new FormControl(''),
-      statusCode: new FormControl(''),
-      operatorStatusCode: new FormControl('', Validators.pattern(this.opers)),
-      valueStatusCode: new FormControl(''),
     })
   }
 
@@ -115,12 +106,9 @@ export class CreateLogRuleComponent implements OnInit {
     if (this.validateGroup('Level', 'level', 'operatorLevel', 'valueLevel', logRuleConditionDto) &&
       this.validateGroup('Message', 'message', 'operatorMessage', 'valueMessage', logRuleConditionDto) &&
       this.validateGroup('Source', 'source', 'operatorSource', 'valueSource', logRuleConditionDto) &&
-      this.validateGroup('Type', 'type', 'operatorType', 'valueType', logRuleConditionDto) &&
-      this.validateGroup('Ip address', 'ipAddress', 'operatorIpAddress', 'valueIpAddress', logRuleConditionDto) &&
-      this.validateGroup('Error', 'error', 'operatorError', 'valueError', logRuleConditionDto) &&
-      this.validateGroup('Status code', 'statusCode', 'operatorStatusCode', 'valueStatusCode', logRuleConditionDto)) {
-      return true;
-    }
+      this.validateGroup('Ip address', 'ipAddress', 'operatorIpAddress', 'valueIpAddress', logRuleConditionDto)) {
+        return true;
+      }
     return false;
   }
 

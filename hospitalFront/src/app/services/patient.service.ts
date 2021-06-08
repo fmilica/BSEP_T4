@@ -41,7 +41,7 @@ export class PatientService {
             // subskripcije
             this.subscribe("/topic/patients", function (message) {
                 const patientAlarm = JSON.parse(message.body);
-                that.toastr.warning(patientAlarm.message);
+                that.toastr.warning(patientAlarm.name + ":\n" + patientAlarm.message);
             });
         }
 

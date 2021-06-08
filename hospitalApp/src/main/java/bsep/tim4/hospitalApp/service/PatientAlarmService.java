@@ -51,4 +51,9 @@ public class PatientAlarmService {
         }
         return new PageImpl<>(patientAlarmDtos, page.getPageable(), page.getTotalElements());
     }
+
+    public PatientAlarmDto convertPatientAlarm(PatientAlarm patientAlarm) throws JsonProcessingException, NonExistentIdException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
+        Patient patient = patientService.findById(patientAlarm.getPatientId());
+        return new PatientAlarmDto(patient.getName(), patientAlarm.getMessage(), patientAlarm.getTimestamp());
+    }
 }

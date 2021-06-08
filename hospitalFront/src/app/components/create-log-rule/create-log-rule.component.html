@@ -12,11 +12,6 @@
                         {{type}}
                     </mat-option>
                 </mat-autocomplete>
-                <!-- <mat-select formControlName="logAlarmType">
-                    <mat-option *ngFor="let type of logAlarmTypes" [value]="type">
-                        {{type}}
-                    </mat-option>
-                </mat-select> -->
             </mat-form-field>
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Log alarm message</mat-label>
@@ -53,8 +48,11 @@
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Operator</mat-label>
                 <mat-select formControlName="operatorMessage">
-                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
-                        {{oper}}
+                    <mat-option [value]="'=='">
+                        contains
+                    </mat-option>
+                    <mat-option [value]="'!='">
+                        not contains
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -81,24 +79,6 @@
                 <input matInput formControlName="valueSource" type="text">
             </mat-form-field>
         </div>
-        <!--Type-->
-        <div class="form-group">
-            <mat-checkbox formControlName="type">
-                Type
-            </mat-checkbox>
-            <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Operator</mat-label>
-                <mat-select formControlName="operatorType">
-                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
-                        {{oper}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Value for type</mat-label>
-                <input matInput formControlName="valueType" type="text">
-            </mat-form-field>
-        </div>
         <!--Ip address-->
         <div class="form-group">
             <mat-checkbox formControlName="ipAddress">
@@ -115,42 +95,6 @@
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Value for ip address</mat-label>
                 <input matInput formControlName="valueIpAddress" type="text">
-            </mat-form-field>
-        </div>
-        <!--Error-->
-        <div class="form-group">
-            <mat-checkbox formControlName="error">
-                Error
-            </mat-checkbox>
-            <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Error</mat-label>
-                <mat-select formControlName="operatorError">
-                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
-                        {{oper}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Value for error</mat-label>
-                <input matInput formControlName="valueError" type="text">
-            </mat-form-field>
-        </div>
-        <!--Status code-->
-        <div class="form-group">
-            <mat-checkbox formControlName="statusCode">
-                Status code
-            </mat-checkbox>
-            <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Operator</mat-label>
-                <mat-select formControlName="operatorStatusCode">
-                    <mat-option *ngFor="let oper of opers.split('|')" [value]="oper">
-                        {{oper}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Value for status code</mat-label>
-                <input matInput formControlName="valueStatusCode" type="text">
             </mat-form-field>
         </div>
         <div class="row justify-content-md-center">

@@ -1,5 +1,6 @@
 package bsep.tim4.hospitalApp.service;
 
+import bsep.tim4.hospitalApp.dto.PatientAlarmDto;
 import bsep.tim4.hospitalApp.dto.PatientStatusDto;
 import bsep.tim4.hospitalApp.exceptions.NonExistentIdException;
 import bsep.tim4.hospitalApp.model.Patient;
@@ -44,12 +45,15 @@ public class PatientStatusService {
     private PatientService patientService;
 
     @Autowired
+    private PatientAlarmService patientAlarmService;
+
+    @Autowired
     private KieSessionService kieSessionService;
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    public PatientStatus save(PatientStatus patientStatus) throws NonExistentIdException {
+    public PatientStatus save(PatientStatus patientStatus) throws NonExistentIdException, JsonProcessingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
 
         PatientEncrypted patient = patientRepository.findById(patientStatus.getPatientId()).orElse(null);
 
@@ -96,20 +100,22 @@ public class PatientStatusService {
         return new PageImpl<>(patientStatusDtos, page.getPageable(), page.getTotalElements());
     }
 
-    private void saveAndSendNewAlarms(List<PatientAlarm> alarms) {
+    private void saveAndSendNewAlarms(List<PatientAlarm> alarms) throws JsonProcessingException, NonExistentIdException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
         PatientAlarm lastSaved = this.patientAlarmRepository.findFirstByOrderByTimestampDesc();
         List<PatientAlarm> newAlarms = new ArrayList<>();
         if (lastSaved != null) {
             for (PatientAlarm alarm : alarms) {
                 if (alarm.getTimestamp().after(lastSaved.getTimestamp())) {
                     alarm = patientAlarmRepository.save(alarm);
-                    this.simpMessagingTemplate.convertAndSend("/topic/patients", alarm);
+                    PatientAlarmDto alarmDto = patientAlarmService.convertPatientAlarm(alarm);
+                    this.simpMessagingTemplate.convertAndSend("/topic/patients", alarmDto);
                 }
             }
         } else {
             for (PatientAlarm alarm : alarms) {
                 alarm = patientAlarmRepository.save(alarm);
-                this.simpMessagingTemplate.convertAndSend("/topic/patients", alarm);
+                PatientAlarmDto alarmDto = patientAlarmService.convertPatientAlarm(alarm);
+                this.simpMessagingTemplate.convertAndSend("/topic/patients", alarmDto);
             }
         }
     }

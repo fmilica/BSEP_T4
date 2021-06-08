@@ -16,7 +16,7 @@ import java.util.List;
 public class LogRuleConditionListDto {
 
     @Valid
-    @Size(min=1, max=8, message = "Inadequate number of rule conditions.")
+    @Size(min=1, max=4, message = "Inadequate number of rule conditions.")
     private List<LogRuleConditionDto> ruleConditions;
 
     @Override

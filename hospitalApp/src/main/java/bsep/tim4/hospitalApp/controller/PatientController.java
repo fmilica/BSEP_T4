@@ -97,6 +97,10 @@ public class PatientController {
                             logger.warn(String.format("%s called method %s with status code %s: %s",
                                     "Medical device", "receivePatientStatus", HttpStatus.NOT_FOUND, "non existent patient id"));
                             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+                        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+                            logger.error(String.format("%s called method %s with status code %s: %s",
+                                    "Medical device", "receivePatientStatus", HttpStatus.INTERNAL_SERVER_ERROR, "key exception"));
+                            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
                         }
                     }
                     logger.error(String.format("%s called method %s with status code %s: %s",

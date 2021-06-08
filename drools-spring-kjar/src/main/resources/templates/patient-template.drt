@@ -17,8 +17,8 @@ rule "Patient template rule @{id}.@{row.rowNumber}"
 		$ps: PatientStatus(patientId == "@{patientId}", @{ruleConditions})
 	then
 		insert(new PatientAlarm($ps.getPatientId(), $ps.getId(), new Timestamp(System.currentTimeMillis()),
-		"Custom alarm for patient: " + "@{patientId}" +
-		", heart rate: " + $ps.getHeartRate() +
+		"Custom alarm:" +
+		" heart rate: " + $ps.getHeartRate() +
         " blood pressure: " + $ps.getLowerBloodPressure() + "/" + $ps.getUpperBloodPressure() +
         " respiratory rate: " + $ps.getRespiratoryRate() +
         " temperature: " + $ps.getBodyTemperature()));
