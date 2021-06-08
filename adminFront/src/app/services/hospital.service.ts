@@ -16,12 +16,22 @@ export class HospitalService {
         return this.http.get<[]>(environment.apiEndpoint + 'hospital');
     }
 
+    getAllHospitalSimulators(hospitalId: number): Observable<[]> {
+        return this.http.get<[]>(environment.apiEndpoint + 'hospital/' + hospitalId);
+    }
+
     getAllNotHospitalSimulators(hospitalId: number): Observable<[]> {
         return this.http.get<[]>(environment.apiEndpoint + 'hospital/not-in/' + hospitalId);
     }
 
     addSimulator(hospitalId: number, simulator): Observable<[]> {
         return this.http.post<[]>(environment.apiEndpoint + 'hospital/add-simulator/' + hospitalId, simulator, {
+            headers: this.headers,
+        });
+    }
+
+    removeSimulator(hospitalId: number, simulator): Observable<[]> {
+        return this.http.post<[]>(environment.apiEndpoint + 'hospital/remove-simulator/' + hospitalId, simulator, {
             headers: this.headers,
         });
     }

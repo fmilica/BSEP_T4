@@ -1,14 +1,22 @@
 <div class="table-title">Create custom alarm for logs</div>
 <div class="col">
-    <form [formGroup]="customAlarmForm" #createCustomAlarmDirective="ngForm" (ngSubmit)="onSubmit(createCustomAlarmDirective)">
+    <form [formGroup]="customAlarmForm" #createCustomAlarmDirective="ngForm"
+        (ngSubmit)="onSubmit(createCustomAlarmDirective)">
         <div class="form-group">
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Log alarm type</mat-label>
-                <mat-select formControlName="logAlarmType">
+                <input type="text" placeholder="Enter alarm type" matInput formControlName="logAlarmType"
+                    [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let type of filteredOptions | async" [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-autocomplete>
+                <!-- <mat-select formControlName="logAlarmType">
                     <mat-option *ngFor="let type of logAlarmTypes" [value]="type">
                         {{type}}
                     </mat-option>
-                </mat-select>
+                </mat-select> -->
             </mat-form-field>
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Log alarm message</mat-label>
@@ -109,8 +117,8 @@
                 <input matInput formControlName="valueIpAddress" type="text">
             </mat-form-field>
         </div>
-         <!--Error-->
-         <div class="form-group">
+        <!--Error-->
+        <div class="form-group">
             <mat-checkbox formControlName="error">
                 Error
             </mat-checkbox>
@@ -127,8 +135,8 @@
                 <input matInput formControlName="valueError" type="text">
             </mat-form-field>
         </div>
-         <!--Status code-->
-         <div class="form-group">
+        <!--Status code-->
+        <div class="form-group">
             <mat-checkbox formControlName="statusCode">
                 Status code
             </mat-checkbox>
@@ -146,11 +154,7 @@
             </mat-form-field>
         </div>
         <div class="row justify-content-md-center">
-            <button
-                id="create-alarm"
-                class="btn btn-color"
-                [disabled] = "customAlarmForm.invalid"
-            >
+            <button id="create-alarm" class="btn btn-color" [disabled]="customAlarmForm.invalid">
                 Create alarm
             </button>
         </div>

@@ -77,7 +77,8 @@ export class ReportsComponent implements OnInit {
   ) {
     this.reportForm = new FormGroup({
       fromDate: new FormControl(''),
-      toDate: new FormControl('')
+      toDate: new FormControl(''),
+      sourcesNumber: new FormControl(1)
     })
   }
 
@@ -85,7 +86,8 @@ export class ReportsComponent implements OnInit {
   }
 
   createReport(reportForm: FormGroupDirective): void {
-    let report: Report = new Report(this.reportForm.get('fromDate').value, this.reportForm.get('toDate').value);
+    let report: Report = new Report(this.reportForm.get('fromDate').value, this.reportForm.get('toDate').value,
+      this.reportForm.get('sourcesNumber').value);
     this.reportService.createReport(report)
       .subscribe(
         response => {

@@ -27,4 +27,8 @@ public class LogAlarmService {
 
         return new PageImpl<>(logAlarmDtoList, page.getPageable(), page.getTotalElements());
     }
+
+    public List<String> findAllAlarmTypes() {
+        return logAlarmRepository.findLogAlarmTypes();
+    }
 }

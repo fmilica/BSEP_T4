@@ -64,4 +64,8 @@ export class LogAlarmService {
                 catchError((err) => throwError(err))
             );
     }
+
+    findAllLogAlarmTypes(): Observable<String[]> {
+        return this.http.get<String[]>(environment.apiEndpoint + 'log-alarm/types');
+    }
 }

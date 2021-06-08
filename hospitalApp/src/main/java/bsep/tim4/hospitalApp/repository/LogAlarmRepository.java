@@ -32,14 +32,21 @@ public interface LogAlarmRepository extends MongoRepository<LogAlarm, String> {
                         "} " +
                     "}" +
             "}",
-            "{$group: { '_id': $source, total: { $sum: 1 } } }",
+            "{$group: { '_id': { $ifNull: [ $source, \"Unknown\" ] }, total: { $sum: 1 } } }",
             "{$sort: {total: -1} }",
+            "{$limit: ?2}",
             "{$project: {\n" +
             "        id: 1,\n" +
             "        total: 1\n" +
             "}}"
     })
-    List<FrequentSources> findMostFrequentSources(Instant from, Instant to);
+    List<FrequentSources> findMostFrequentSources(Instant from, Instant to, int sourcesNumber);
 
-    List<LogAlarm> findByTimestampBetween(Date startDate, Date endDate);
+    @Aggregation(pipeline = {
+            "{$group: { '_id': $type, total: { $sum: 1 } } }",
+            "{$project: {\n" +
+                    "        id: 1\n" +
+                    "}}"
+    })
+    List<String> findLogAlarmTypes();
 }

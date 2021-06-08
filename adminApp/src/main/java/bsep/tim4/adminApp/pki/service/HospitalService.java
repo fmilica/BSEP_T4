@@ -69,6 +69,25 @@ public class HospitalService {
         return logConfigList;
     }
 
+    public List<LogConfig> removeSimulator(Long hospitalId, List<LogConfig> logConfigList) throws NonExistentIdException {
+        Hospital hospital = hospitalRepository.findById(hospitalId).orElse(null);
+        if (hospital == null) {
+            throw new NonExistentIdException("Hospital");
+        }
+        Set<Simulator> removedSimulators = new HashSet<>();
+        for (LogConfig logConfig : logConfigList) {
+            Simulator simulator = simulatorRepository.findById(logConfig.getSimulatorId()).orElse(null);
+            if (simulator == null) {
+                throw new NonExistentIdException("Simulator");
+            }
+            removedSimulators.add(simulator);
+            logConfig.setPath(simulator.getPath());
+        }
+        hospital.getSimulators().removeAll(removedSimulators);
+        hospitalRepository.save(hospital);
+        return logConfigList;
+    }
+
     public void handleCsr(String email) {
         Hospital hospital = hospitalRepository.findOneByEmail(email);
         if (hospital != null) {

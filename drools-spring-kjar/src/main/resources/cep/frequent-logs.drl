@@ -23,7 +23,7 @@ rule "More than 50 other logs in 1 minute"
         eval($logs.size() >= 50)
     then
         System.out.println("******************* FREQUENT ***************************");
-        insert(new LogAlarm(new Date(), "DOS", LogAlarmType.DOS, "Many logs in one minute"));
+        insert(new LogAlarm(new Date(), "DOS", "DOS", "Many logs in one minute"));
         modify($log1){setProcessed(true);};
         for (Object obj: $logs) {
             Log log = (Log) obj;
@@ -47,7 +47,7 @@ rule "More than 10 login logs in 1 minute"
         eval($logs.size() >= 10)
     then
         System.out.println("**************** FREQUENT LOGIN ****************************");
-        insert(new LogAlarm(new Date(), "BRUTE_FORCE", LogAlarmType.BRUTE_FORCE, "Many login logs in one minute"));
+        insert(new LogAlarm(new Date(), "BRUTE_FORCE", "BRUTE_FORCE", "Many login logs in one minute"));
         modify($log1){setProcessed(true);};
         for (Object obj: $logs) {
             Log log = (Log) obj;

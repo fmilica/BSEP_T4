@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping(value="api/log-alarm")
@@ -31,5 +32,14 @@ public class LogAlarmController {
         logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                 principal.getName(), "findAllLogAlarms", HttpStatus.OK, "authorized"));
         return new ResponseEntity<>(logAlarms, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/types")
+    public ResponseEntity<List<String>> findAllAlarmTypes(Principal principal) {
+        List<String> logAlarmTypes = logAlarmService.findAllAlarmTypes();
+
+        logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                principal.getName(), "findAllAlarmTypes", HttpStatus.OK, "authorized"));
+        return new ResponseEntity<>(logAlarmTypes, HttpStatus.OK);
     }
 }

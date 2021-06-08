@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,10 @@ public class ReportDto {
 
     @NotNull(message = "Start date cannot be empty.")
     private Date endDate;
+
+    @NotNull(message = "Number of most frequent sources cannot be empty.")
+    @Positive(message = "Number of most frequent sources must be positive.")
+    private int sourcesNumber;
 
     private Long totalLogs;
     private Long totalLogAlarms;

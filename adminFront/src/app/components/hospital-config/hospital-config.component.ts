@@ -15,8 +15,10 @@ export class HospitalConfigComponent implements OnInit {
   displayedColumns: string[] = ['hospitalName', 'hospitalSimulators']
   dataSource: [] = []
   simulators: [] = []
+  removeSimulators: [] = []
 
   addSimulatorForm: FormGroup;
+  removeSimulatorForm: FormGroup;
 
   constructor(
     private hospitalService: HospitalService,
@@ -27,7 +29,11 @@ export class HospitalConfigComponent implements OnInit {
       simulator: new FormControl(''),
       readInterval: new FormControl(0),
       filter: new FormControl('')
-    })
+    });
+    this.removeSimulatorForm = new FormGroup({
+      hospital: new FormControl(''),
+      simulator: new FormControl('')
+    });
   }
 
   ngOnInit(): void {
@@ -52,13 +58,38 @@ export class HospitalConfigComponent implements OnInit {
     ).subscribe();
   }
 
-  onSubmit() {
+  onRemoveHospitalSelected() {
+    let hospitalId = this.removeSimulatorForm.get('hospital').value;
+    this.hospitalService.getAllHospitalSimulators(hospitalId).pipe(
+      map((simulators: []) => {
+        this.removeSimulators = simulators;
+      })
+    ).subscribe();
+  }
+
+  onAddSubmit() {
     let hospitalId = this.addSimulatorForm.get('hospital').value;
     let simulatorId = this.addSimulatorForm.get('simulator').value;
     let readInterval = this.addSimulatorForm.get('readInterval').value;
     let filter = this.addSimulatorForm.get('filter').value;
     let simulator = [{ "simulatorId": simulatorId, "readInterval": readInterval, "filter": filter }]
     this.hospitalService.addSimulator(hospitalId, simulator)
+      .subscribe(
+        response => {
+          this.toastr.success('Successfully configured hospital!');
+          this.initDataSource();
+        },
+        error => {
+          this.toastr.error(error.error.fieldErrors[0].defaultMessage);
+        }
+      );
+  }
+
+  onRemoveSubmit() {
+    let hospitalId = this.removeSimulatorForm.get('hospital').value;
+    let simulatorId = this.removeSimulatorForm.get('simulator').value;
+    let simulator = [{ "simulatorId": simulatorId }]
+    this.hospitalService.removeSimulator(hospitalId, simulator)
       .subscribe(
         response => {
           this.toastr.success('Successfully configured hospital!');

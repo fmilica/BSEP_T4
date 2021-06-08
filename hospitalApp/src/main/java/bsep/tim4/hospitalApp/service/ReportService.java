@@ -24,6 +24,7 @@ public class ReportService {
     public ReportDto generateReport(ReportDto reportDto) {
         Date startDate = reportDto.getStartDate();
         Date endDate = reportDto.getEndDate();
+        int sourcesNumber = reportDto.getSourcesNumber();
 
         long totalLogs = logRepository.countByTimestampBetween(startDate, endDate);
         reportDto.setTotalLogs(totalLogs);
@@ -38,7 +39,8 @@ public class ReportService {
             reportDto.getLogAlarmsByType().add(totalTypeAlarms);
         }
 
-        List<FrequentSources> sources = logAlarmRepository.findMostFrequentSources(startDate.toInstant(), endDate.toInstant());
+        List<FrequentSources> sources =
+                logAlarmRepository.findMostFrequentSources(startDate.toInstant(), endDate.toInstant(), sourcesNumber);
         reportDto.setFrequentSource(sources);
 
         return reportDto;

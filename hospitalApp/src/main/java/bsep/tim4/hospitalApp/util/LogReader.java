@@ -212,7 +212,7 @@ public class LogReader implements Runnable {
             for (LogAlarm alarm : alarms) {
                 if (alarm.getTimestamp().after(lastSaved.getTimestamp())) {
                     alarm = logAlarmRepository.save(alarm);
-                    if (alarm.getType() == LogAlarmType.NEW_BLACKLIST_IP) {
+                    if (alarm.getType().equals("NEW_BLACKLIST_IP")) {
                         newMaliciousIps.add(new MaliciousIp(alarm.getSource()));
                     }
                     this.simpMessagingTemplate.convertAndSend("/topic/logs", alarm);
@@ -221,7 +221,7 @@ public class LogReader implements Runnable {
         } else {
             for (LogAlarm alarm : alarms) {
                 alarm = logAlarmRepository.save(alarm);
-                if (alarm.getType() == LogAlarmType.NEW_BLACKLIST_IP) {
+                if (alarm.getType().equals("NEW_BLACKLIST_IP")) {
                     newMaliciousIps.add(new MaliciousIp(alarm.getSource()));
                 }
                 this.simpMessagingTemplate.convertAndSend("/topic/logs", alarm);

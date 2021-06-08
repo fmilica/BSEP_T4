@@ -19,7 +19,7 @@ rule "Log template rule @{id}.@{row.rowNumber}"
     when
         $log1: Log(processed == false, $source : source, @{ruleConditions})
     then
-        insert(new LogAlarm(new Date(), $source, LogAlarmType.@{logAlarmType}, "@{logAlarmMessage}"));
+        insert(new LogAlarm(new Date(), $source, "@{logAlarmType}", "@{logAlarmMessage}"));
         System.out.println("**************** @{logAlarmMessage} ****************************");
         modify($log1){setProcessed(true);};
 end

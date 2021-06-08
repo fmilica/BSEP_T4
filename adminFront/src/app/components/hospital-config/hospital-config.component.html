@@ -26,7 +26,7 @@
         </td>
     </ng-container>
 </table>
-<form id="add-simulator-form" [formGroup]="addSimulatorForm" (ngSubmit)="onSubmit()">
+<form id="add-simulator-form" [formGroup]="addSimulatorForm" (ngSubmit)="onAddSubmit()">
     <div class="form-group">
         <mat-form-field appearance="fill" class="form-field spacer">
             <mat-label>Hospital</mat-label>
@@ -58,6 +58,32 @@
     <div class="form-group">
         <button id="add-simulator" class="btn btn-color spacer-btn">
             Add Simulator
+        </button>
+    </div>
+</form>
+<form id="remove-simulator-form" [formGroup]="removeSimulatorForm" (ngSubmit)="onRemoveSubmit()">
+    <div class="form-group">
+        <mat-form-field appearance="fill" class="form-field spacer">
+            <mat-label>Hospital</mat-label>
+            <mat-select formControlName="hospital">
+                <mat-option *ngFor="let hospital of dataSource" [value]="hospital.id"
+                    (click)="onRemoveHospitalSelected()">
+                    {{hospital.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field spacer">
+            <mat-label>Simulator</mat-label>
+            <mat-select formControlName="simulator">
+                <mat-option *ngFor="let simulator of removeSimulators" [value]="simulator.id">
+                    {{simulator.id}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="form-group">
+        <button id="remove-simulator" class="btn btn-color spacer-btn">
+            Remove Simulator
         </button>
     </div>
 </form>

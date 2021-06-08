@@ -1,22 +1,19 @@
 {
-  "logConfigList": [
-    {
-      "path": "C:/Users/evaje/OneDrive/Desktop/Skola/8_Semestar/Bezbednost u sistemima elektronskog poslovanja/projekat/BSEP_T4/hospitalApp/logs",
-      "type": "DEFAULT",
-      "readInterval": 3,
-      "filter": "",
-      "lastRead": {
-        "hospital-logger-json.log": 143085
-      }
-    },
-    {
-      "path": "C:/Users/evaje/Downloads/Keycloak/keycloak-12.0.4/standalone/log",
-      "type": "DEFAULT",
-      "readInterval": 3,
-      "filter": "",
-      "lastRead": {
-        "server.log": 252982
-      }
+  "logConfigList" : [ {
+    "path" : "C:/Users/evaje/Downloads/Keycloak/keycloak-12.0.4/standalone/log",
+    "type" : "DEFAULT",
+    "readInterval" : 3,
+    "filter" : "",
+    "lastRead" : {
+      "server.log" : 1044
     }
-  ]
+  }, {
+    "path" : "C:/Users/evaje/OneDrive/Desktop/Skola/8_Semestar/Bezbednost u sistemima elektronskog poslovanja/projekat/BSEP_T4/hospitalApp/logs",
+    "type" : "DEFAULT",
+    "readInterval" : 3,
+    "filter" : "",
+    "lastRead" : {
+      "hospital-logger-json.log" : 450685
+    }
+  } ]
 }

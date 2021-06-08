@@ -1,27 +1,25 @@
 package bsep.tim4.hospitalApp.dto;
 
-import bsep.tim4.hospitalApp.model.LogAlarmType;
-
 import java.util.Date;
 
 public class LogAlarmDto {
 
-    private LogAlarmType type;
+    private String type;
     private String message;
     private Date timestamp;
 
     public LogAlarmDto() { }
 
-    public LogAlarmDto(LogAlarmType type, String message, Date timestamp) {
+    public LogAlarmDto(String type, String message, Date timestamp) {
         this.type = type;
         this.message = message;
         this.timestamp = timestamp;
     }
 
-    public LogAlarmType getType() {
+    public String getType() {
         return type;
     }
-    public void setType(LogAlarmType type) {
+    public void setType(String type) {
         this.type = type;
     }
     public String getMessage() {

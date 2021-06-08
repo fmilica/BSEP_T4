@@ -105,20 +105,7 @@ public class HospitalController {
         try {
             logConfigList = hospitalService.addSimulator(hospitalId, logConfigList);
 
-            final String fullUri = hospitalUri +  configureLogDirsUri;
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("Authorization", token);
-
-            ObjectMapper om = new ObjectMapper();
-            String contentJson = om.writeValueAsString(logConfigList);
-
-            HttpEntity<String> request =
-                    new HttpEntity<>(contentJson, headers);
-
-            ResponseEntity<Void> responseEntity = restTemplate.
-                    postForEntity(fullUri, request, void.class);
+            configureHospitalRequest(token, logConfigList);
 
             logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
                     principal.getName(), "addSimulator", HttpStatus.OK, "authorized"));
@@ -128,5 +115,46 @@ public class HospitalController {
                     principal.getName(), "addSimulator", HttpStatus.BAD_REQUEST, "nonexistent id"));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
+    }
+
+    @PostMapping(value="/remove-simulator/{hospitalId}")
+    // SUPER ADMIN
+    public ResponseEntity<String> removeSimulator(
+            Principal principal,
+            @RequestHeader("Authorization") String token,
+            @PathVariable @NotNull(message = "Hospital id cannot be empty")
+            @Positive( message = "Hospital id is invalid") Long hospitalId,
+            @RequestBody @Valid List<LogConfig> logConfigList) {
+
+        try {
+            logConfigList = hospitalService.removeSimulator(hospitalId, logConfigList);
+
+            configureHospitalRequest(token, logConfigList);
+
+            logger.info(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "addSimulator", HttpStatus.OK, "authorized"));
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NonExistentIdException | JsonProcessingException e) {
+            logger.warn(String.format("User with userId=%s called method %s with status code %s: %s",
+                    principal.getName(), "addSimulator", HttpStatus.BAD_REQUEST, "nonexistent id"));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    private void configureHospitalRequest(String token, List<LogConfig> logConfigList) throws JsonProcessingException {
+        final String fullUri = hospitalUri +  configureLogDirsUri;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", token);
+
+        ObjectMapper om = new ObjectMapper();
+        String contentJson = om.writeValueAsString(logConfigList);
+
+        HttpEntity<String> request =
+                new HttpEntity<>(contentJson, headers);
+
+        ResponseEntity<Void> responseEntity = restTemplate.
+                postForEntity(fullUri, request, void.class);
     }
 }
