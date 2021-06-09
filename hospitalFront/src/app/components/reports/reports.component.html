@@ -1,7 +1,7 @@
 <div class="table-title">Create logs report</div>
 <form id="report-form" [formGroup]="reportForm" #createReportForm="ngForm" (ngSubmit)="createReport(createReportForm)">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group">
                 <mat-form-field appearance="fill" class="form-field">
                     <mat-label>From date</mat-label>
@@ -9,7 +9,7 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group">
                 <mat-form-field appearance="fill" class="form-field">
                     <mat-label>To date</mat-label>
@@ -17,7 +17,15 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>Most frequent sources number</mat-label>
+                    <input formControlName="sourcesNumber" matInput type="number" min="1">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-3">
             <div class="form-group">
                 <button id="create-report" class="btn btn-color">
                     Create report
@@ -28,6 +36,7 @@
 </form>
 <div class="row" [hidden]="!showCharts">
     <div class="col-md-12 upper">
+        <h1>Most frequent alarm sources</h1>
         <table mat-table [dataSource]="frequentSources" id="frequent-sources-table">
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

@@ -5,6 +5,7 @@ export class Report {
     constructor(
         public startDate: Date,
         public endDate: Date,
+        public sourcesNumber: number,
         public totalLogs?: number,
         public totalLogAlarms?: number,
         public frequentSource?: FrequentSource[],

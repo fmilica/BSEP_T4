@@ -17,7 +17,7 @@ public class LogRuleConditionDto {
 
     @NotBlank(message = "Rule condition type cannot be empty.")
     @Size(min=4, max=18, message = "Inadequate rule condition type length.")
-    @Pattern(regexp = "(level|message|source|type|ipAddress|error|statusCode)",
+    @Pattern(regexp = "(level|message|source|ipAddress)",
             message = "Rule condition type is not valid.")
     private String conditionType;
 
@@ -35,6 +35,13 @@ public class LogRuleConditionDto {
         if (conditionType.equals("level")) {
             enumValue = "LogLevel." + value;
         } else {
+            if (conditionType.equals("message")) {
+                if (conditionOperator.equals("==")) {
+                    return conditionType + ".contains(\"" + value + "\")";
+                } else {
+                    return "!" + conditionType + ".contains(\"" + value + "\")";
+                }
+            }
             enumValue = '"' + value + '"';
         }
         return conditionType + " " + conditionOperator + " " + enumValue;

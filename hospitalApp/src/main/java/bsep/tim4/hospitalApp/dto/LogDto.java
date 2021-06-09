@@ -7,13 +7,17 @@ import java.util.Date;
 public class LogDto {
 
     private LogLevel level;
+    private String source;
+    private String ipAddress;
     private String message;
     private Date timestamp;
 
     public LogDto() { }
 
-    public LogDto(LogLevel level, String message, Date timestamp) {
+    public LogDto(LogLevel level, String source, String ipAddress, String message, Date timestamp) {
         this.level = level;
+        this.source = source;
+        this.ipAddress = ipAddress;
         this.message = message;
         this.timestamp = timestamp;
     }
@@ -23,6 +27,18 @@ public class LogDto {
     }
     public void setLevel(LogLevel level) {
         this.level = level;
+    }
+    public String getSource() {
+        return source;
+    }
+    public void setSource(String source) {
+        this.source = source;
+    }
+    public String getIpAddress() {
+        return ipAddress;
+    }
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
     public String getMessage() {
         return message;

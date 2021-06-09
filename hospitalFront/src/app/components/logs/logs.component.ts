@@ -13,8 +13,8 @@ import { LogService } from 'src/app/services/log.service';
 })
 export class LogsComponent implements OnInit {
 
-  displayedColumns: string[] = ['level', 'message', 'timestamp'];
-  dataSource: LogPage = {content: [], totalElements: 0, totalPages: 0, size: 0};
+  displayedColumns: string[] = ['level', 'source', 'ipAddress', 'message', 'timestamp'];
+  dataSource: LogPage = { content: [], totalElements: 0, totalPages: 0, size: 0 };
   pageEvent: PageEvent = new PageEvent();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -54,9 +54,9 @@ export class LogsComponent implements OnInit {
 
   getNewPage(index: number, size: number): void {
     this.logService
-    .findAllByPage(this.pageEvent.pageIndex, this.pageEvent.pageSize)
-    .pipe(map((logPage: LogPage) => (this.dataSource = logPage)))
-    .subscribe();
+      .findAllByPage(this.pageEvent.pageIndex, this.pageEvent.pageSize)
+      .pipe(map((logPage: LogPage) => (this.dataSource = logPage)))
+      .subscribe();
   }
 
   onFilter(filterLogs: FormGroupDirective): void {
@@ -71,9 +71,9 @@ export class LogsComponent implements OnInit {
     console.log(logsFilter)
 
     this.logService
-    .findAllFilter(this.pageEvent.pageIndex, this.pageEvent.pageSize, logsFilter)
-    .pipe(map((logsPage: LogPage) => (this.dataSource = logsPage)))
-    .subscribe();
+      .findAllFilter(this.pageEvent.pageIndex, this.pageEvent.pageSize, logsFilter)
+      .pipe(map((logsPage: LogPage) => (this.dataSource = logsPage)))
+      .subscribe();
   }
 
 }

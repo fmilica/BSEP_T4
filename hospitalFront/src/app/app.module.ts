@@ -28,6 +28,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { LogsComponent } from './components/logs/logs.component';
 import { PatientComponent } from './components/patient/patient.component';
@@ -79,6 +80,7 @@ import { CreateLogRuleComponent } from './components/create-log-rule/create-log-
     MatNativeDateModule,
     MatProgressBarModule,
     MatPaginatorModule,
+    MatAutocompleteModule,
     MDBBootstrapModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',

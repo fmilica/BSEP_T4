@@ -11,8 +11,8 @@ import { LogAlarmService } from 'src/app/services/log-alarm.service';
 })
 export class LogAlarmsComponent implements OnInit {
 
-  displayedColumns: string[] = ['type', 'message', 'timestamp'];
-  dataSource: LogAlarmPage = {content: [], totalElements: 0, totalPages: 0, size: 0};
+  displayedColumns: string[] = ['type', 'source', 'message', 'timestamp'];
+  dataSource: LogAlarmPage = { content: [], totalElements: 0, totalPages: 0, size: 0 };
   pageEvent: PageEvent = new PageEvent();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -40,9 +40,9 @@ export class LogAlarmsComponent implements OnInit {
 
   getNewPage(index: number, size: number): void {
     this.logAlarmService
-    .findAllByPage(this.pageEvent.pageIndex, this.pageEvent.pageSize)
-    .pipe(map((logAlarmPage: LogAlarmPage) => (this.dataSource = logAlarmPage)))
-    .subscribe();
+      .findAllByPage(this.pageEvent.pageIndex, this.pageEvent.pageSize)
+      .pipe(map((logAlarmPage: LogAlarmPage) => (this.dataSource = logAlarmPage)))
+      .subscribe();
   }
 
 }

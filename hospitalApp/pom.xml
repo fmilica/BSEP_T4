@@ -181,6 +181,13 @@
 			<artifactId>querydsl-apt</artifactId>
 			<version>4.3.1</version>
 		</dependency>
+
+		<!-- JavaFX -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>15.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

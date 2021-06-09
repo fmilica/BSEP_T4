@@ -24,7 +24,7 @@ rule "More than 5 login attempts in 1 minute from one username"
         eval($logs.size() >= 5)
     then
         System.out.println("**************** LOGIN FAILED RULE ****************************");
-        insert(new LogAlarm(new Date(), $source, LogAlarmType.FAILED_LOGIN, "Many login attempts"));
+        insert(new LogAlarm(new Date(), $source, "FAILED_LOGIN", "Many login attempts"));
         modify($log1){setProcessed(true);};
         for (Object obj: $logs) {
             Log log = (Log) obj;

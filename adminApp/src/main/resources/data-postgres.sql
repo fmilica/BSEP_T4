@@ -12,5 +12,5 @@ insert into certificate_data (alias, common_name, email, parent_alias, revocatio
 insert into hospital (email, med_dev_num) values ('novosadska@bolnica.com', 1);
 insert into hospital (email, med_dev_num) values ('beogradska@bolnica.com', 0);
 -- simulatori
-insert into simulator (path) values ('C:\\Users\\evaje\\OneDrive\\Desktop\\Skola\\8_Semestar\\Bezbednost u sistemima elektronskog poslovanja\\projekat\\BSEP_T4\\logSimulator\\sim1');
-insert into simulator (path) values ('C:\\Users\\evaje\\OneDrive\\Desktop\\Skola\\8_Semestar\\Bezbednost u sistemima elektronskog poslovanja\\projekat\\BSEP_T4\\logSimulator\\sim2');
+insert into simulator (path) values ('C:\\Users\\Ksenija\\Desktop\\BSEP_T4\\logSimulator\\sim1');
+insert into simulator (path) values ('C:\\Users\\Ksenija\\Desktop\\BSEP_T4\\logSimulator\\sim2');
